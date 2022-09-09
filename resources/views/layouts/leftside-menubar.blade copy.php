@@ -32,10 +32,10 @@
 </ul>
 @endif--}}
 <ul class="nav flex-column">
-  <li class="nav-item active">
+  {{-- <li class="nav-item active">
     <a class="nav-link" href="{{ url('home') }}"><i class="material-icons">dashboard</i> <span class="nav-link-text">@lang('Dashboard')</span></a>
-  </li>
-  @if(Auth::user()->role == 'admin')
+  </li> --}}
+  {{-- @if(Auth::user()->role == 'admin')
   <li class="nav-item dropdown">
     <a role="button" href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
         class="material-icons">date_range</i> <span class="nav-link-text">@lang('Attendance')</span> <i class="material-icons pull-right">keyboard_arrow_down</i></a>
@@ -55,18 +55,22 @@
   <li class="nav-item">
     <a class="nav-link" href="{{ url('school/sections?course=1') }}"><i class="material-icons">class</i> <span class="nav-link-text">@lang('Classes &amp; Sections')</span></a>
   </li>
-  @endif
+  @endif --}}
   @if(Auth::user()->role != 'student')
   <li class="nav-item">
     <a class="nav-link" href="{{url('users/'.Auth::user()->school->code.'/1/0')}}"><i class="material-icons">contacts</i>
       <span class="nav-link-text">@lang('Students')</span></a>
   </li>
-  <li class="nav-item">
+  {{-- <li class="nav-item">
     <a class="nav-link" href="{{url('users/'.Auth::user()->school->code.'/0/1')}}"><i class="material-icons">contacts</i>
       <span class="nav-link-text">@lang('Teachers')</span></a>
-  </li>
+  </li> --}}
   @endif
-  @if(Auth::user()->role == 'admin')
+  @if(Auth::user()->role == 'admin') 
+  <li class="nav-item">
+    <a class="nav-link" href="{{url('users/'.Auth::user()->school->code.'/accountant')}}"><i class="material-icons">contacts</i>
+            <span class="nav-link-text">@lang('Accountants')</span></a>
+  </li>
   <li class="nav-item dropdown">
     <a role="button" href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
         class="material-icons">line_style</i> <span class="nav-link-text">@lang('Exams')</span> <i class="material-icons pull-right">keyboard_arrow_down</i></a>
@@ -84,30 +88,30 @@
       </li>
     </ul>
   </li>
-  <li class="nav-item">
+  {{-- <li class="nav-item">
     <a class="nav-link" href="{{ url('grades/all-exams-grade') }}"><i class="material-icons">assignment</i> <span class="nav-link-text">@lang('Grades')</span></a>
-  </li>
+  </li> --}}
   <li class="nav-item" style="border-bottom: 1px solid #dbd8d8;"></li>
-  <li class="nav-item">
+  {{-- <li class="nav-item">
     <a class="nav-link" href="{{ url('academic/routine') }}"><i class="material-icons">calendar_today</i> <span class="nav-link-text">@lang('Class Routine')</span></a>
-  </li>
-  <li class="nav-item">
+  </li> --}}
+  {{-- <li class="nav-item">
     <a class="nav-link" href="{{ url('academic/syllabus') }}"><i class="material-icons">vertical_split</i> <span class="nav-link-text">@lang('Syllabus')</span></a>
-  </li>
-  <li class="nav-item">
+  </li> --}}
+  {{-- <li class="nav-item">
     <a class="nav-link" href="{{ url('academic/notice') }}"><i class="material-icons">announcement</i> <span class="nav-link-text">@lang('Notice')</span></a>
-  </li>
-  <li class="nav-item">
+  </li> --}}
+  {{-- <li class="nav-item">
     <a class="nav-link" href="{{ url('academic/event') }}"><i class="material-icons">event</i> <span class="nav-link-text">@lang('Event')</span></a>
-  </li>
-  <li class="nav-item">
+  </li> --}}
+  {{-- <li class="nav-item">
     <a class="nav-link" href="{{ url('academic/certificate') }}"><i class="material-icons">verified</i> <span class="nav-link-text">Certificate</span></a>
-  </li>
+  </li> --}}
   <li class="nav-item" style="border-bottom: 1px solid #dbd8d8;"></li>
   <li class="nav-item">
     <a class="nav-link" href="{{ route('settings.index') }}"><i class="material-icons">settings</i> <span class="nav-link-text">@lang('Academic Settings')</span></a>
   </li>
-  <li class="nav-item dropdown">
+  {{-- <li class="nav-item dropdown">
     <a role="button" href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
         class="material-icons">chrome_reader_mode</i> <span class="nav-link-text">@lang('Manage GPA')</span> <i class="material-icons pull-right">keyboard_arrow_down</i></a>
     <ul class="dropdown-menu" style="width: 100%;">
@@ -120,10 +124,17 @@
         <a class="dropdown-item" href="{{ url('gpa/create-gpa') }}"><i class="material-icons">note_add</i> <span class="nav-link-text">@lang('Add New GPA')</span></a>
       </li>
     </ul>
-  </li>
+  </li> --}}
   @endif
   @if(Auth::user()->role == 'admin' || Auth::user()->role == 'accountant')
-  <li class="nav-item dropdown">
+  
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url('fees/all') }}"><i class="material-icons">developer_board</i> <span class="nav-link-text">@lang('Generate Form')</span></a>
+  </li> 
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url('fees/create') }}"><i class="material-icons">note_add</i> <span class="nav-link-text">@lang('Add Fee Field')</span></a>
+  </li>
+  {{-- <li class="nav-item dropdown">
     <a role="button" href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
         class="material-icons">monetization_on</i> <span class="nav-link-text">@lang('Fees Generator')</span> <i class="material-icons pull-right">keyboard_arrow_down</i></a>
     <ul class="dropdown-menu" style="width: 100%;">
@@ -135,11 +146,11 @@
         <a class="dropdown-item" href="{{ url('fees/create') }}"><i class="material-icons">note_add</i> <span class="nav-link-text">@lang('Add Fee Field')</span></a>
       </li>
     </ul>
-  </li>
+  </li> --}}
   @endif
    
-  @if(Auth::user()->role == 'admin' || Auth::user()->role == 'accountant')
-  <li class="nav-item dropdown">
+  @if(Auth::user()->role == 'admin'  )
+  {{-- <li class="nav-item dropdown">
     <a role="button" href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
         class="material-icons">account_balance_wallet</i> <span class="nav-link-text">@lang('Manage Accounts')</span> <i class="material-icons pull-right">keyboard_arrow_down</i></a>
     <ul class="dropdown-menu" style="width: 100%;">
@@ -168,14 +179,14 @@
           <span class="nav-link-text">@lang('Income List')</span></a>
       </li>
     </ul>
-  </li>
+  </li> --}}
   @endif
   @if(Auth::user()->role == 'student')
-  <li class="nav-item">
+  {{-- <li class="nav-item">
     <a class="nav-link active" href="{{ url('attendances/0/'.Auth::user()->id.'/0') }}"><i class="material-icons">date_range</i>
       <span class="nav-link-text">@lang('My Attendance')</span></a>
-  </li>
-  <li class="nav-item">
+  </li> --}}
+  {{-- <li class="nav-item">
     <a class="nav-link" href="{{url('user/'.Auth::user()->id.'/notifications')}}">
       <i class="material-icons">email</i> 
       <span class="nav-link-text">Notifications</span>
@@ -186,29 +197,29 @@
         <span class="label label-danger" style="vertical-align: middle;border-style: none;border-radius: 50%;width: 30px;height: 30px;">{{$mc}}</span>
       @endif
     </a>
-  </li>
-  <li class="nav-item">
+  </li> --}}
+  {{-- <li class="nav-item">
     <a class="nav-link" href="{{ url('courses/0/'.Auth::user()->section_id) }}"><i class="material-icons">subject</i>
       <span class="nav-link-text">@lang('My Courses')</span></a>
-  </li>
-  <li class="nav-item">
+  </li> --}}
+  {{-- <li class="nav-item">
     <a class="nav-link" href="{{ url('grades/'.Auth::user()->id) }}"><i class="material-icons">bubble_chart</i> <span
         class="nav-link-text">@lang('My Grade')</span></a>
-  </li>
+  </li> --}}
   <li class="nav-item">
     <a class="nav-link" href="{{url('stripe/charge')}}"><i class="material-icons">payment</i> <span class="nav-link-text">@lang('Payment')</span></a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="{{url('stripe/receipts')}}"><i class="material-icons">receipt</i> <span class="nav-link-text">@lang('Receipt')</span></a>
   </li>
-  <li class="nav-item">
+  {{-- <li class="nav-item">
     <a class="nav-link" href="{{url('academic/student/certificates')}}"><i class="material-icons">verified</i> <span class="nav-link-text">Certificates</span></a>
-  </li>
+  </li> --}}
   @endif
   {{--<div style="text-align:center;">@lang('Student')</div>--}}
   {{--<div style="text-align:center;">@lang('Teacher')</div>--}}
   @if(Auth::user()->role == 'admin' || Auth::user()->role == 'librarian')
-  <li class="nav-item dropdown">
+  {{-- <li class="nav-item dropdown">
     <a role="button" href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
         class="material-icons">local_library</i> <span class="nav-link-text">@lang('Manage Library')</span> <i class="material-icons pull-right">keyboard_arrow_down</i></a>
     <ul class="dropdown-menu" style="width: 100%;">
@@ -234,12 +245,29 @@
             class="nav-link-text">@lang('Add New Book')</span></a>
       </li>
     </ul>
-  </li>
+  </li> --}}
   @endif
   @if(Auth::user()->role == 'teacher')
   <li class="nav-item">
     <a class="nav-link" href="{{ url('courses/'.Auth::user()->id.'/0') }}"><i class="material-icons">import_contacts</i>
       <span class="nav-link-text">@lang('My Courses')</span></a>
   </li>
-  @endif
+  @endif 
+  
+  <li class="nav-item">
+    <a class="nav-link" href="{{url('user/'.Auth::user()->student_code)}}"><i class="material-icons">person</i> <span class="nav-link-text">@lang('Profile')</span></a>
+  </li> 
+  <li class="nav-item">
+    <a class="nav-link" href="{{url('user/config/change_password')}}"><i class="material-icons">key</i> <span class="nav-link-text">@lang('Change Password')</span></a>
+  </li> 
+  <li class="nav-item">
+    <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+    document.getElementById('logout-form').submit();"> 
+    <i class="material-icons">logout</i> <span class="nav-link-text">@lang('Logout')</span></a>
+    </a>
+
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    {{ csrf_field() }}
+    </form>
+  </li>
 </ul>

@@ -29,7 +29,7 @@
                 <li><a href="{{ route('login') }}" style="color: #000;">@lang('Login')</a></li>
                 @else
                 @if(\Auth::user()->role == 'student')
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{url('user/'.\Auth::user()->id.'/notifications')}}" class="nav-link nav-link-align-btn"
                         role="button">
                         <i class="material-icons text-muted">email</i>
@@ -40,7 +40,7 @@
                         <span class="label label-danger" style="vertical-align: middle;border-style: none;border-radius: 50%;width: 30px;height: 30px;">{{$mc}}</span>
                         @endif
                     </a>
-                </li>
+                </li> --}}
                 @endif
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle nav-link-align-btn" data-toggle="dropdown" role="button"
@@ -73,11 +73,11 @@
                             <a href="{{url('user/config/change_password')}}">@lang('Change Password')</a>
                         </li>
                         @if(env('APP_ENV') != 'production')
-                        <li>
+                        {{-- <li>
                             <a href="{{url('user/config/impersonate')}}">
                                 {{ app('impersonate')->isImpersonating() ? __('Leave Impersonation') : __('Impersonate') }}
                             </a>                                
-                        </li>
+                        </li> --}}
                         @endif
                         <li>
                             <a href="{{ route('logout') }}" onclick="event.preventDefault();

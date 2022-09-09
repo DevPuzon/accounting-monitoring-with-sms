@@ -24,6 +24,7 @@ class HomeController extends Controller
     public function index()
     {
         
+      return redirect('users/'.\Auth::user()->school->code.'/1/0');   
         if (\Auth::user()->role != 'master') {
             $minutes = 1440;// 24 hours = 1440 minutes
             $school_id = \Auth::user()->school->id;

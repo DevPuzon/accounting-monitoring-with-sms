@@ -4,9 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Payment;
 use Illuminate\Http\Request;
+use App\Services\Payment\PaymentService;
 
 class PaymentController extends Controller
 {
+    protected $paymentService;
+    protected $payment;
+
+    public function __construct(PaymentService $paymentService, Payment $payment){
+        $this->paymentService = $paymentService;
+        $this->payment = $payment;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,6 +25,15 @@ class PaymentController extends Controller
     {
         $receipts = Payment::where('custormer_id', auth()->user()->id)->get();
         return view('stripe.receipts',compact('receipts'));
+    }
+
+    public function list()
+    {
+        $payments = Payment::select("*")->orderBy('updated_at')
+        ->user() 
+        ->paginate(50);
+        // return view('stripe.payment-history',compact('payments')); 
+        return $this->paymentService->indexView('stripe.payment-history',$payments);
     }
     
     /**
