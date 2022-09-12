@@ -1,11 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Services\User\UserService;
+use App\Fee;
 
 use Illuminate\Http\Request;
 
 class FeeController extends Controller
 {
+    protected $userService; 
+    protected $fee; 
+
+    public function __construct(UserService $userService,Fee $fee ){
+        $this->userService = $userService; 
+        $this->fee = $fee; 
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +34,8 @@ class FeeController extends Controller
      */
     public function create()
     {
-        return view('fees.create');
+        $students = $this->userService->getAllStudents();
+        return view('fees.create',['students'=>$students]);
     }
 
     /**
@@ -37,13 +48,20 @@ class FeeController extends Controller
     {
         $request->validate([
             'fee_name' => 'required|string|max:255',
+            'balance' => 'required|numeric'
         ]);
         $fee = new \App\Fee;
         $fee->fee_name = $request->fee_name;
+        $fee->balance = $request->balance;
         $fee->school_id = \Auth::user()->school_id;
         $fee->user_id = \Auth::user()->id;
         $fee->save();
         return back()->with('status', __('Saved'));
+    }
+
+    public function balanceList(){ 
+        $fees = $this->fee->with(['payment'])->get();
+        return view('stripe.balance-list',['fees'=>$fees]);
     }
 
     /**

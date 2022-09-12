@@ -45,8 +45,8 @@ class UserService {
     public function updateStudentInfo($request, $id){
         $info = StudentInfo::firstOrCreate(['student_id' => $id]);
         $info->student_id = $id;
-        $info->session = (!empty($request->session)) ? $request->session : '3000';
-        $info->version = (!empty($request->language)) ? $request->language : '';
+        $info->session = (!empty($request->session)) ? $request->session : '';
+        $info->version = (!empty($request->version)) ? $request->version : '';
         $info->group = (!empty($request->group)) ? $request->group : '';
         $info->birthday = (!empty($request->birthday)) ? $request->birthday : '';
         $info->religion = (!empty($request->religion)) ? $request->religion : '';
@@ -117,6 +117,15 @@ class UserService {
             'current_page' => $users->currentPage(),
             'per_page' => $users->perPage(),
         ]);
+    }
+
+    public function getAllStudents(){
+        return $this->user->with(['section.class', 'school', 'studentInfo'])
+                ->where('code', auth()->user()->school->code)
+                ->student()
+                ->where('active', 1)
+                ->orderBy('name', 'asc')
+                ->get();
     }
 
     public function getStudents(){
@@ -208,7 +217,7 @@ class UserService {
         $tb->code = session('register_school_code');
         $tb->student_code = session('register_school_id').date('y').substr(number_format(time() * mt_rand(), 0, '', ''), 0, 5);
         $tb->gender = $request->gender;
-        // $tb->blood_group = $request->blood_group;
+        $tb->blood_group = $request->blood_group;
         $tb->nationality = (!empty($request->nationality)) ? $request->nationality : '';
         $tb->phone_number = $request->phone_number;
         $tb->pic_path = (!empty($request->pic_path)) ? $request->pic_path : '';
@@ -235,7 +244,7 @@ class UserService {
         $tb->about = (!empty($request->about)) ? $request->about : '';
         $tb->pic_path = (!empty($request->pic_path)) ? $request->pic_path : '';
         $tb->verified = 1;
-        // $tb->section_id = $request->section;
+        $tb->section_id = $request->section;
         $tb->save();
         return $tb;
     }

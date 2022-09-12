@@ -51,7 +51,7 @@
                     @endif
                     <form action="{{url('stripe/charge')}}" method="post" id="payment-form">
                         {{ csrf_field() }}
-                        <input type="hidden" id="stripe_key" name="stripe_key" value="{{env('STRIPE_KEY')}}">
+                        <input type="hidden" id="stripe_key" name="stripe_key" value="{{env('STRIPE_KEY')}}"> 
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title">@lang('Enter your credit card information')</h3>
@@ -61,7 +61,7 @@
                                 <label for="amount">@lang('Pay Fee For')</label>
                                 <select class="form-control" name="charge_field" required>
                                   @foreach ($fees_fields as $fees_field)
-                                    <option>{{$fees_field->fee_name}}</option>
+                                    <option value="{{$fees_field->id}}" >{{$fees_field->fee_name}}</option>
                                   @endforeach
                                 </select>
                               </div>

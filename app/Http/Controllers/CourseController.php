@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Course\SaveConfigurationRequest;
 use App\Http\Traits\GradeTrait;
 use App\Services\Course\CourseService;
+use Illuminate\Support\Facades\Validator;
 
 class CourseController extends Controller
 {
@@ -73,11 +74,24 @@ class CourseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { 
+
+      $validator = Validator::make($request->all(), [ 
+        'course_name' => 'required',
+        'class_id' => 'required',
+        'course_type' => 'required',
+        'course_time' => 'required',
+        'section_id' => 'required',
+        'units' => 'required|numeric',
+        'teacher_id' => 'required' 
+      ]);
+      if($validator->fails()){
+        return back()->with('error', __('Could not add the course. All fields are not filled up'));
+      }
       try{
         $this->courseService->addCourse($request);
       } catch (\Exception $ex){
-        return __('Could not add course.');
+        return __('Could not add course.'); 
       }
       return back()->with('status', __('Created'));
     }
@@ -130,6 +144,7 @@ class CourseController extends Controller
       $request->validate([
         'course_name' => 'required|string',
         'course_time' => 'required|string',
+        'units' => 'required|numeric'
       ]);
       $this->courseService->updateCourseInfo($id, $request);
       return back()->with('status', __('Saved'));

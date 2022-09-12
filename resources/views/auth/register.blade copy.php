@@ -20,11 +20,6 @@
         </div>
         @endif
         <div class="col-md-8" id="main-container">
-            @if (session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }} 
-            </div>
-            @endif
             @if (session('status'))
             <div class="alert alert-success">
                 {{ session('status') }}
@@ -40,8 +35,7 @@
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" id="registerForm" action="{{ url('register/'.session('register_role')) }}">
                         {{ csrf_field() }}
-                        <input type="hidden" value="3020" name="session" id="session">
-                        <input type="hidden" value="0" name="blood_group" id="blood_group">
+
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">* @lang('Full Name')</label>
 
@@ -236,11 +230,11 @@
                             </div>
                         </div>
                         @if(session('register_role', 'student') == 'student')
-                        <div class="form-group{{ $errors->has('version') ? ' has-error' : '' }}">
-                            <label for="version" class="col-md-4 control-label">* @lang('Language')</label>
+                        <div class="form-group{{ $errors->has('language') ? ' has-error' : '' }}">
+                            <label for="language" class="col-md-4 control-label">* @lang('Language')</label>
 
                             <div class="col-md-6">
-                                <select id="version" class="form-control" name="version">
+                                <select id="language" class="form-control" name="language">
                                     <option selected="selected">@lang('Tagalog')</option>
                                     <option>@lang('English')</option>
 									<option>@lang('Bicolano Viejo')</option>
@@ -249,9 +243,9 @@
 									<option>@lang('Albayano')</option>  
                                 </select>
 
-                                @if ($errors->has('version'))
+                                @if ($errors->has('language'))
                                 <span class="help-block">
-                                    <strong>{{ $errors->first('version') }}</strong>
+                                    <strong>{{ $errors->first('language') }}</strong>
                                 </span>
                                 @endif
                             </div>

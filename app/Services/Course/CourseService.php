@@ -36,6 +36,7 @@ class CourseService {
 
     public function updateCourseInfo($id, $request){
         $tb = Course::find($id);
+        $tb->units = $request->units;
         $tb->course_name = $request->course_name;
         $tb->course_time = $request->course_time;
         $tb->save();
@@ -62,6 +63,7 @@ class CourseService {
         $tb->course_time = $request->course_time;
         $tb->section_id = $request->section_id;
         $tb->teacher_id = $request->teacher_id;
+        $tb->units = $request->units;
         $tb->grade_system_name = '';
         $tb->quiz_count = 0;
         $tb->assignment_count = 0;

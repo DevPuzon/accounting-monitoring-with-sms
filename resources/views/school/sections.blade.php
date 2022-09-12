@@ -27,11 +27,11 @@
                                     <div class="col-md-4">
                                         <a class="panel-title collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$class->id}}" aria-expanded="false" aria-controls="collapse{{$class->id}}"><small><b>@lang('Click to view all Sections under this Class') <i class="material-icons">keyboard_arrow_down</i></b></small></a>
                                     </div>
-                                    @if(isset($_GET['course']) && $_GET['course'] == 1)
+                                    {{-- @if(isset($_GET['course']) && $_GET['course'] == 1)
                                     <div class="col-md-4">
                                         <a role="button" class="btn btn-info btn-xs" href="{{url('academic/syllabus/'.$class->id)}}"><i class="material-icons">visibility</i> @lang('View Syllabus for this Class')</a>
                                     </div>
-                                    @endif
+                                    @endif --}}
                                 </div>
                         </div>
                         <div id="collapse{{$class->id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{$class->id}}">
@@ -48,7 +48,7 @@
                                             @if(isset($_GET['course']) && $_GET['course'] == 1)
                                             <th>@lang('View Courses')</th>
                                             <th>@lang('View Students')</th>
-                                            <th>@lang('View Routines')</th>
+                                            {{-- <th>@lang('View Routines')</th> --}}
                                             @endif
                                         </tr>
                                     </thead>
@@ -94,9 +94,9 @@
                                             <td>
                                                 <a role="button" class="btn btn-danger btn-xs" href="{{url('section/students/'.$section->id.'?section=1')}}"><i class="material-icons">visibility</i> @lang('View Students of this section')</a>
                                             </td>
-                                            <td>
+                                            {{-- <td>
                                                 <a role="button" class="btn btn-primary btn-xs" href="{{url('academic/routine/'.$section->id)}}"><i class="material-icons">visibility</i> @lang('View Routines for this section')</a>
-                                            </td>
+                                            </td> --}}
                                             @endif
                                             </tr>
                                             @endif

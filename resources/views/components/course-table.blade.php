@@ -12,9 +12,10 @@
       @if(!$student)
         <th scope="col">@lang('Class Number')</th>
         <th scope="col">@lang('Section Number')</th>
-        <th scope="col">@lang('All Students')</th>
-        <th scope="col">@lang('Action')</th>
+        {{-- <th scope="col">@lang('All Students')</th>
+        <th scope="col">@lang('Action')</th> --}}
       @endif
+      {{-- <th scope="col">@lang('Units')</th> --}}
       @foreach ($courses as $course)
         @if(!$student && ($course->teacher_id == Auth::user()->id || Auth::user()->role == 'admin') && $course->exam_id != 0)
           <th scope="col">@lang('Give Marks')</th>
@@ -45,13 +46,12 @@
         <td>
           <a href="{{url('user/'.$course->teacher->student_code)}}">{{$course->teacher->name}}</a>
         </td>
-      @endif
-
+      @endif 
       @if(!$student)
         <td>{{$course->section->class->class_number}}</td>
         <td>{{$course->section->section_number}}</td>
 
-        @if($course->exam_id != 0)
+        {{-- @if($course->exam_id != 0)
           <td>
             <a href="{{url('course/students/'.$course->teacher_id.'/'.$course->id.'/'.$course->exam_id.'/'.$course->section->id)}}" role="button" class="btn btn-info btn-xs"><i class="material-icons">message</i> @lang('Message Students')</a>
           </td>
@@ -65,9 +65,10 @@
           </td>
         @else
           <td><small>@lang('Save under Exam to Take Attendance')</small></td>
-        @endif
+        @endif --}}
 
       @endif
+      {{-- <td>{{$course->units}}</td> --}}
 
       @if(!$student && ($course->teacher_id == Auth::user()->id || Auth::user()->role == 'admin') && $course->exam_id != 0)
         <td>

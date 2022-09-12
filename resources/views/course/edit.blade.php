@@ -18,6 +18,19 @@
             <div class="panel panel-default">
                 <form class="form-horizontal" action="{{url('edit/course/'.$course->id)}}" method="post">
                     {{ csrf_field() }}
+                    <div style="display: hidden;" class="form-group{{ $errors->has('units') ? ' has-error' : '' }}">
+                        <label for="units" class="col-md-4 control-label">@lang('Units')</label>
+
+                        <div class="col-md-6">
+                            <input id="units" type="number" class="form-control" name="units" value="{{ $course->units }}" required>
+
+                            @if ($errors->has('units'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('units') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
                     <div class="form-group{{ $errors->has('course_name') ? ' has-error' : '' }}">
                         <label for="course_name" class="col-md-4 control-label">@lang('Course Name')</label>
 

@@ -48,6 +48,12 @@
               </select>
             </div>
           </div>
+        <div  style="display: hidden;" class="form-group">
+          <label for="units{{$section->id}}" class="col-sm-2 control-label">@lang('Units')</label>
+          <div class="col-sm-10">
+            <input type="number" class="form-control" value="0" id="units{{$section->id}}" name="units" placeholder="@lang('0')"> 
+          </div>
+        </div>
         <div class="form-group">
           <label for="course_type{{$section->id}}" class="col-sm-2 control-label">@lang('Course Type')</label>
           <div class="col-sm-10">
