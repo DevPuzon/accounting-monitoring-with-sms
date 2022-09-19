@@ -32,7 +32,7 @@ class CreateAccountantRequest extends FormRequest
             'password' => 'required|string|min:6|confirmed',
             'gender' => 'required',
             'blood_group' => '',
-            'phone_number' => 'required|unique:users',
+            'phone_number' => 'required|numeric',
             'email' => 'sometimes|email|max:255|unique:users',
         ];
     }

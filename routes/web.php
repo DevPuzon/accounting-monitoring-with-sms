@@ -122,8 +122,9 @@ Route::middleware(['auth', 'admin'])->prefix('academic')->name('academic.')->gro
     // Route::get('users/update/{id}','UserController@destroy'); 
 });
 
+// Route::get('sendsms/{msg}/{to}', 'NotificationController@sendSMS'); 
+
 Route::middleware(['auth', 'student'])->group(function () {
-    Route::get('user/{id}/notifications', 'NotificationController@index');
     Route::get('academic/student/certificates', 'CertificateController@index');
 });
 

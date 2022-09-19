@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Notification as Notification;
 use App\Http\Resources\NotificationResource;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; 
 
 class NotificationController extends Controller
 {
@@ -125,4 +125,7 @@ class NotificationController extends Controller
         'status' => 'error'
       ]);
     }
+
+
+    
 }

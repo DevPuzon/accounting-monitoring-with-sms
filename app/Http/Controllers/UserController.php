@@ -24,6 +24,9 @@ use App\Events\UserRegistered;
 use App\Events\StudentInfoUpdateRequested;
 use Illuminate\Support\Facades\Log;
 use App\Services\User\UserService;
+use App\Services\Notification\NotificationService;
+
+
 /**
  * Class UserController
  * @package App\Http\Controllers
@@ -31,10 +34,13 @@ use App\Services\User\UserService;
 class UserController extends Controller
 {
     protected $userService;
+    protected $notificationService;
     protected $user;
 
-    public function __construct(UserService $userService, User $user){
+    public function __construct(UserService $userService, User $user,
+    NotificationService $notificationService){
         $this->userService = $userService;
+        $this->notificationService = $notificationService;
         $this->user = $user;
     }
     /**
@@ -187,6 +193,7 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
+        $request->phone_number = str_replace("+63","",$request->phone_number);
         DB::transaction(function () use ($request) {
             $password = $request->password;
             $tb = $this->userService->storeStudent($request);
@@ -203,7 +210,22 @@ class UserController extends Controller
             }
         });
 
-        return back()->with('status', __('Saved'));
+         
+       $sms = $this->notificationService->sendSMS('Hi '.$request->name.',
+
+       Congratulations! You have successfully created the account. You may use this credential for your account.
+       
+       Email: '.$request->email.'
+       Password: '.$request->password.'
+       
+       Login page:'.url('login').'
+       
+       Please feel free to email us if you have any queries.
+       
+       Regards, 
+       SLTFCI Admin',$request->phone_number);
+
+        return back()->with('status', __('Saved' ));
     }
 
     /**

@@ -33,7 +33,7 @@ class CreateLibrarianRequest extends FormRequest
             'password' => 'required|string|min:6|confirmed',
             'gender' => 'required',
             'blood_group' => 'required',
-            'phone_number' => 'required|unique:users',
+            'phone_number' => 'required|numeric',
         ];
     }
 }
