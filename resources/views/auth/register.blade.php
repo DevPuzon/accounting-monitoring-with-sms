@@ -40,8 +40,6 @@
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" id="registerForm" action="{{ url('register/'.session('register_role')) }}">
                         {{ csrf_field() }}
-                        <input type="hidden" value="3020" name="session" id="session">
-                        <input type="hidden" value="0" name="blood_group" id="blood_group">
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">* @lang('Full Name')</label>
 
@@ -108,7 +106,8 @@
                             </div>
                         </div>
                         @if(session('register_role', 'student') == 'student')
-                         <div class="form-group{{ $errors->has('section') ? ' has-error' : '' }}">
+                        <input type="hidden" value="0" name="section" id="section">
+                         {{-- <div class="form-group{{ $errors->has('section') ? ' has-error' : '' }}">
                             <label for="section" class="col-md-4 control-label">* @lang('Class and Section')</label>
 
                             <div class="col-md-6">
@@ -125,7 +124,7 @@
                                 </span>
                                 @endif
                             </div>
-                        </div> 
+                        </div>  --}}
                         <div class="form-group{{ $errors->has('birthday') ? ' has-error' : '' }}">
                             <label for="birthday" class="col-md-4 control-label">* @lang('Birthday')</label>
 
@@ -181,6 +180,7 @@
                             </div>
                         </div>
                         @endif
+                        <input type="hidden" value="0" name="blood_group" id="blood_group">
                         {{-- <div class="form-group{{ $errors->has('blood_group') ? ' has-error' : '' }}">
                             <label for="blood_group" class="col-md-4 control-label">@lang('Blood Group')</label>
 
@@ -256,6 +256,8 @@
                                 @endif
                             </div>
                         </div>
+                        
+                        <input type="hidden" value="3020" name="session" id="session">
                         {{-- <div class="form-group{{ $errors->has('session') ? ' has-error' : '' }}">
                             <label for="session" class="col-md-4 control-label">* @lang('Session')</label>
 
@@ -517,14 +519,14 @@
                         </div> --}}
                         @endif
 
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label class="col-md-4 control-label">@lang('Upload Profile Picture')</label>
                             <div class="col-md-6">
                                 <input type="hidden" id="picPath" name="pic_path">
                                 @component('components.file-uploader',['upload_type'=>'profile'])
                                 @endcomponent
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
@@ -555,5 +557,9 @@
     $('#registerBtn').click(function () {
         $("#registerForm").submit();
     });
+
+    // $(document).on('submit', '#registerForm', function(event) {
+    // event.preventDefault();  
+    // });
 </script>
 @endsection

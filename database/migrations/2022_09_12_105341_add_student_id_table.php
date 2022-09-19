@@ -15,8 +15,7 @@ class AddStudentIdTable extends Migration
     {
         Schema::table('fees', function (Blueprint $table) {
             //
-            $table->float('balance');
-            $table->integer('student_id');
+            $table->float('balance'); 
         });
     }
 

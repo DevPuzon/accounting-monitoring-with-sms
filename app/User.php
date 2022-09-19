@@ -19,7 +19,8 @@ class User extends Model implements
     AuthorizableContract,
     CanResetPasswordContract
 {
-    use Authenticatable, Authorizable, CanResetPassword, HasApiTokens, Notifiable, Impersonate, Billable;
+    use Authenticatable, Authorizable, CanResetPassword, 
+    HasApiTokens, Notifiable, Impersonate, Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -27,7 +28,9 @@ class User extends Model implements
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role', 'code',/* school code*/'student_code', 'active', 'verified', 'school_id', 'section_id', 'address', 'about', 'phone_number', 'blood_group', 'nationality', 'gender', 'department_id',
+        'name', 'email', 'password', 'role', 'code',/* school code*/'student_code', 'active', 'verified', 'school_id', 
+        /*'section_id',*/ 
+        'address', 'about', 'phone_number', 'blood_group', 'nationality', 'gender', 'department_id',
     ];
 
     /**
@@ -70,6 +73,7 @@ class User extends Model implements
     public function notifications(){
         return $this->hasMany('App\Notification','student_id');
     }
+     
 
     public function hasRole(string $role): bool
     {

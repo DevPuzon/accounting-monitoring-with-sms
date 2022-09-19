@@ -130,10 +130,13 @@
   
   {{-- <li class="nav-item">
     <a class="nav-link" href="{{ url('fees/all') }}"><i class="material-icons">developer_board</i> <span class="nav-link-text">@lang('Generate Form')</span></a>
-  </li> 
+  </li>  --}}
   <li class="nav-item">
     <a class="nav-link" href="{{ url('fees/create') }}"><i class="material-icons">note_add</i> <span class="nav-link-text">@lang('Add Fee Field')</span></a>
-  </li> --}}
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url('fees/generated-form') }}"><i class="material-icons">receipt</i> <span class="nav-link-text">@lang('Generated Forms')</span></a>
+  </li>
   {{-- <li class="nav-item dropdown">
     <a role="button" href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
         class="material-icons">monetization_on</i> <span class="nav-link-text">@lang('Fees Generator')</span> <i class="material-icons pull-right">keyboard_arrow_down</i></a>
@@ -209,12 +212,12 @@
   {{-- <li class="nav-item">
     <a class="nav-link" href="{{url('stripe/charge')}}"><i class="material-icons">payment</i> <span class="nav-link-text">@lang('Payment')</span></a>
   </li> --}}
-  {{-- <li class="nav-item">
+  <li class="nav-item">
     <a class="nav-link" href="{{url('stripe/balance-list')}}"><i class="material-icons">payment</i> <span class="nav-link-text">@lang('Balance List')</span></a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="{{url('stripe/receipts')}}"><i class="material-icons">receipt</i> <span class="nav-link-text">@lang('Receipt')</span></a>
-  </li> --}}
+    <a class="nav-link" href="{{url('stripe/receipts')}}"><i class="material-icons">receipt</i> <span class="nav-link-text">@lang('Transaction History')</span></a>
+  </li>  
   {{-- <li class="nav-item">
     <a class="nav-link" href="{{url('academic/student/certificates')}}"><i class="material-icons">verified</i> <span class="nav-link-text">Certificates</span></a>
   </li> --}}
@@ -257,12 +260,12 @@
   </li>
   @endif 
   
-  {{-- <li class="nav-item">
+  <li class="nav-item">
     <a class="nav-link" href="{{url('user/'.Auth::user()->student_code)}}"><i class="material-icons">person</i> <span class="nav-link-text">@lang('Profile')</span></a>
   </li> 
   <li class="nav-item">
     <a class="nav-link" href="{{url('user/config/change_password')}}"><i class="material-icons">key</i> <span class="nav-link-text">@lang('Change Password')</span></a>
-  </li>  --}}
+  </li> 
   <li class="nav-item">
     <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
     document.getElementById('logout-form').submit();"> 

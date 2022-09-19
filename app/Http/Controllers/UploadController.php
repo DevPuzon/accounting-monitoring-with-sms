@@ -66,7 +66,7 @@ class UploadController extends Controller {
       $tb->title = $request->title;
       $tb->active = 1;
       $tb->school_id = auth()->user()->school_id;
-      $tb->section_id = $request->section_id;
+      $tb->section_id = $request->section_id ? $request->section_id : 0;
       $tb->user_id = auth()->user()->id;
       $tb->save();
     } else if($request->upload_type == 'syllabus'){

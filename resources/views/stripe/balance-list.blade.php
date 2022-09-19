@@ -57,7 +57,7 @@ background-color: #fefde5 !important;
                                     <th>@lang('Amount')</th> 
                                 </tr>
                             </thead> 
-                            <tbody>
+                            <tbody>  
                                 @foreach ($fees as $fee)
                                     <tr
                                     @if(!($fee->payment))
@@ -83,7 +83,7 @@ background-color: #fefde5 !important;
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">@lang('All Sections of Class') {{$fee->name}}</h4>
+                <h4 class="modal-title" id="myModalLabel">@lang('Payment') {{$fee->name}}</h4>
             </div>
             <div class="modal-body">   
                 

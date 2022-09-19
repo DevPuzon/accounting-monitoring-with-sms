@@ -1,14 +1,16 @@
 {{$users->links()}}
+ 
+
 <div class="table-responsive">
 <table class="table table-bordered table-data-div table-condensed table-striped table-hover">
   <thead>
     <tr>
       <th scope="col">#</th>
-      @if(Auth::user()->role == 'admin')
+      {{-- @if(Auth::user()->role == 'admin')
         @if (!Session::has('section-attendance'))
         <th scope="col">@lang('Action')</th>
         @endif
-      @endif
+      @endif --}}
       <th scope="col">@lang('Code')</th>
       <th scope="col">@lang('Full Name')</th>
       @foreach ($users as $user)
@@ -46,6 +48,11 @@
       {{-- <th scope="col">@lang('Blood')</th> --}}
       <th scope="col">@lang('Phone')</th>
       <th scope="col">@lang('Address')</th>
+      
+      @if(Auth::user()->role == 'admin'  )
+      <th scope="col">@lang('Actions')</th>
+      @endif
+
       @endif
     </tr>
   </thead>
@@ -54,11 +61,11 @@
     <tr>
       <th scope="row">{{ ($current_page-1) * $per_page + $key + 1 }}</th>
       @if(Auth::user()->role == 'admin')
-        @if (!Session::has('section-attendance'))
+        {{-- @if (!Session::has('section-attendance'))
         <td>
           <a class="btn btn-xs btn-danger" href="{{url('edit/user/'.$user->id)}}">@lang('Edit')</a>
         </td>
-        @endif
+        @endif --}}
       @endif
       <td><small>{{$user->student_code}}</small></td>
       <td>
@@ -140,6 +147,27 @@
       {{-- <td><small>{{$user->blood_group}}</small></td> --}}
       <td><small>{{$user->phone_number}}</small></td>
       <td><small>{{$user->address}}</small></td>
+          
+      @if(Auth::user()->role == 'admin'  )
+      <td style="display:flex; column-gap:7px;">
+        <a class="btn btn-xs btn-sm btn-success" href="{{url('edit/user/'.$user->id)}}" ><i class="material-icons">edit</i> </a>  
+
+        {{-- <form class="form-horizontal" action="{{url('user/delete/'.$user->student_code)}}" method="GET">
+          {{ csrf_field() }} 
+          @csrf @method('DELETE')
+          <button class="btn btn-xs btn-sm btn-danger" 
+          type="submit" ><i class="material-icons">delete</i> </button>
+        </form> --}}
+        <form class="form-horizontal" id="delete-form-{{$user->id}}" 
+            + action="{{url('user/delete/'.$user->id)}}"
+            method="post">
+          @csrf @method('DELETE')
+          <button class="btn btn-xs btn-sm btn-danger" 
+          type="submit" ><i class="material-icons">delete</i> </button>
+      </form>
+      </td>
+      @endif
+
       @endif
     </tr>
     @endforeach

@@ -23,7 +23,9 @@
       @if ($user->role == 'teacher' && $user->section_id > 0)
         <small>@lang('Class Teacher of Section'): <span class="label label-info">{{ucfirst($user->section->section_number)}}</span></small>
       @endif
-      
+      <a href="{{url('edit/user/'.$user->id)}}" class="btn btn-xs btn-success pull-right" 
+        style="margin-left:7px"  role="button"><i class="material-icons">edit</i> @lang('Edit')</a>
+
       @if($user->role == "student")
        <button class="btn btn-xs btn-success pull-right" role="button" id="btnPrint"><i class="material-icons">print</i> @lang('Print Profile')</button>
        <div class="visible-print-block" id="profile-content">

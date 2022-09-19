@@ -54,8 +54,12 @@ Route::get('grades/{student_id}', 'GradeController@index')->middleware(['auth', 
 Route::middleware(['auth', 'accountant'])->prefix('fees')->name('fees.')->group(function () {
     Route::get('all', 'FeeController@index');
     Route::get('create', 'FeeController@create');
+    Route::get('generated-form', 'FeeController@generatedForm');
     Route::post('create', 'FeeController@store');
+    
+    Route::post('generated-form/import', 'FeeController@import');
 });
+
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/settings', 'SettingController@index')->name('settings.index');
@@ -76,6 +80,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('users/{school_code}/{student_code}/{teacher_code}', 'UserController@index');
     Route::get('users/{school_code}/{role}', 'UserController@indexOther');
+
     Route::get('user/{user_code}', 'UserController@show');
     Route::get('user/config/change_password', 'UserController@changePasswordGet');
     Route::post('user/config/change_password', 'UserController@changePasswordPost');
@@ -83,6 +88,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('courses/{teacher_id}/{section_id}', 'CourseController@index');
 });
+
+Route::middleware(['auth','notstudent'])->group(function () { 
+    Route::get('users/{school_code}/{student_code}/{teacher_code}', 'UserController@index');
+    Route::get('users/{school_code}/{role}', 'UserController@indexOther'); 
+});
+
 
 Route::middleware(['auth', 'teacher'])->group(function () {
     Route::get('course/students/{teacher_id}/{course_id}/{exam_id}/{section_id}', 'CourseController@course');
@@ -107,6 +118,8 @@ Route::middleware(['auth', 'admin'])->prefix('academic')->name('academic.')->gro
         Route::get('certificate/{id}', 'CertificateController@update');
         Route::get('routine/{id}', 'RoutineController@update');
     });
+
+    // Route::get('users/update/{id}','UserController@destroy'); 
 });
 
 Route::middleware(['auth', 'student'])->group(function () {
@@ -180,6 +193,9 @@ Route::middleware(['auth', 'master'])->group(function () {
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
+    
+    Route::delete('user/delete/{id}','UserController@destroy'); 
+    
     Route::prefix('school')->name('school.')->group(function () {
         Route::post('add-class', 'MyclassController@store');
         Route::post('add-section', 'SectionController@store');
@@ -223,10 +239,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('edit/course/{id}', 'CourseController@updateNameAndTime');
 });
 
-//use PDF;
-Route::middleware(['auth', 'master.admin'])->group(function () {
+Route::middleware(['auth', 'iam_user'])->group(function () {
     Route::get('edit/user/{id}', 'UserController@edit');
     Route::post('edit/user', 'UserController@update');
+});
+//use PDF;
+Route::middleware(['auth', 'master.admin'])->group(function () { 
     Route::post('upload/file', 'UploadController@upload');
     Route::post('users/import/user-xlsx', 'UploadController@import');
     Route::get('users/export/students-xlsx', 'UploadController@export');

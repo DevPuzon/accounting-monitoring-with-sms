@@ -19,9 +19,9 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
             $role = Auth::user()->role;
-            if($role == 'student'){
-                return redirect('stripe/charge');
-            }
+            // if($role == 'student'){
+            //     return redirect('stripe/charge');
+            // }
             return redirect('/home');
         }
 

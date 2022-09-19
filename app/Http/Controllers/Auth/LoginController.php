@@ -36,9 +36,9 @@ class LoginController extends Controller
     public function redirectTo()
     {
         $role = Auth::user()->role;
-        if($role == 'student'){
-            return 'stripe/charge';
-        }
+        // if($role == 'student'){
+        //     return 'stripe/charge';
+        // }
         return ($role == 'master')?'/masters':'/home';
     }
 

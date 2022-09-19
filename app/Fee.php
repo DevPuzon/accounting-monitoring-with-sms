@@ -9,7 +9,7 @@ class Fee extends Model
     //
     public function student()
     {
-        return $this->belongsTo('App\Student');
+        return $this->belongsTo('App\StudentInfo');
     }
 
     public function user()
@@ -18,6 +18,12 @@ class Fee extends Model
     }
 
     public function payment(){
-        return $this->hasOne('App\Payment','charged_id');
+        return $this->hasOne('App\Payment','charged_id')
+        ->where('user_id',\Auth::user()->id);
     }
+
+    // public function paidByUser($query,$user_id){
+    //     return $query->where("user_id",$user)
+    // }
+
 }

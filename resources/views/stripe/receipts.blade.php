@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Receipts'))
+@section('title', __('Transaction History'))
 
 @section('content')
 <div class="container-fluid">
@@ -10,7 +10,7 @@
         </div>
         <div class="col-md-10" id="main-container">
             <div class="panel panel-default">
-                <div class="page-panel-title">@lang('Invoices')
+                <div class="page-panel-title">@lang('Transaction History')
               </div>
                 <div class="panel-body">
                     @if (session('status'))

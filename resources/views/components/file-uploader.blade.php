@@ -32,7 +32,9 @@
             @endforeach
         </select>
     @endif
-  <input class="form-control-sm" id="fileupload" type="file"  accept=".xlsx,.xls,.doc,.docx,.ppt,.pptx,.txt,.pdf,image/png,image/jpeg" name="file" data-url="{{url('upload/file')}}">
+  <input class="form-control-sm" id="fileupload" type="file"  
+  accept=".xlsx,.xls,.doc,.docx,.ppt,.pptx,.txt,.pdf,image/png,image/jpeg" name="file" 
+  data-url="{{url('upload/file')}}">
   <br/>
   <div class="progress">
     <div class="progress-bar progress-bar-striped active" id="up-prog-info" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
@@ -50,22 +52,23 @@
 $(function () {
     var jqXHR = null;
     var uploadButton = $('<button/>')
+            .attr("id", "btn_upload") 
             .addClass('btn btn-primary btn-sm')
             .text(@json( __('Upload')))
             .on('click', function () {
-                @if($upload_type != 'profile')
-                    if(!$('#upload-title').val()){
-                        swal({
-                            title:@json( __('File needs a Title')),
-                            type:'info',
-                            showCloseButton: true,
-                        });
-                        return false;
-                    }
-                @endif
-                var $this = $(this),
+                    @if($upload_type != 'profile')
+                        if(!$('#upload-title').val()){
+                            swal({
+                                title:@json( __('File needs a Title')),
+                                type:'info',
+                                showCloseButton: true,
+                            });
+                            return false;
+                        }
+                    @endif
+                    var $this = $(this),
                     data = $this.data();
-                $('#fileupload').hide();
+                    $('#fileupload').hide();
                     var acceptFileTypes = /application\/(pdf|xlsx|xls|doc|docx|ppt|pptx|txt)|image\/(png|jpeg)$/i;
                     var filesSize = 50 * 1024 * 1024;
                     var file = data.originalFiles[0];
@@ -105,6 +108,7 @@ $(function () {
                         });
                     }
             });
+
     $('#fileupload').fileupload({
         dataType: 'json',
         add: function (e, data) {
@@ -137,12 +141,26 @@ $(function () {
         if(error) {
             $('#errorAlert').text(error);
         } else {
-            data.context.html('<div>' + @json( __('Upload finished.')) + '</div>');
+            // data.context.html('<div>' + @json( __('Upload finished.')) + '</div>');
             $('button.cancelBtn').hide();
             $('#errorAlert').empty();
+            $('#errorAlert').hide();
             @if($upload_type == 'profile')
             $('#picPath').val(path);
-            $('#my-profile').attr('src', imgUrlpath);
+            for(const a of document.getElementsByClassName("img-thumbnail")){
+                a.src = imgUrlpath;
+            } $('.progress-bar').attr(
+                'aria-valuenow',
+                0
+            ).css('width', 0 + '%'); 
+            $('#up-prog-info').text("0%");
+            $('#fileupload').show();
+            $('#fileInfo').remove();
+
+            // $('#my-profile').attr('src', imgUrlpath);
+            // setTimeout(() => {
+            //     location.reload();
+            // }, 1000);
             @endif
         }
     })

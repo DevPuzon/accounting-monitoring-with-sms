@@ -15,4 +15,8 @@ class Payment extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function fee()
+    {
+        return $this->hasOne('App\Fee','id');
+    }
 }

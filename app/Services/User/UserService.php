@@ -244,7 +244,7 @@ class UserService {
         $tb->about = (!empty($request->about)) ? $request->about : '';
         $tb->pic_path = (!empty($request->pic_path)) ? $request->pic_path : '';
         $tb->verified = 1;
-        $tb->section_id = $request->section;
+        $tb->section_id = $request->section ? $request->section : 0;
         $tb->save();
         return $tb;
     }

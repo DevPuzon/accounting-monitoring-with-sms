@@ -420,10 +420,16 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        // return ($this->user->destroy($id))?response()->json([
-      //   'status' => 'success'
-      // ]):response()->json([
-      //   'status' => 'error'
-      // ]);
+        // return (User::where('id', $id)->firstorfail()->delete())?response()->json([
+        // 'status' => 'success'
+        // ]):response()->json([
+        // 'status' => 'error'
+        // ]);
+
+        if((User::where('id', $id)->firstorfail()->delete())){
+            return back()->with('status', __('Deleted')); 
+        }else{
+            return back()->with('error', __('Encountered an error')); 
+        }
     }
 }
