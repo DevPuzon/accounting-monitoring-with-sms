@@ -30,7 +30,9 @@ class FirstStudentSheetImport implements OnEachRow, WithHeadingRow
 
         // $this->class = (string) $row[__('class')];
         // $this->section = (string) $row[__('section')];
-
+        if(!$row[__('name')]){
+            return;
+        }
         $user = [
             'name'           => $row[__('name')],
             'email'          => $row[__('email')],
@@ -49,7 +51,7 @@ class FirstStudentSheetImport implements OnEachRow, WithHeadingRow
             // 'blood_group'    => $row[__('blood_group')],
             'nationality'    => $row[__('nationality')],
             'gender'         => $row[__('gender')],
-        ];
+        ]; 
 
         $tb = create(User::class, $user);
 

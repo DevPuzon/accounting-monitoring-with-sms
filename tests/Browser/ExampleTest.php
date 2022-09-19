@@ -12,7 +12,7 @@ class ExampleTest extends DuskTestCase
     public function it_shows_app_name() {
         $this->browse(function (Browser $browser) {
             $browser->visit('/')
-                    ->assertSee('UnifiedTransform');
+                    ->assertSee('SLTCFI');
         });
     }
 }

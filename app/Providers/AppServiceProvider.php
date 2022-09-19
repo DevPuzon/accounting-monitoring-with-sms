@@ -30,6 +30,10 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Laravel\Dusk\DuskServiceProvider::class);
             $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
             $this->app->register(\Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class);
+        }else{
+            $this->app->bind('path.public',function(){
+            return base_path('public_html');
+            });
         }
     }
 }
