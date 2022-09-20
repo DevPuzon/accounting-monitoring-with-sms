@@ -5,9 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Payment;
 use App\Fee;
+use App\Services\Notification\NotificationService;
 
 class CashierController extends Controller
 {
+    protected $notificationService; 
+
+    public function __construct(NotificationService $notificationService){ 
+        $this->notificationService = $notificationService; 
+    }
+
     public function index(){
         $fees_fields = Fee::bySchool(auth()->user()->school_id)->get();
         return view('stripe.payment', compact('fees_fields'));
@@ -30,7 +37,7 @@ class CashierController extends Controller
             $user->createAsStripeCustomer([
                 'source' =>  $stripeToken 
             ]);
-        }
+        } 
         try {
             $transaction = $user->charge($amount,null);
             $payment = new Payment;
@@ -43,7 +50,20 @@ class CashierController extends Controller
             $payment->user_id = $request->user_id;
             
             $payment->save();
-            return back()->with('status',__('Payment Successful'));
+
+            $sms = $this->notificationService->sendSMS('Hi '.$user->name.',
+
+            Thank you for paying the '.$charge_for->fee_name.' for '.$request->amount.' pesos only.
+            To view the transaction, please proceed to this link '.url('stripe/receipts').'
+
+            Remember to keep this message for your own.
+            Please feel free to email us if you have any queries.
+            
+            Regards, 
+            SLTFCI Admin',$user->phone_number);
+     
+
+            return back()->with('status',__('Payment Successful'.json_encode($sms)));
         } catch (\Exception $e) {
             return back()->with('error',__('Payment Unsuccessful'));
         } 

@@ -15,10 +15,16 @@ class NotificationService {
 
     
     public function sendSMS($msg,$to){
+        if(!env('IS_SEND_SMS', false)){
+          return response()->json([
+            'IS_SEND_SMS' => env('IS_SEND_SMS', false)
+          ]);
+        }
+
         $curl = curl_init();
   
         curl_setopt_array($curl, array(
-          CURLOPT_URL => 'https://api.twilio.com/2010-04-01/Accounts/ACbb23b55c8e55d6dd8aed6b374715f16f/Messages',
+          CURLOPT_URL => 'https://api.twilio.com/2010-04-01/Accounts/'.env('TWILIO_SID').'/Messages',
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => '',
           CURLOPT_MAXREDIRS => 10,
@@ -28,7 +34,7 @@ class NotificationService {
           CURLOPT_CUSTOMREQUEST => 'POST',
           CURLOPT_POSTFIELDS => 'Body='.urlencode($msg).'&From=%2B19286934249&To=%2B63'.$to.'',
           CURLOPT_HTTPHEADER => array(
-            'Authorization: Basic QUNiYjIzYjU1YzhlNTVkNmRkOGFlZDZiMzc0NzE1ZjE2ZjpiNjhlZGM1N2I3ZjVmZGQyZGJjMGIyMWY2MTBlMzU2MQ==',
+            'Authorization: Basic '.env('TWILIO_AUTH'),
             'Content-Type: application/x-www-form-urlencoded'
           ),
         ));
@@ -39,9 +45,11 @@ class NotificationService {
         return ($response)?response()->json([
           'status' => 'success',
           'response'=>json_encode($response),
+          'isSendSMS' => env('IS_SEND_SMS', false),
           'message'=>$msg,
           'to'=>$to,
         ]):response()->json([
+          'isSendSMS' => env('IS_SEND_SMS', false),
           'status' => 'error'
         ]);
     }

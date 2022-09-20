@@ -10,6 +10,7 @@ use App\Imports\TeachersImport;
 use App\Exports\StudentsExport;
 use App\Exports\TeachersExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Services\Notification\NotificationService;
 /*
  * jQuery File Upload Plugin PHP Class
  * https://github.com/blueimp/jQuery-File-Upload
@@ -22,6 +23,12 @@ use Maatwebsite\Excel\Facades\Excel;
  */
 
 class UploadController extends Controller {
+
+  protected $notificationService; 
+
+  public function __construct(NotificationService $notificationService){ 
+      $this->notificationService = $notificationService; 
+  }
 
   public function upload(Request $request){
 
@@ -124,7 +131,7 @@ class UploadController extends Controller {
         try{
 
           if($request->type == 'student')
-            Excel::import(new StudentsImport, $path);
+            Excel::import(new StudentsImport($this->notificationService), $path);
           else if($request->type == 'teacher')
             Excel::import(new TeachersImport, $path);
             

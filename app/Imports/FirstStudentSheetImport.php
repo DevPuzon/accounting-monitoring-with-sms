@@ -10,9 +10,16 @@ use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Row;
 use Maatwebsite\Excel\Concerns\OnEachRow;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use App\Services\Notification\NotificationService;
 
 class FirstStudentSheetImport implements OnEachRow, WithHeadingRow
 {
+    protected $notificationService; 
+
+    public function __construct(NotificationService $notificationService){ 
+        $this->notificationService = $notificationService; 
+    }
+
     protected $class, $section;
     /**
     * @param array $row
@@ -76,6 +83,21 @@ class FirstStudentSheetImport implements OnEachRow, WithHeadingRow
             'mother_annual_income' => $row[__('mother_annual_income')] ?? '',
             'user_id' => auth()->user()->id,
         ];
+
+        
+       $sms = $this->notificationService->sendSMS('Hi '.$row[__('name')].',
+
+       Congratulations! You have successfully created the account. You may use this credential for your account.
+       
+       Email: '.$row[__('email')].'
+       Password: '.$row[__('password')].'
+       
+       Login page:'.url('login').'
+       
+       Please feel free to email us if you have any queries.
+       
+       Regards, 
+       SLTFCI Admin',$row[__('phone_number')]);
         
         create(StudentInfo::class, $student_info);
     }
