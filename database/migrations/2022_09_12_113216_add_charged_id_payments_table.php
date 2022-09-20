@@ -15,7 +15,7 @@ class AddChargedIdPaymentsTable extends Migration
     {
         Schema::table('payments', function (Blueprint $table) {
             //
-            $table->integer('charged_id');
+            $table->integer('fee_id');
         });
     }
 

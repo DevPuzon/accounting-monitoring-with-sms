@@ -18,8 +18,8 @@ class Fee extends Model
     }
 
     public function payment(){
-        return $this->hasOne('App\Payment','charged_id')
-        ->where('user_id',\Auth::user()->id);
+        return $this->hasOne('App\Payment','fee_id');
+        // ->where('user_id',$user_id);
     }
 
     // public function paidByUser($query,$user_id){

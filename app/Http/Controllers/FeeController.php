@@ -42,6 +42,13 @@ class FeeController extends Controller
         $students = $this->userService->getAllStudents();
         return view('fees.create',['students'=>$students]);
     }
+    
+    public function editShow($id)
+    {
+        $students = $this->userService->getAllStudents();
+        
+        return view('fees.edit',['students'=>$students,'fee'=>$this->fee::where("id",$id)->first()]);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -63,14 +70,65 @@ class FeeController extends Controller
         $fee->save();
         return back()->with('status', __('Saved'));
     }
+    
+    public function update(Request $request)
+    {
+        $request->validate([
+            'fee_name' => 'required|string|max:255',
+            'balance' => 'required|numeric'
+        ]);
+        $fee = Fee::find($request->id); 
+        $fee->id = $request->id;
+        $fee->fee_name = $request->fee_name;
+        $fee->balance = $request->balance;
+        $fee->user_id = $request->student_id; 
+        $fee->save();
+        return back()->with('status', __('Updated'));
+    }
 
-    public function balanceList(){ 
+    public function balanceList($user_id){ 
+        if(\Auth::user()->role == "student" && \Auth::user()->id != $user_id){
+            return redirect("/home"); 
+        }
         $fees = $this->fee
-                ->with(['payment' ])   
-                ->where('user_id',\Auth::user()->id)
+                ->with(['payment'=>function($q) use ($user_id){
+                    $q->where('user_id',$user_id);
+                }])   
+                ->where('user_id',$user_id)
                 ->orWhere('user_id',0)
                 ->get();
-        return view('stripe.balance-list',['fees'=>$fees]);
+        return view('stripe.balance-list',['fees'=>$fees,'user_id'=>$user_id]);
+    }
+    
+    public function balanceById($user_id,$fee_id){ 
+        if(\Auth::user()->role == "student" && \Auth::user()->id != $user_id){
+            return redirect("/home"); 
+        }
+        $fee = $this->fee
+                ->where('id',$fee_id)
+                ->with(['payment'=>function($q) use ($user_id){
+                    $q->where('user_id',$user_id);
+                }])   
+                ->where('user_id',$user_id)
+                ->orWhere('user_id',0)
+                ->first();
+        return view('stripe.edit-balance',['fee'=>$fee,'user_id'=>$user_id]);
+    }
+ 
+    public function paidBalanceById(Request $request){ 
+        if(\Auth::user()->role == "student" && \Auth::user()->id != $user_id){
+            return redirect("/home"); 
+        }
+        
+        $payment = new Payment();
+        $payment->fee_id = $request->fee_id ;
+        $payment->user_id = $request->user_id ;
+        $payment->reference_id = $request->reference_id ;
+        $payment->payment_method = $request->payment_method ;
+        $payment->payment_status = 1; 
+        $payment->save();
+
+        return back()->with('status', __('Paid successfully')); 
     }
  
     public function generatedForm(){ 
@@ -102,19 +160,7 @@ class FeeController extends Controller
     {
         //
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
+ 
     /**
      * Remove the specified resource from storage.
      *
@@ -122,8 +168,12 @@ class FeeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    { 
+        if((Fee::where('id', $id)->firstorfail()->delete())){
+            return back()->with('status', __('Deleted')); 
+        }else{
+            return back()->with('error', __('Encountered an error')); 
+        }
     }
 
 

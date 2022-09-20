@@ -150,14 +150,8 @@
           
       @if(Auth::user()->role == 'admin'  )
       <td style="display:flex; column-gap:7px;">
-        <a class="btn btn-xs btn-sm btn-success" href="{{url('edit/user/'.$user->id)}}" ><i class="material-icons">edit</i> </a>  
-
-        {{-- <form class="form-horizontal" action="{{url('user/delete/'.$user->student_code)}}" method="GET">
-          {{ csrf_field() }} 
-          @csrf @method('DELETE')
-          <button class="btn btn-xs btn-sm btn-danger" 
-          type="submit" ><i class="material-icons">delete</i> </button>
-        </form> --}}
+        <a class="btn btn-xs btn-sm btn-success" href="{{url('stripe/balance-list/'.$user->id)}}" ><i class="material-icons">payment</i> </a>   
+        <a class="btn btn-xs btn-sm btn-success" href="{{url('edit/user/'.$user->id)}}" ><i class="material-icons">edit</i> </a>   
         <form class="form-horizontal" id="delete-form-{{$user->id}}" 
             + action="{{url('user/delete/'.$user->id)}}"
             method="post">

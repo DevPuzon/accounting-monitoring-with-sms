@@ -48,7 +48,8 @@ class UserService {
         $info->session = (!empty($request->session)) ? $request->session : '';
         $info->version = (!empty($request->version)) ? $request->version : '';
         $info->group = (!empty($request->group)) ? $request->group : '';
-        $info->birthday = (!empty($request->birthday)) ? $request->birthday : '';
+        $info->birthday = (!empty($request->birthday)) ? $request->birthday : ''; 
+        $info->year_and_section = (!empty($request->year_and_section)) ? $request->year_and_section : '';
         $info->religion = (!empty($request->religion)) ? $request->religion : '';
         $info->father_name = (!empty($request->father_name)) ? $request->father_name : '';
         $info->father_phone_number = (!empty($request->father_phone_number)) ? $request->father_phone_number : '';
@@ -235,7 +236,8 @@ class UserService {
         $tb->active = 1;
         $tb->school_id = auth()->user()->school_id;
         $tb->code = auth()->user()->code;// School Code
-        $tb->student_code = auth()->user()->school_id.date('y').substr(number_format(time() * mt_rand(), 0, '', ''), 0, 5);
+        // $tb->student_code = auth()->user()->school_id.date('y').substr(number_format(time() * mt_rand(), 0, '', ''), 0, 5); 
+        $tb->student_code = $request->student_code;
         $tb->gender = $request->gender;
         $tb->blood_group = $request->blood_group;
         $tb->nationality = (!empty($request->nationality)) ? $request->nationality : '';

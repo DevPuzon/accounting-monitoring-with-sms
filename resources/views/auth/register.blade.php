@@ -106,6 +106,35 @@
                             </div>
                         </div>
                         @if(session('register_role', 'student') == 'student')
+                        
+                        <div class="form-group{{ $errors->has('year_and_section') ? ' has-error' : '' }}">
+                            <label for="year_and_section" class="col-md-4 control-label">* @lang('Year and section')</label>
+
+                            <div class="col-md-6">
+                                <input id="year_and_section" value="{{ old('year_and_section') }}" type="text" class="form-control" name="year_and_section" required>
+
+                                @if ($errors->has('year_and_section'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('year_and_section') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        
+                        <div class="form-group{{ $errors->has('student_code') ? ' has-error' : '' }}">
+                            <label for="student_code" class="col-md-4 control-label">* @lang('Student Code')</label>
+
+                            <div class="col-md-6">
+                                <input id="student_code" value="{{ old('student_code') }}" type="text" class="form-control" name="student_code" required>
+
+                                @if ($errors->has('student_code'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('student_code') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
                         <input type="hidden" value="0" name="section" id="section">
                          {{-- <div class="form-group{{ $errors->has('section') ? ' has-error' : '' }}">
                             <label for="section" class="col-md-4 control-label">* @lang('Class and Section')</label>

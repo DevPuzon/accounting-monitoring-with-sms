@@ -23,7 +23,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $receipts = Payment::where('custormer_id', auth()->user()->id)->get();
+        $receipts = Payment::where('user_id', auth()->user()->id)->get();
         return view('stripe.receipts',compact('receipts'));
     }
 

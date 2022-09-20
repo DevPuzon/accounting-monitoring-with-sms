@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Add Form Field'))
+@section('title', __('Edit Fee Form'))
 
 @section('content')
 <div class="container-fluid">
@@ -10,7 +10,7 @@
         </div>
         <div class="col-md-10" id="main-container">
             <div class="panel panel-default">
-                <div class="page-panel-title">@lang('Add Fee Form')
+                <div class="page-panel-title">@lang('Edit Fee Form')
               </div>
                 <div class="panel-body">
                     @if (session('status'))
@@ -18,16 +18,17 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <form class="form-horizontal" action="{{url('fees/create')}}" method="post">
+                    <form class="form-horizontal" action="{{url('fees/update')}}" method="post">
                       {{ csrf_field() }}
- 
+                        <input type="hidden" name="id" value="{{ $fee->id }}"> 
                         <div class="form-group{{ $errors->has('student_id') ? ' has-error' : '' }}">
                             <label for="student_id" class="col-md-4 control-label">* @lang('Student')</label> 
                             <div class="col-md-6">
-                                <select id="student_id" class="form-control" name="student_id" required>
-                                <option value="0" selected>All</option>
+                                <select id="student_id" class="form-control" name="student_id" required
+                                value="{{ $fee->user_id }}">
+                                <option value="0" {{ ($fee->user_id == 0 ) ? "selected":"" }}>All</option>
                                 @foreach ($students as $student)
-                                <option value="{{$student->id}}">{{$student->email}}</option>
+                                <option value="{{$student->id}}"  {{ ($fee->user_id == $student->id ) ? "selected":"" }}>{{$student->email}}</option>
                                 @endforeach
                                 </select>  
                             </div>
@@ -36,7 +37,7 @@
                       <div class="form-group{{ $errors->has('fee_name') ? ' has-error' : '' }}">
                           <label for="fee_name" class="col-md-4 control-label">* @lang('Form Field Name')</label> 
                           <div class="col-md-6">
-                              <input id="fee_name" type="text" class="form-control" name="fee_name" value="{{ old('fee_name') }}" placeholder="@lang('Form Field Name')" required>
+                              <input id="fee_name" type="text" class="form-control" name="fee_name" value="{{ $fee->fee_name }}" placeholder="@lang('Form Field Name')" required>
 
                               @if ($errors->has('fee_name'))
                                   <span class="help-block">
@@ -48,7 +49,7 @@
                       <div class="form-group{{ $errors->has('balance') ? ' has-error' : '' }}">
                           <label for="balance" class="col-md-4 control-label">* @lang('Balance')</label> 
                           <div class="col-md-6">
-                              <input id="balance" type="text" class="form-control" name="balance" value="{{ old('balance') }}" placeholder="@lang('0')" required>
+                              <input id="balance" type="text" class="form-control" name="balance"value="{{ $fee->balance }}" placeholder="@lang('0')" required>
 
                               @if ($errors->has('balance'))
                                   <span class="help-block">
@@ -59,7 +60,7 @@
                       </div>
                       <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-8">
-                          <button type="submit" class="btn btn-success">@lang('Save')</button>
+                          <button type="submit" class="btn btn-success">@lang('Update')</button>
                         </div>
                       </div>
                     </form>

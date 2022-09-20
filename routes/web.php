@@ -54,9 +54,12 @@ Route::get('grades/{student_id}', 'GradeController@index')->middleware(['auth', 
 Route::middleware(['auth', 'accountant'])->prefix('fees')->name('fees.')->group(function () {
     Route::get('all', 'FeeController@index');
     Route::get('create', 'FeeController@create');
+    Route::get('update/{id}', 'FeeController@editShow');
     Route::get('generated-form', 'FeeController@generatedForm');
     Route::post('create', 'FeeController@store');
+    Route::post('update', 'FeeController@update');
     
+    Route::delete('delete/{id}','FeeController@destroy');  
     Route::post('generated-form/import', 'FeeController@import');
 });
 
@@ -289,6 +292,13 @@ Route::middleware(['auth', 'student'])->prefix('stripe')->group(function () {
     Route::get('charge', 'CashierController@index');
     Route::post('charge/{fee_id}/{user_id}', 'CashierController@store');
     Route::get('receipts', 'PaymentController@index');
-    Route::get('balance-list', 'FeeController@balanceList');
     Route::get('payment-history', 'PaymentController@list');
+
+    
+    Route::get('balance-list/{user_id}', 'FeeController@balanceList'); 
+    Route::get('balance/status/{user_id}/{fee_id}', 'FeeController@balanceById'); 
+    Route::post('balance/paid', 'FeeController@paidBalanceById'); 
 });
+
+
+ 

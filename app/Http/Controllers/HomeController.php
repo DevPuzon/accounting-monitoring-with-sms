@@ -25,7 +25,7 @@ class HomeController extends Controller
     {
         if(\Auth::user()->role == 'student')
         {
-          return redirect('stripe/balance-list');   
+          return redirect('stripe/balance-list/'.\Auth::user()->id);   
         }else{ 
           return redirect('users/'.\Auth::user()->school->code.'/1/0');   
         }

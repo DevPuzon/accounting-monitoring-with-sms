@@ -18,8 +18,8 @@ class CreatePaymentsTable extends Migration
             $table->string('payment_id');
             $table->tinyInteger('payment_status');
             $table->float('amount');
-            $table->integer('custormer_id')->unsigned();
-            $table->string('charge_for');
+            $table->integer('user_id')->unsigned();
+            $table->integer('fee_id')->unsigned();
             $table->timestamps();
         });
     }

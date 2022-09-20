@@ -213,11 +213,11 @@
     <a class="nav-link" href="{{url('stripe/charge')}}"><i class="material-icons">payment</i> <span class="nav-link-text">@lang('Payment')</span></a>
   </li> --}}
   <li class="nav-item">
-    <a class="nav-link" href="{{url('stripe/balance-list')}}"><i class="material-icons">payment</i> <span class="nav-link-text">@lang('Balance List')</span></a>
+    <a class="nav-link" href="{{url('stripe/balance-list/'.Auth::user()->id)}}"><i class="material-icons">payment</i> <span class="nav-link-text">@lang('Balance List')</span></a>
   </li>
-  <li class="nav-item">
+  {{-- <li class="nav-item">
     <a class="nav-link" href="{{url('stripe/receipts')}}"><i class="material-icons">receipt</i> <span class="nav-link-text">@lang('Transaction History')</span></a>
-  </li>  
+  </li>   --}}
   {{-- <li class="nav-item">
     <a class="nav-link" href="{{url('academic/student/certificates')}}"><i class="material-icons">verified</i> <span class="nav-link-text">Certificates</span></a>
   </li> --}}

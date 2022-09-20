@@ -55,15 +55,18 @@ background-color: #fefde5 !important;
                                     <th>@lang('Fee name')</th>
                                     <th>@lang('Payment status')</th>
                                     <th>@lang('Amount')</th> 
+                                    @if(Auth::user()->role == 'admin' || Auth::user()->role == 'accountant'  )
+                                    <th scope="col">@lang('Actions')</th>
+                                    @endif
                                 </tr>
                             </thead> 
-                            <tbody>  
+                            <tbody>   
                                 @foreach ($fees as $fee)
                                     <tr
-                                    @if(!($fee->payment))
+                                    {{-- @if(!($fee->payment))
                                     style="cursor: pointer"
                                     data-toggle="modal" data-target="#myModal{{$fee->id}}"
-                                    @endif
+                                    @endif --}}
                                     > 
                                         <td>{{ $fee->fee_name }}</td>
                                         <td>
@@ -74,9 +77,15 @@ background-color: #fefde5 !important;
                                             @endif
                                         </td>                                                                           
                                         <td>{{ $fee->balance }}</td>
+                                        
+                                        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'accountant'  )
+                                        <td style="display:flex; column-gap:7px;">
+                                          <a class="btn btn-xs btn-sm btn-success" href="{{url('stripe/balance/status/'.$user_id.'/'.$fee->id)}}" ><i class="material-icons">edit</i> </a>    
+                                        </td>
+                                        @endif
                                     </tr> 
                                     
-<div class="modal fade" id="myModal{{$fee->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+{{-- <div class="modal fade" id="myModal{{$fee->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -209,7 +218,7 @@ function stripeTokenHandler{{ $fee->id }}(token) {
     // Submit the form
     form.submit();
 }
-</script> 
+</script>  --}}
 
 
 

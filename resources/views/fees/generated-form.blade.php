@@ -39,6 +39,10 @@
                                     <th>@lang('Student Code')</th>
                                     <th>@lang('Balance')</th> 
                                     <th>@lang('Created At')</th> 
+                                    @if(Auth::user()->role == 'admin' || Auth::user()->role == 'accountant'  )
+                                    <th scope="col">@lang('Actions')</th>
+                                    @endif
+                              
                                 </tr>
                             </thead> 
                             <tbody> 
@@ -49,7 +53,19 @@
                                         <td>{{ !empty($fee->user->studentInfo) ? $fee->user->name : "" }}</td>   
                                         <td>{{ !empty($fee->user->studentInfo) ? $fee->user->studentInfo->student_id : "" }}</td>   
                                         <td>{{ $fee->balance }}</td>   
-                                        <td>{{ date_format($fee->created_at," M d, Y g:i A") }}</td>  
+                                        <td>{{ date_format($fee->created_at," M d, Y g:i A") }}</td> 
+                                        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'accountant'  )
+                                        <td style="display:flex; column-gap:7px;">
+                                          <a class="btn btn-xs btn-sm btn-success" href="{{url('fees/update/'.$fee->id)}}" ><i class="material-icons">edit</i> </a>   
+                                          <form class="form-horizontal" id="delete-form-{{$fee->id}}" style=" margin: 0px; "
+                                              + action="{{url('fees/delete/'.$fee->id)}}"
+                                              method="post">
+                                            @csrf @method('DELETE')
+                                            <button class="btn btn-xs btn-sm btn-danger" 
+                                            type="submit" ><i class="material-icons">delete</i> </button>
+                                        </form>
+                                        </td>
+                                        @endif 
                                     </tr>   
                                 @endforeach 
                             </tbody>
@@ -72,7 +88,7 @@
                     paging: false,
                     order: [5, 'desc'],
                 });
-        }, 1000);
+        }, 5000);
     });
 </script>
 @endsection 
