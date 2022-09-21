@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('title', __('Edit Balance'))
+@section('title', __('View Balance'))
 
-@section('content') 
+@section('content')
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-2" id="side-navbar">
@@ -10,7 +10,7 @@
         </div>
         <div class="col-md-10" id="main-container">
             <div class="panel panel-default">
-                <div class="page-panel-title">@lang('Edit Balance')
+                <div class="page-panel-title">@lang('View Balance')
               </div>
                 <div class="panel-body">
                     @if (session('status'))
@@ -18,34 +18,16 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <form class="form-horizontal" action="{{url('stripe/balance/paid')}}" method="post">
-                      {{ csrf_field() }}
-                        <input type="hidden" name="fee_id" value="{{ $fee->id }}">  
-                        <input type="hidden" name="user_id" value="{{ $user_id }}">  
-                        
-                        {{-- <div class="form-group{{ $errors->has('payment_status') ? ' has-error' : '' }}">
-                            <label for="payment_status" class="col-md-4 control-label">* @lang('Payment status')</label> 
-                            <div class="col-md-6">
-                                <select id="payment_status" class="form-control" name="payment_status" required
-                                value="{{ $fee->user_id }}">
-                                @if (!$fee->payment)
-                                <option value="0" selected>Not paid</option> 
-                                <option value="1" selected>Paid</option>   
-                                @else
-                                <option value="0" {{ ($fee->payment->payment_status == 0 ) ? "selected":"" }}>Not paid</option> 
-                                <option value="0" {{ ($fee->payment->payment_status == 1 ) ? "selected":"" }}>Paid</option> 
-                                @endif
-                                </select>
-                            </div>
-                        </div>  --}}
-
+                    <form class="form-horizontal"  >  
                         <div class="form-group{{ $errors->has('reference_id') ? ' has-error' : '' }}">
-                            <label for="reference_id" class="col-md-4 control-label">@lang('Reference ID')</label> 
+                            <label for="reference_id" class="col-md-4 control-label">@lang('Reference ID :')</label> 
                             <div class="col-md-6">
                                 <input id="reference_id" type="text" class="form-control" name="reference_id"  
-                                @if ($fee->payment) 
                                 readonly  
+                                @if ($fee->payment) 
                                 value="{{$fee->payment->reference_id}}"
+                                @else 
+                                value="None"
                                 @endif
                                 required placeholder="@lang('Reference ID')">
 
@@ -58,12 +40,14 @@
                         </div> 
 
                         <div class="form-group{{ $errors->has('payment_method') ? ' has-error' : '' }}">
-                            <label for="payment_method" class="col-md-4 control-label">@lang('Payment method    ')</label> 
+                            <label for="payment_method" class="col-md-4 control-label">@lang('Payment method :')</label> 
                             <div class="col-md-6">
                                 <input id="payment_method" type="text" class="form-control" name="payment_method" 
-                                @if ($fee->payment) 
                                 readonly 
+                                @if ($fee->payment) 
                                 value="{{$fee->payment->payment_method}}"
+                                @else 
+                                value="None"
                                 @endif
                                 required placeholder="@lang('Payment method')">
 
@@ -76,7 +60,7 @@
                         </div> 
 
                         <div class="form-group{{ $errors->has('payment_status') ? ' has-error' : '' }}">
-                            <label for="payment_status" class="col-md-4 control-label">@lang('Payment status')</label> 
+                            <label for="payment_status" class="col-md-4 control-label">@lang('Payment status :')</label> 
                             <div class="col-md-6">
                                 <input id="payment_status" type="text" class="form-control"  
                                 readonly
@@ -95,7 +79,7 @@
                         </div> 
 
                         <div class="form-group{{ $errors->has('fee_name') ? ' has-error' : '' }}">
-                            <label for="fee_name" class="col-md-4 control-label">@lang('Fee name')</label> 
+                            <label for="fee_name" class="col-md-4 control-label">@lang('Fee name :')</label> 
                             <div class="col-md-6">
                                 <input id="fee_name" type="text" class="form-control"  
                                 readonly
@@ -110,22 +94,22 @@
                         </div> 
 
                         <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-                            <label for="description" class="col-md-4 control-label">* @lang('Description')</label> 
-                            <div class="col-md-6">   
-                            
-                            <div style="margin: 0px;padding: 10px 15px;background-color: #ecf0f1;border: 2px solid #dce4ec;border-radius: 4px;">
-                                {!!$fee->description!!}
+                            <label for="description" class="col-md-4 control-label">@lang('Description :')</label> 
+                            <div class="col-md-6"> 
+                                <div style="margin: 0px;padding: 10px 15px;">
+                                    {!!$fee->description!!}
+                                </div>
+
+                                @if ($errors->has('description'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('description') }}</strong>
+                                    </span>
+                                @endif
                             </div>
-                            @if ($errors->has('description'))
-                            <span class="help-block">
-                            <strong>{{ $errors->first('description') }}</strong>
-                            </span>
-                            @endif
-                            </div>
-                        </div>
+                        </div> 
 
                         <div class="form-group{{ $errors->has('balance') ? ' has-error' : '' }}">
-                            <label for="balance" class="col-md-4 control-label">@lang('Amount')</label> 
+                            <label for="balance" class="col-md-4 control-label">@lang('Amount :')</label> 
                             <div class="col-md-6">
                                 <input id="balance" type="text" class="form-control" readonly
                                 value="{{ $fee->balance }}" placeholder="@lang('0')">
@@ -136,19 +120,17 @@
                                     </span>
                                 @endif
                             </div>
-                        </div> 
-                        @if (!$fee->payment)  
-                        <div class="form-group">
-                            <div class="col-sm-offset-4 col-sm-8">
-                            <button type="submit" class="btn btn-success"
-                            >@lang('Paid')</button>
-                            </div>
-                        </div>
-                        @endif
+                        </div>  
                     </form>
                 </div>
             </div>
         </div>
     </div>
-</div> 
+</div>
+<style>
+    .form-control{
+        background: #fff !important;
+        border:inherit !important;
+    }
+</style>
 @endsection

@@ -60,12 +60,14 @@ class FeeController extends Controller
     {
         $request->validate([
             'fee_name' => 'required|string|max:255',
+            'description' => 'required|string',
             'balance' => 'required|numeric'
         ]);
         $fee = new \App\Fee;
         $fee->fee_name = $request->fee_name;
         $fee->balance = $request->balance;
         $fee->user_id = $request->student_id;
+        $fee->description = $request->description; 
         $fee->school_id = \Auth::user()->school_id;
         $fee->save();
         return back()->with('status', __('Saved'));
@@ -75,12 +77,14 @@ class FeeController extends Controller
     {
         $request->validate([
             'fee_name' => 'required|string|max:255',
+            'description' => 'required|string',
             'balance' => 'required|numeric'
         ]);
         $fee = Fee::find($request->id); 
         $fee->id = $request->id;
         $fee->fee_name = $request->fee_name;
         $fee->balance = $request->balance;
+        $fee->description = $request->description; 
         $fee->user_id = $request->student_id; 
         $fee->save();
         return back()->with('status', __('Updated'));
@@ -114,6 +118,22 @@ class FeeController extends Controller
                 ->first();
         return view('stripe.edit-balance',['fee'=>$fee,'user_id'=>$user_id]);
     }
+
+    public function balanceViewById($user_id,$fee_id){ 
+        if(\Auth::user()->role == "student" && \Auth::user()->id != $user_id){
+            return redirect("/home"); 
+        }
+        $fee = $this->fee
+                ->where('id',$fee_id)
+                ->with(['payment'=>function($q) use ($user_id){
+                    $q->where('user_id',$user_id);
+                }])   
+                ->where('user_id',$user_id)
+                ->orWhere('user_id',0)
+                ->first();
+        return view('stripe.view-item-balance',['fee'=>$fee,'user_id'=>$user_id]);
+    }
+    
  
     public function paidBalanceById(Request $request){ 
         if(\Auth::user()->role == "student" && \Auth::user()->id != $user_id){

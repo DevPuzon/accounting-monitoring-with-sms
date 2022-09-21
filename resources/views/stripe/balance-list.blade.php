@@ -62,13 +62,14 @@ background-color: #fefde5 !important;
                             </thead> 
                             <tbody>   
                                 @foreach ($fees as $fee)
+
                                     <tr
                                     {{-- @if(!($fee->payment))
                                     style="cursor: pointer"
                                     data-toggle="modal" data-target="#myModal{{$fee->id}}"
                                     @endif --}}
                                     > 
-                                        <td>{{ $fee->fee_name }}</td>
+                                        <td><a href="{{url('stripe/balance/view-status/'.$user_id.'/'.$fee->id.'')}}">{{ $fee->fee_name }}</a></td>
                                         <td>
                                             @if($fee->payment)
                                             <span class="label label-success"> Paid </span>

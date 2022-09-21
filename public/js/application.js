@@ -10,7 +10,7 @@ function loader_fade_out() {
 }
 
 function data_table_div() {
-    var myTable = $('.table-data-div').DataTable({ paging: false });
+    var myTable = $('.table-data-div').length > 0 ? $('.table-data-div').DataTable({ paging: false }):{};
 }
 
 function all_images() {
@@ -23,5 +23,5 @@ function all_images() {
 }
 
 function datepicker_format() {
-    $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+    $('.datepicker').length > 0 ? $('.datepicker').datepicker({format: 'yyyy-mm-dd'}):{};
 }

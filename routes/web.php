@@ -297,6 +297,7 @@ Route::middleware(['auth', 'student'])->prefix('stripe')->group(function () {
     
     Route::get('balance-list/{user_id}', 'FeeController@balanceList'); 
     Route::get('balance/status/{user_id}/{fee_id}', 'FeeController@balanceById'); 
+    Route::get('balance/view-status/{user_id}/{fee_id}', 'FeeController@balanceViewById'); 
     Route::post('balance/paid', 'FeeController@paidBalanceById'); 
 });
 
