@@ -66,7 +66,7 @@
                     <ul class="dropdown-menu">
                         @if(Auth::user()->role != 'master')
                         <li>
-                            <a href="{{url('user/'.Auth::user()->student_code)}}">@lang('Profile')</a>
+                            <a href="{{url('user/'.Auth::user()->id)}}">@lang('Profile')</a>
                         </li>
                         @endif
                         <li>

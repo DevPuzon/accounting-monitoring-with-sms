@@ -84,7 +84,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('users/{school_code}/{student_code}/{teacher_code}', 'UserController@index');
     Route::get('users/{school_code}/{role}', 'UserController@indexOther');
 
-    Route::get('user/{user_code}', 'UserController@show');
+    Route::get('user/{id}', 'UserController@show');
     Route::get('user/config/change_password', 'UserController@changePasswordGet');
     Route::post('user/config/change_password', 'UserController@changePasswordPost');
     Route::get('section/students/{section_id}', 'UserController@sectionStudents');
@@ -217,11 +217,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
             $classes = \App\Myclass::where('school_id', \Auth::user()->school->id)->pluck('id');
             $sections = \App\Section::with('class')->whereIn('class_id', $classes)->get();
             session([
-        'register_role' => 'teacher',
-        'departments' => $departments,
-        'register_sections' => $sections,
-      ]);
-
+                'register_role' => 'teacher',
+                'departments' => $departments,
+                'register_sections' => $sections,
+            ]); 
             return redirect()->route('register');
         });
         Route::get('accountant', function () {

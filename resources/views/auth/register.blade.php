@@ -83,9 +83,11 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">* @lang('Password')</label>
-
+                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}"
+                            @if(session('register_role', 'student') == 'student') 
+                            hidden
+                            @endif>
+                            <label for="password" class="col-md-4 control-label">* @lang('Password')</label> 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control" name="password" required>
 
@@ -95,18 +97,20 @@
                                 </span>
                                 @endif
                             </div>
-                        </div>
+                        </div>  
 
-                        <div class="form-group">
+                        <div class="form-group"
+                            @if(session('register_role', 'student') == 'student') 
+                            hidden
+                            @endif >
                             <label for="password-confirm" class="col-md-4 control-label">* @lang('Confirm Password')</label>
-
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
                                     required>
                             </div>
                         </div>
-                        @if(session('register_role', 'student') == 'student')
-                        
+
+                        @if(session('register_role', 'student') == 'student') 
                         <div class="form-group{{ $errors->has('year_and_section') ? ' has-error' : '' }}">
                             <label for="year_and_section" class="col-md-4 control-label">* @lang('Year and section')</label>
 
@@ -587,8 +591,15 @@
         $("#registerForm").submit();
     });
 
-    // $(document).on('submit', '#registerForm', function(event) {
-    // event.preventDefault();  
-    // });
+    $(document).on('submit', '#registerForm', function(event) {
+        @if(session('register_role', 'student') == 'student')
+            var password = document.getElementById("password");
+            var passwordConfirm = document.getElementById("password-confirm");
+            var studentCode = document.getElementById("student_code");
+
+            password.value = studentCode.value;
+            passwordConfirm.value = studentCode.value; 
+        @endif
+    });
 </script>
 @endsection

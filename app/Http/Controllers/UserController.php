@@ -211,19 +211,19 @@ class UserController extends Controller
         });
 
          
-       $sms = $this->notificationService->sendSMS('Hi '.$request->name.',
+    //    $sms = $this->notificationService->sendSMS('Hi '.$request->name.',
 
-       Congratulations! You have successfully created the account. You may use this credential for your account.
+    //    Congratulations! You have successfully created the account. You may use this credential for your account.
        
-       Email: '.$request->email.'
-       Password: '.$request->password.'
+    //    Email: '.$request->email.'
+    //    Password: '.$request->password.'
        
-       Login page:'.url('login').'
+    //    Login page:'.url('login').'
        
-       Please feel free to email us if you have any queries.
+    //    Please feel free to email us if you have any queries.
        
-       Regards, 
-       SLTFCI Admin',$request->phone_number);
+    //    Regards, 
+    //    SLTFCI Admin',$request->phone_number);
 
         return back()->with('status', __('Saved' ));
     }
@@ -308,9 +308,9 @@ class UserController extends Controller
      *
      * @return UserResource
      */
-    public function show($user_code)
+    public function show($id)
     {
-        $user = $this->userService->getUserByUserCode($user_code);
+        $user = $this->userService->getStudent($id);
 
         return view('profile.user', compact('user'));
     }

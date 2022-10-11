@@ -40,15 +40,16 @@ class FirstStudentSheetImport implements OnEachRow, WithHeadingRow
         if(!$row[__('name')]){
             return;
         }
+        
         $user = [
             'name'           => $row[__('name')],
             'email'          => $row[__('email')],
-            'password'       => Hash::make($row[__('password')]),
+            'password'       => Hash::make($row[__('student_code')]),
             'active'         => 1,
             'role'           => 'student',
             'school_id'      => auth()->user()->school_id,
             'code'           => auth()->user()->code,
-            'student_code'   => auth()->user()->school_id.date('y').substr(number_format(time() * mt_rand(), 0, '', ''), 0, 5),
+            'student_code'   => $row[__('student_code')],
             'address'        => $row[__('address')],
             // 'about'          => $row[__('about')],
             'pic_path'       => '',
@@ -85,19 +86,19 @@ class FirstStudentSheetImport implements OnEachRow, WithHeadingRow
         ];
 
         
-       $sms = $this->notificationService->sendSMS('Hi '.$row[__('name')].',
+    //    $sms = $this->notificationService->sendSMS('Hi '.$row[__('name')].',
 
-       Congratulations! You have successfully created the account. You may use this credential for your account.
+    //    Congratulations! You have successfully created the account. You may use this credential for your account.
        
-       Email: '.$row[__('email')].'
-       Password: '.$row[__('password')].'
+    //    Email: '.$row[__('email')].'
+    //    Password: '.$row[__('password')].'
        
-       Login page:'.url('login').'
+    //    Login page:'.url('login').'
        
-       Please feel free to email us if you have any queries.
+    //    Please feel free to email us if you have any queries.
        
-       Regards, 
-       SLTFCI Admin',$row[__('phone_number')]);
+    //    Regards, 
+    //    SLTFCI Admin',$row[__('phone_number')]);
         
         create(StudentInfo::class, $student_info);
     }

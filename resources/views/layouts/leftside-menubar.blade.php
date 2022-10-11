@@ -261,7 +261,7 @@
   @endif 
   
   <li class="nav-item">
-    <a class="nav-link" href="{{url('user/'.Auth::user()->student_code)}}"><i class="material-icons">person</i> <span class="nav-link-text">@lang('Profile')</span></a>
+    <a class="nav-link" href="{{url('user/'.Auth::user()->id)}}"><i class="material-icons">person</i> <span class="nav-link-text">@lang('Profile')</span></a>
   </li> 
   <li class="nav-item">
     <a class="nav-link" href="{{url('user/config/change_password')}}"><i class="material-icons">key</i> <span class="nav-link-text">@lang('Change Password')</span></a>

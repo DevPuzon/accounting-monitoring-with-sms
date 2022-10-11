@@ -138,6 +138,14 @@ class UserService {
                 ->paginate(50);
     }
 
+    
+    public function getStudent($id){ 
+        return $this->user->with('section', 'studentInfo')
+              ->where('id', $id)
+              ->where('active', 1)
+              ->first();
+    }
+
     public function getTeachers(){
         return $this->user->with(['section', 'school'])
                 ->where('code', auth()->user()->school->code)
