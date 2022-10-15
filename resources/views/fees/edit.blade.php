@@ -48,14 +48,14 @@
                               @endif
                           </div>
                       </div> 
-                    <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-                        <label for="description" class="col-md-4 control-label">* @lang('Description')</label> 
+                    <div class="form-group{{ $errors->has('message') ? ' has-error' : '' }}">
+                        <label for="message" class="col-md-4 control-label">* @lang('Message')</label> 
                         <div class="col-md-6">  
-                        <textarea id="description" name="description"  > 
+                        <textarea id="message" name="message"  > 
                         </textarea> 
-                        @if ($errors->has('description'))
+                        @if ($errors->has('message'))
                         <span class="help-block">
-                        <strong>{{ $errors->first('description') }}</strong>
+                        <strong>{{ $errors->first('message') }}</strong>
                         </span>
                         @endif
                         </div>
@@ -85,17 +85,17 @@
 </div>
 <script> 
     tinymce.init({
-    selector: 'textarea#description',
+    selector: 'textarea#message',
         setup: function (editor) {
         editor.on('init', function (e) {
-            editor.setContent(`{!!$fee->description!!}`);
+            editor.setContent(`{!!$fee->message!!}`);
         });
         } 
     });
       
     setInterval(() => {
-        var content = tinymce.get("description").getContent();
-        var desc = document.getElementById("description");
+        var content = tinymce.get("message").getContent();
+        var desc = document.getElementById("message");
         desc.value = content ;
     }, 100);
 </script>
@@ -106,7 +106,7 @@
 
 
 <style>
-    .tox-notifications-container, .tox-statusbar__branding, .tox-menubar {
+    .tox-notifications-container, .tox-statusbar__branding, .tox-menubar, .tox-editor-header {
         display:none !important;
     }
 </style>

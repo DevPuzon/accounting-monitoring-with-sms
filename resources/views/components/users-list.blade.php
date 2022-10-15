@@ -79,7 +79,7 @@
               <img src="{{asset('01-progress.gif')}}" data-src="https://img.icons8.com/color/48/000000/businesswoman.png" style="border-radius: 50%;" width="25px" height="25px">&nbsp;
             @endif
           @endif
-          <a href="{{url('user/'.$user->student_code)}}">
+          <a href="{{url('user/'.$user->id)}}">
             {{$user->name}}</a>
           </small></td>
       @if($user->role == 'student')

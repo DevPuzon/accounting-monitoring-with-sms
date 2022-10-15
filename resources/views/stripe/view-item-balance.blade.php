@@ -93,16 +93,16 @@
                             </div>
                         </div> 
 
-                        <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-                            <label for="description" class="col-md-4 control-label">@lang('Description :')</label> 
+                        <div class="form-group{{ $errors->has('message') ? ' has-error' : '' }}">
+                            <label for="message" class="col-md-4 control-label">@lang('Message :')</label> 
                             <div class="col-md-6"> 
                                 <div style="margin: 0px;padding: 10px 15px;">
-                                    {!!$fee->description!!}
+                                    {!!$fee->message!!}
                                 </div>
 
-                                @if ($errors->has('description'))
+                                @if ($errors->has('message'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('description') }}</strong>
+                                        <strong>{{ $errors->first('message') }}</strong>
                                     </span>
                                 @endif
                             </div>

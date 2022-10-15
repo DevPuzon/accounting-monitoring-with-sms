@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Services\User\UserService;
 use App\Imports\FeesImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Services\Notification\NotificationService;
 use App\Fee;
 use App\Payment;
 
@@ -13,12 +14,15 @@ class FeeController extends Controller
 {
     protected $userService; 
     protected $fee; 
-    protected $payment; 
+    protected $payment;
+    protected $notificationService; 
+ 
 
-    public function __construct(UserService $userService,Fee $fee,Payment $payment ){
+    public function __construct(UserService $userService,Fee $fee,Payment $payment,NotificationService $notificationService ){
         $this->userService = $userService; 
         $this->fee = $fee; 
         $this->payment = $payment; 
+        $this->notificationService = $notificationService; 
     }
 
     /**
@@ -60,16 +64,25 @@ class FeeController extends Controller
     {
         $request->validate([
             'fee_name' => 'required|string|max:255',
-            'description' => 'required|string',
+            'message' => 'required|string',
             'balance' => 'required|numeric'
         ]);
         $fee = new \App\Fee;
         $fee->fee_name = $request->fee_name;
         $fee->balance = $request->balance;
         $fee->user_id = $request->student_id;
-        $fee->description = $request->description; 
+        $fee->message = $request->message; 
         $fee->school_id = \Auth::user()->school_id;
         $fee->save();
+
+        $message = $fee->message;
+        $message = str_replace("<br>","\n",$message);
+        $message = str_replace("&nbsp;","\t",$message);
+
+        // $sms = $this->notificationService->sendSMS('Dear '.$user->name.', '
+        // .$message,$user->phone_number);
+
+
         return back()->with('status', __('Saved'));
     }
     
@@ -77,14 +90,14 @@ class FeeController extends Controller
     {
         $request->validate([
             'fee_name' => 'required|string|max:255',
-            'description' => 'required|string',
+            'message' => 'required|string',
             'balance' => 'required|numeric'
         ]);
         $fee = Fee::find($request->id); 
         $fee->id = $request->id;
         $fee->fee_name = $request->fee_name;
         $fee->balance = $request->balance;
-        $fee->description = $request->description; 
+        $fee->message = $request->message; 
         $fee->user_id = $request->student_id; 
         $fee->save();
         return back()->with('status', __('Updated'));
@@ -113,8 +126,13 @@ class FeeController extends Controller
                 ->with(['payment'=>function($q) use ($user_id){
                     $q->where('user_id',$user_id);
                 }])   
-                ->where('user_id',$user_id)
-                ->orWhere('user_id',0)
+                ->where( function ( $query ) use ($user_id)
+                {
+                    $query->where( 'user_id', $user_id )
+                        ->orWhere( 'user_id', 0);
+                })
+                // ->orWhere('user_id',$user_id)
+                // ->orWhere('user_id',0)
                 ->first();
         return view('stripe.edit-balance',['fee'=>$fee,'user_id'=>$user_id]);
     }
@@ -128,8 +146,13 @@ class FeeController extends Controller
                 ->with(['payment'=>function($q) use ($user_id){
                     $q->where('user_id',$user_id);
                 }])   
-                ->where('user_id',$user_id)
-                ->orWhere('user_id',0)
+                ->where( function ( $query ) use ($user_id)
+                {
+                    $query->where( 'user_id', $user_id )
+                        ->orWhere( 'user_id', 0);
+                })
+                // ->where('user_id',$user_id)
+                // ->orWhere('user_id',0)
                 ->first();
         return view('stripe.view-item-balance',['fee'=>$fee,'user_id'=>$user_id]);
     }
