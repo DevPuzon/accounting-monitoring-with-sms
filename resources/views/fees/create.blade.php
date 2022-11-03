@@ -78,7 +78,8 @@
                       </div>
                       <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-8">
-                          <button type="submit" class="btn btn-success">@lang('Save')</button>
+                          <button type="submit" class="btn btn-success" disabled>@lang('Save')</button>
+                          {{-- <button type="submit" class="btn btn-success">@lang('Save')</button>#changed --}}
                         </div>
                       </div>
                     </form>

@@ -54,7 +54,7 @@ background-color: #fefde5 !important;
                                 <tr>
                                     <th>@lang('Fee name')</th>
                                     <th>@lang('Payment status')</th>
-                                    <th>@lang('Amount')</th> 
+                                    <th>@lang('Amount')</th>  
                                     @if(Auth::user()->role == 'admin' || Auth::user()->role == 'accountant'  )
                                     <th scope="col">@lang('Actions')</th>
                                     @endif

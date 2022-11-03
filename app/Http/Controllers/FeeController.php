@@ -114,7 +114,8 @@ class FeeController extends Controller
                 ->where('user_id',$user_id)
                 ->orWhere('user_id',0)
                 ->get();
-        return view('stripe.balance-list',['fees'=>$fees,'user_id'=>$user_id]);
+        // return view('stripe.balance-list',['fees'=>$fees,'user_id'=>$user_id]);
+        return view('stripe.balance-list',['fees'=>[],'user_id'=>[]]); #change
     }
     
     public function balanceById($user_id,$fee_id){ 
@@ -180,7 +181,8 @@ class FeeController extends Controller
                 ->with(['user.studentInfo' ])  
                 ->with(['payment']) 
                 ->get(); 
-        return view('fees.generated-form',['fees'=>$fees]);
+        return view('fees.generated-form',['fees'=>[]]);
+        // return view('fees.generated-form',['fees'=>$fees]); #changed
     }
     /**
      * Display the specified resource.

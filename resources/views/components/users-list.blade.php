@@ -49,7 +49,7 @@
       <th scope="col">@lang('Phone')</th>
       <th scope="col">@lang('Address')</th>
       
-      @if(Auth::user()->role == 'admin'  )
+      @if(Auth::user()->role == 'admin' || Auth::user()->role == 'accountant' )
       <th scope="col">@lang('Actions')</th>
       @endif
 
@@ -148,12 +148,13 @@
       <td><small>{{$user->phone_number}}</small></td>
       <td><small>{{$user->address}}</small></td>
           
-      @if(Auth::user()->role == 'admin'  )
-      <td style="display:flex; column-gap:7px;">
-        
+      @if(Auth::user()->role == 'admin' || Auth::user()->role == 'accountant'  )
+      <td style="display:flex; column-gap:7px;"> 
         @if($user->role == 'student')
           <a class="btn btn-xs btn-sm btn-success" href="{{url('stripe/balance-list/'.$user->id)}}" ><i class="material-icons">payment</i> </a>   
         @endif
+        
+        @if( Auth::user()->role == 'admin')
         <a class="btn btn-xs btn-sm btn-success" href="{{url('edit/user/'.$user->id)}}" ><i class="material-icons">edit</i> </a>   
         <form class="form-horizontal" id="delete-form-{{$user->id}}" 
             + action="{{url('user/delete/'.$user->id)}}"
@@ -161,7 +162,8 @@
           @csrf @method('DELETE')
           <button class="btn btn-xs btn-sm btn-danger" 
           type="submit" ><i class="material-icons">delete</i> </button>
-      </form>
+        </form>
+        @endif
       </td>
       @endif
 

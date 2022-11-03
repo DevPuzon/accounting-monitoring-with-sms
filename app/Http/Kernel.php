@@ -63,6 +63,7 @@ class Kernel extends HttpKernel
         'master.admin' => \App\Http\Middleware\CheckMasterOrAdmin::class,
         'iam_user' => \App\Http\Middleware\CheckIamUser::class, 
         'teacher.student' => \App\Http\Middleware\CheckTeacherOrStudent::class,
+        'accountant.student' => \App\Http\Middleware\CheckStudentAccountant::class, 
         'admin' => \App\Http\Middleware\CheckAdmin::class,
         'accountant' => \App\Http\Middleware\CheckAccountant::class,
         'librarian' => \App\Http\Middleware\CheckLibrarian::class,

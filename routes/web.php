@@ -287,7 +287,7 @@ Route::prefix('emails')->group(function () {
     });
 });
 
-Route::middleware(['auth', 'student'])->prefix('stripe')->group(function () {
+Route::middleware(['auth', 'accountant.student'])->prefix('stripe')->group(function () {
     Route::get('charge', 'CashierController@index');
     Route::post('charge/{fee_id}/{user_id}', 'CashierController@store');
     Route::get('receipts', 'PaymentController@index');
