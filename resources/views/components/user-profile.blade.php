@@ -107,6 +107,16 @@
                   <td>{{$user->nationality}}</td>
                 </tr>
                 <tr>
+                  <td>@lang('Course'):</td>
+                  <td>{{$user->studentInfo['course']}}</td> 
+                  <td>@lang('Major'):</td>
+                  <td>{{$user->studentInfo['major']}}</td>
+                </tr>
+                <tr>
+                  <td>@lang('Year'):</td>
+                  <td>{{$user->studentInfo['year']}}</td>
+                </tr> 
+                <tr>
                   <td>@lang('Birthday'):</td>
                   <td>{{Carbon\Carbon::parse($user->birthday)->format('d/m/Y')}}</td>
                   <td>@lang('Religion'):</td>
@@ -192,7 +202,15 @@
         <tr>
           <td><b>@lang('Gender'):</b></td>
           <td>{{$user->gender}}</td> 
+          <td><b>@lang('Course'):</b></td>
+          <td>{{$user->studentInfo['course']}}</td> 
         </tr>
+        <tr>
+          <td><b>@lang('Major'):</b></td>
+          <td>{{$user->studentInfo['major']}}</td>
+          <td><b>@lang('Year'):</b></td>
+          <td>{{$user->studentInfo['year']}}</td>
+        </tr> 
         <tr>
           <td><b>@lang('Father\'s Name'):</b></td>
           <td>@isset($user->studentInfo['father_name']){{$user->studentInfo['father_name']}}@endisset</td>

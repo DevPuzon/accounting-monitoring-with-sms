@@ -150,7 +150,10 @@
           
       @if(Auth::user()->role == 'admin'  )
       <td style="display:flex; column-gap:7px;">
-        <a class="btn btn-xs btn-sm btn-success" href="{{url('stripe/balance-list/'.$user->id)}}" ><i class="material-icons">payment</i> </a>   
+        
+        @if($user->role == 'student')
+          <a class="btn btn-xs btn-sm btn-success" href="{{url('stripe/balance-list/'.$user->id)}}" ><i class="material-icons">payment</i> </a>   
+        @endif
         <a class="btn btn-xs btn-sm btn-success" href="{{url('edit/user/'.$user->id)}}" ><i class="material-icons">edit</i> </a>   
         <form class="form-horizontal" id="delete-form-{{$user->id}}" 
             + action="{{url('user/delete/'.$user->id)}}"

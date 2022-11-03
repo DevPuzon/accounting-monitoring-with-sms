@@ -49,7 +49,11 @@ class UserService {
         $info->version = (!empty($request->version)) ? $request->version : '';
         $info->group = (!empty($request->group)) ? $request->group : '';
         $info->birthday = (!empty($request->birthday)) ? $request->birthday : ''; 
-        $info->year_and_section = (!empty($request->year_and_section)) ? $request->year_and_section : '';
+        // $info->year_and_section = (!empty($request->year_and_section)) ? $request->year_and_section : '';
+        
+        $info->course =(!empty($request->course)) ? $request->course : '';
+        $info->major =(!empty($request->major)) ? $request->major : '';
+        $info->year =(!empty($request->year)) ? $request->year : '';
         $info->religion = (!empty($request->religion)) ? $request->religion : '';
         $info->father_name = (!empty($request->father_name)) ? $request->father_name : '';
         $info->father_phone_number = (!empty($request->father_phone_number)) ? $request->father_phone_number : '';

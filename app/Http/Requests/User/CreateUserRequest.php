@@ -42,7 +42,7 @@ class CreateUserRequest extends FormRequest
             'session' => 'required',
             'version' => 'required',
             'birthday' => 'required', 
-            'year_and_section' => 'required|string',
+            // 'year_and_section' => 'required|string',
             'student_code' => 'required|string|unique:users',
             'religion' => 'required|string',
         ];

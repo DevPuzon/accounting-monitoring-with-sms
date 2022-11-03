@@ -111,7 +111,7 @@
                         </div>
 
                         @if(session('register_role', 'student') == 'student') 
-                        <div class="form-group{{ $errors->has('year_and_section') ? ' has-error' : '' }}">
+                        {{-- <div class="form-group{{ $errors->has('year_and_section') ? ' has-error' : '' }}">
                             <label for="year_and_section" class="col-md-4 control-label">* @lang('Year and section')</label>
 
                             <div class="col-md-6">
@@ -123,7 +123,7 @@
                                 </span>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
 
                         
                         <div class="form-group{{ $errors->has('student_code') ? ' has-error' : '' }}">
@@ -139,6 +139,54 @@
                                 @endif
                             </div>
                         </div>
+                        
+                        <div class="form-group{{ $errors->has('course') ? ' has-error' : '' }}">
+                            <label for="course" class="col-md-4 control-label">@lang('Course')</label>
+
+                            <div class="col-md-6">
+                                <input id="course" value="{{ old('course') }}" type="text" class="form-control" name="course" >
+
+                                @if ($errors->has('course'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('course') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        
+                        <div class="form-group{{ $errors->has('major') ? ' has-error' : '' }}">
+                            <label for="major" class="col-md-4 control-label">@lang('Major')</label>
+
+                            <div class="col-md-6">
+                                <input id="major" value="{{ old('major') }}" type="text" class="form-control" name="major" >
+
+                                @if ($errors->has('major'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('major') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        
+                        <div class="form-group{{ $errors->has('year') ? ' has-error' : '' }}">
+                            <label for="year" class="col-md-4 control-label">@lang('Year')</label>
+
+                            <div class="col-md-6">
+                                <input id="year" value="{{ old('year') }}" type="text" class="form-control" name="year" >
+
+                                @if ($errors->has('year'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('year') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+
+
+
+                        
                         <input type="hidden" value="0" name="section" id="section">
                          {{-- <div class="form-group{{ $errors->has('section') ? ' has-error' : '' }}">
                             <label for="section" class="col-md-4 control-label">* @lang('Class and Section')</label>
