@@ -299,6 +299,3 @@ Route::middleware(['auth', 'accountant.student'])->prefix('stripe')->group(funct
     Route::get('balance/view-status/{user_id}/{fee_id}', 'FeeController@balanceViewById'); 
     Route::post('balance/paid', 'FeeController@paidBalanceById'); 
 });
-
-
- 

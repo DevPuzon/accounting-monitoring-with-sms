@@ -344,7 +344,22 @@ class UserController extends Controller
             'sections' => $sections,
             'departments' => $departments,
         ]);
-    }
+    } 
+    
+    public function updateUserFCMToken(Request $request){
+        $user_id = $request->user_id;
+        $token = $request->token;
+        $user = $this->user->find($user_id);
+        $user->fcm_token = $token;
+        return $user->save();
+    } 
+    
+    public function getUserFCMToken(Request $request){
+        $user_id = $request->user_id; 
+        $user = $this->user->find($user_id); 
+        return ["token"=>$user->fcm_token];
+    } 
+    
 
     /**
      * Update the specified resource in storage.
@@ -392,7 +407,6 @@ class UserController extends Controller
 
         return back()->with('status', __('Saved'));
     }
-
     /**
      * Activate admin
      * @param $id

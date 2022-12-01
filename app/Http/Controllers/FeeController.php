@@ -78,9 +78,12 @@ class FeeController extends Controller
         $message = $fee->message;
         $message = str_replace("<br>","\n",$message);
         $message = str_replace("&nbsp;","\t",$message);
+        $message = str_replace("<p>","",$message);
+        $message = str_replace("</p>","",$message);
+        $user = $this->userService->getStudent($fee->user_id);
 
-        // $sms = $this->notificationService->sendSMS('Dear '.$user->name.', '
-        // .$message,$user->phone_number);
+        $sms = $this->notificationService->sendSMS('Dear '.$user->name.', '
+        .$message,$user->phone_number);
 
 
         return back()->with('status', __('Saved'));
@@ -114,8 +117,7 @@ class FeeController extends Controller
                 ->where('user_id',$user_id)
                 ->orWhere('user_id',0)
                 ->get();
-        // return view('stripe.balance-list',['fees'=>$fees,'user_id'=>$user_id]);
-        return view('stripe.balance-list',['fees'=>[],'user_id'=>[]]); #change
+        return view('stripe.balance-list',['fees'=>$fees,'user_id'=>$user_id]); 
     }
     
     public function balanceById($user_id,$fee_id){ 
@@ -180,9 +182,8 @@ class FeeController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->with(['user.studentInfo' ])  
                 ->with(['payment']) 
-                ->get(); 
-        return view('fees.generated-form',['fees'=>[]]);
-        // return view('fees.generated-form',['fees'=>$fees]); #changed
+                ->get();  
+        return view('fees.generated-form',['fees'=>$fees]); 
     }
     /**
      * Display the specified resource.

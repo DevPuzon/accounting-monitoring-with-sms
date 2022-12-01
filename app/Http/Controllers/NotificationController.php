@@ -126,6 +126,45 @@ class NotificationController extends Controller
       ]);
     }
 
+    public function pushNotification($token,$title,$message){
+      
+      $curl = curl_init();
 
+      curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://fcm.googleapis.com/fcm/send',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS =>'{
+                          "notification":{
+                          "title":"'.$title.'",
+                          "body": "'.$message.'",
+                          "sound":"default",
+                          "click_action":"FCM_PLUGIN_ACTIVITY",
+                          "icon":""
+                          },
+                          "data":{
+                          "routes": ""
+                          },
+                          "to":"'.$token.'",
+                          "priority":"high",
+                          "restricted_package_name":""
+                      }',
+        CURLOPT_HTTPHEADER => array(
+          'Authorization: key=AAAAMIZ4bAU:APA91bH6pfBQoT_MaY11S357GXuJt67zgH4eAbN3i7z6JpnsboUJ6Fd_nkeuHfp7M9uBALO0kb58Qowl1IJU6QvGNnJrA2WbgOcz3IVaXbCbtp2hkMWoTQkHvzWS2FiLQoMHNmBklJEF',
+          'Content-Type: application/json'
+        ),
+      ));
+
+      $response = curl_exec($curl);
+
+      curl_close($curl);
+      echo $response;
+
+    }
     
 }

@@ -131,9 +131,9 @@ class UploadController extends Controller {
         try{
 
           if($request->type == 'student')
-            Excel::import(new StudentsImport($this->notificationService), $path);
+            Excel::import(new StudentsImport($this->notificationService), $request->file);
           else if($request->type == 'teacher')
-            Excel::import(new TeachersImport, $path);
+            Excel::import(new TeachersImport, $request->file);
             
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();

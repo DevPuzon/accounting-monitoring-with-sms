@@ -45,7 +45,7 @@ class FirstFeeSheetImport implements OnEachRow, WithHeadingRow
 
         $fee = [
             'fee_name'          => $row[__('fee_name')],
-            'description'       => $row[__('description')],
+            'message'           => $row[__('message')],
             'user_id'           => $user_id,
             'balance'           => $row[__('balance')] 
         ]; 

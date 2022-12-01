@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container">
         <div class="navbar-header">
@@ -29,6 +30,8 @@
                 <li><a href="{{ route('login') }}" style="color: #000;">@lang('Login')</a></li>
                 @else
                 @if(\Auth::user()->role == 'student')
+                                
+                <input id="user_id" type="hidden" value="{{ \Auth::user()->user_id}}">
                 {{-- <li class="nav-item">
                     <a href="{{url('user/'.\Auth::user()->id.'/notifications')}}" class="nav-link nav-link-align-btn"
                         role="button">
@@ -96,3 +99,85 @@
         </div>
     </div>
 </nav>
+
+ 
+<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>  
+<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-messaging.js"></script> 
+<script>
+  // Your web app's Firebase configuration
+    var firebaseConfig = { 
+            apiKey: "AIzaSyBKYmu0Na0CwNE8trfSMjCOlvAMKDj65Ko",
+            authDomain: "prototypeproject-eeb91.firebaseapp.com",
+            databaseURL: "https://prototypeproject-eeb91.firebaseio.com",
+            projectId: "prototypeproject-eeb91",
+            storageBucket: "prototypeproject-eeb91.appspot.com",
+            messagingSenderId: "208414469125",
+            appId: "1:208414469125:web:8357b52d90f71a5d9a006c",
+            measurementId: "G-R62XTDLQWV"
+        };   
+    firebase.initializeApp(firebaseConfig); 
+    const messaging=firebase.messaging(); 
+    getStartToken(); 
+
+    messaging.onMessage(function(payload){
+        console.log("on Message",payload);
+    });
+
+    function getStartToken() {
+        messaging.getToken().then((currentToken) => {
+            if (currentToken) {
+                sendTokenToServer(currentToken);
+            } else {
+                // Show permission request.
+                RequestPermission();
+                setTokenSentToServer(false);
+            }
+        }).catch((err) => {
+            console.log(err);
+            setTokenSentToServer(false);
+        });
+    }
+
+    function RequestPermission() {
+        messaging.requestPermission()
+        .then(function(permission) {
+            if (permission === 'granted') {
+                console.log("have Permission");
+                //calls method again and to sent token to server
+                getStartToken();
+            } else {
+                console.log("Permission Denied");
+            }
+        })
+        .catch(function(err) {
+            console.log(err);
+        }) 
+    }
+
+    function sendTokenToServer(token) { 
+        var user_id = document.getElementById("user_id").value;
+        if (!isTokensendTokenToServer()) {
+            $.ajax({
+                url: 'api/update-user-fcm-token?user_id='+user_id+'&token='+token,
+                type: 'POST',
+                data: { 
+                },
+                success: function(response) {
+                    setTokenSentToServer(true);
+                },
+                error: function(err) {
+                    setTokenSentToServer(false);
+                },
+            });
+        }
+    }
+
+    function isTokensendTokenToServer() {
+        return window.localStorage.getItem('sendTokenToServer') === '1';
+    }
+
+    function setTokenSentToServer(sent) {
+        window.localStorage.setItem('sendTokenToServer', sent ? '1' : '0');
+    }
+
+</script>

@@ -63,6 +63,7 @@ class CashierController extends Controller
             // $message = $fee->message;
             // $message = str_replace("<br>","\n",$message);
             // $message = str_replace("&nbsp;","\t",$message);
+
             // $sms = $this->notificationService->sendSMS('Dear '.$user->name.', '
             // .$message,$user->phone_number);
      

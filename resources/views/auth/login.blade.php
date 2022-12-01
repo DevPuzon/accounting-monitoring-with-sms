@@ -80,3 +80,6 @@
     </div>
 </div>
 @endsection
+<script> 
+    window.localStorage.setItem('sendTokenToServer', '0');
+</script>

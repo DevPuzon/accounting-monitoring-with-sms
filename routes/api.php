@@ -160,3 +160,8 @@ use Illuminate\Http\Request;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
+
+Route::post('update-user-fcm-token', 'UserController@updateUserFCMToken');
+Route::get('get-user-fcm-token', 'UserController@getUserFCMToken');
+ 
