@@ -27,13 +27,15 @@
                         <div class="form-group{{ $errors->has('student_id') ? ' has-error' : '' }}">
                             <label for="student_id" class="col-md-4 control-label">* @lang('Student')</label> 
                             <div class="col-md-6">
+                                <input type="hidden" name="student_ids" id="student_ids">
                                 <select id="student_id" class="form-control" name="student_id" required>
                                 <option value="0" selected>All</option>
                                 @foreach ($students as $student)
-                                <option value="{{$student->id}}">{{$student->email}}</option>
+                                <option value="{{$student->id}},||,{{$student->email}}">{{$student->email}}</option>
                                 @endforeach
-                                </select>  
-                            </div>
+                                </select>
+                                <div id="selectedStudents">  </div> 
+                            </div>                     
                         </div> 
 
                       <div class="form-group{{ $errors->has('fee_name') ? ' has-error' : '' }}">
@@ -118,6 +120,59 @@
         var desc = document.getElementById("message");
         desc.value = content ;
     }, 100);
+
+
+    let selectedStudents = [];
+    let _selectedStudents = document.getElementById("selectedStudents");
+    let _studentIDs = document.getElementById("student_ids");
+    let _student_id = document.getElementById("student_id");
+
+    function renderSelectAll(){ 
+        selectedStudents = [];  
+        let students = [];
+        var i = 0 ;
+        for(let option of _student_id.getElementsByTagName("option")){
+            if(i != 0 ){
+                students.push(option.value.split(",||,")[0]);
+            }
+            i++;
+        }
+        _studentIDs.value = students.join(",");
+    }
+
+    renderSelectAll();
+    function renderSelectedStudent(){  
+        console.log("renderSelectedStudent",selectedStudents);
+        let selectHTML = "";
+        for(let [i,selected] of selectedStudents.entries()){
+            selectHTML += `<span id="selectedStudentItem${selected.id}" class="c-badge badge badge-success">${selected.email}<i class="material-icons">cancel</i></span> `; 
+        }
+        _selectedStudents.innerHTML = selectHTML; 
+        for(let [i,selected] of selectedStudents.entries()){ 
+            document.getElementById(`selectedStudentItem${selected.id}`)
+            .addEventListener('click', function (e){ 
+                selectedStudents.splice(i,1);
+                renderSelectedStudent();
+            });
+        } 
+        _studentIDs.value = selectedStudents.map((el)=>{return el.id}).join(",");
+    }
+
+    
+    _student_id.addEventListener('change', function (e){
+        let val = e.target.value;
+        console.log(this);
+        if(val == "0"){
+            renderSelectAll();
+        }else{
+            let valSt = val.split(",||,");
+            if(!selectedStudents.find((el)=>{return el.email == valSt[1];})){ 
+                selectedStudents.push({id:valSt[0],email:valSt[1]});
+            }
+        }
+        renderSelectedStudent();
+        // <span class="c-badge badge badge-success"> <i class="material-icons">cancel</i></span> 
+    });
 </script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -131,5 +186,12 @@
     .tox-notifications-container, .tox-statusbar__branding, .tox-menubar, .tox-editor-header {
         display:none !important;
     }
+    .c-badge {
+        cursor: pointer; 
+    }
+    .c-badge i{ 
+        font-size: 15px;
+    }
+    
 </style>
 @endsection

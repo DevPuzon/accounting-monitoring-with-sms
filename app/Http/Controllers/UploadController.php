@@ -127,26 +127,34 @@ class UploadController extends Controller {
         ]);
 
         $path = $request->file('file')->getRealPath();
-
+        $arrayNames = array();
+        $arrayNames[0] = "sdsds";
         try{
 
           if($request->type == 'student')
-            Excel::import(new StudentsImport($this->notificationService), $request->file);
-          else if($request->type == 'teacher')
-            Excel::import(new TeachersImport, $request->file);
-            
+            Excel::import(new StudentsImport($this->notificationService,function($arrayNames){  
+              $arrayNames = $arrayNames ;  
+              // echo json_encode($arrayNames);
+              // return back()->with('status', __('Students are added successfully!'.json_encode($arrayNames) ));
+            }), $request->file);
+          else if($request->type == 'teacher'){
+            Excel::import(new TeachersImport, $request->file); 
+          }
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             
-            foreach ($failures as $failure) {
-                $failure->row(); // row that went wrong
-                $failure->attribute(); // either heading key (if using heading row concern) or column index
-                $failure->errors(); // Actual error messages from Laravel validator
-                $failure->values(); // The values of the row that has failed.
-            }
+            // foreach ($failures as $failure) {
+            //     $failure->row(); // row that went wrong
+            //     $failure->attribute(); // either heading key (if using heading row concern) or column index
+            //     $failure->errors(); // Actual error messages from Laravel validator
+            //     $failure->values(); // The values of the row that has failed.
+            // } 
+
+            return back()->with('error', __($failures[0][0][0]));
+            // dd($failures[0][0][0]);
         }
-        
-        return back()->with('status', __('Students are added successfully!'));
+        return back()->with('status', __('Students are added successfully!'  ));
+         
     }
 
     public function export(Request $request){

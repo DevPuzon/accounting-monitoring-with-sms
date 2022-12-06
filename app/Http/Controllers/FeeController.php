@@ -66,24 +66,28 @@ class FeeController extends Controller
             'fee_name' => 'required|string|max:255',
             'message' => 'required|string',
             'balance' => 'required|numeric'
-        ]);
-        $fee = new \App\Fee;
-        $fee->fee_name = $request->fee_name;
-        $fee->balance = $request->balance;
-        $fee->user_id = $request->student_id;
-        $fee->message = $request->message; 
-        $fee->school_id = \Auth::user()->school_id;
-        $fee->save();
-
-        $message = $fee->message;
-        $message = str_replace("<br>","\n",$message);
-        $message = str_replace("&nbsp;","\t",$message);
-        $message = str_replace("<p>","",$message);
-        $message = str_replace("</p>","",$message);
-        $user = $this->userService->getStudent($fee->user_id);
-
-        $sms = $this->notificationService->sendSMS('Dear '.$user->name.', '
-        .$message,$user->phone_number);
+        ]); 
+        $student_ids = explode(',', $request->student_ids); 
+        foreach($student_ids as $student_id){
+            $fee = new \App\Fee;
+            $fee->fee_name = $request->fee_name;
+            $fee->balance = $request->balance;
+            $fee->user_id = $student_id;
+            $fee->message = $request->message; 
+            $fee->school_id = \Auth::user()->school_id;
+            $fee->save();
+    
+            $message = $fee->message;
+            $message = str_replace("<br>","\n",$message);
+            $message = str_replace("&nbsp;","\t",$message);
+            $message = str_replace("<p>","",$message);
+            $message = str_replace("</p>","",$message);
+            $user = $this->userService->getStudent($fee->user_id);
+    
+            $sms = $this->notificationService->sendSMS('Dear '.$user->name.', '
+            .$message,$user->phone_number);
+    
+        }
 
 
         return back()->with('status', __('Saved'));
