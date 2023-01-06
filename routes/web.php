@@ -299,3 +299,10 @@ Route::middleware(['auth', 'accountant.student'])->prefix('stripe')->group(funct
     Route::get('balance/view-status/{user_id}/{fee_id}', 'FeeController@balanceViewById'); 
     Route::post('balance/paid', 'FeeController@paidBalanceById'); 
 });
+
+Route::prefix('mobile')->name('mobile.')->group(function () {
+    Route::get('login', 'MobileController@login');
+    Route::get('home', 'MobileController@home');
+    Route::get('dashboard', 'MobileController@dashboard'); 
+    Route::get('notification', 'MobileController@notification'); 
+});

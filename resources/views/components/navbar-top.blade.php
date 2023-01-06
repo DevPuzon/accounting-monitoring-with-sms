@@ -1,4 +1,6 @@
-
+@if(!is_null(\Auth::user()) ) 
+<input id="user_id" type="hidden" value="{{ \Auth::user()->id }}">
+@endif
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container">
         <div class="navbar-header">
@@ -31,7 +33,6 @@
                 @else
                 @if(\Auth::user()->role == 'student')
                                 
-                <input id="user_id" type="hidden" value="{{ \Auth::user()->user_id}}">
                 {{-- <li class="nav-item">
                     <a href="{{url('user/'.\Auth::user()->id.'/notifications')}}" class="nav-link nav-link-align-btn"
                         role="button">
@@ -104,7 +105,13 @@
 <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>  
 <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-messaging.js"></script> 
 <script>
-  // Your web app's Firebase configuration
+    // Your web app's Firebase configuration 
+    if(window.innerWidth <= 768 && !window.location.pathname.includes('mobile') && (window.location.pathname.includes('users') || window.location.pathname.includes('balance-list'))){
+        window.location.href = '{{ url('/mobile/home')}}'
+    }
+    else if(window.innerWidth <= 768 && !window.location.pathname.includes('mobile')){
+        window.location.href = '{{ url('/mobile/login')}}'
+    }
     var firebaseConfig = { 
             apiKey: "AIzaSyBKYmu0Na0CwNE8trfSMjCOlvAMKDj65Ko",
             authDomain: "prototypeproject-eeb91.firebaseapp.com",
@@ -114,7 +121,7 @@
             messagingSenderId: "208414469125",
             appId: "1:208414469125:web:8357b52d90f71a5d9a006c",
             measurementId: "G-R62XTDLQWV"
-        };   
+    };   
     firebase.initializeApp(firebaseConfig); 
     const messaging=firebase.messaging(); 
     getStartToken(); 
@@ -158,7 +165,7 @@
         var user_id = document.getElementById("user_id").value;
         if (!isTokensendTokenToServer()) {
             $.ajax({
-                url: 'api/update-user-fcm-token?user_id='+user_id+'&token='+token,
+                url: '{{ url('/api/update-user-fcm-token') }}?user_id='+user_id+'&token='+token,
                 type: 'POST',
                 data: { 
                 },
