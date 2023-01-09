@@ -104,14 +104,29 @@
  
 <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>  
 <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-messaging.js"></script> 
-<script>
-    // Your web app's Firebase configuration 
+<script> 
     if(window.innerWidth <= 768 && !window.location.pathname.includes('mobile') && (window.location.pathname.includes('users') || window.location.pathname.includes('balance-list'))){
-        window.location.href = '{{ url('/mobile/home')}}'
+        window.location.href = '{{ url('/mobile/save_fcm_token')}}'
     }
     else if(window.innerWidth <= 768 && !window.location.pathname.includes('mobile')){
         window.location.href = '{{ url('/mobile/login')}}'
+    } 
+    @if(!is_null(Auth::user()))
+    if(window.innerWidth <= 768 && !window.location.pathname.includes('mobile') && {{ Auth::user()->role == 'admin' ? 1 : 0}}){
+        window.location.href = "{{ url('mobile/login') }}"
+        $.ajax({
+            url: '{{ url('logout') }}',
+            type: 'POST',
+            data: { 
+            },
+            success: function(response) { 
+                window.location.href = "{{ url('mobile/login') }}"
+            },
+            error: function(err) { 
+            },
+        }); 
     }
+    @endif
     var firebaseConfig = { 
             apiKey: "AIzaSyBKYmu0Na0CwNE8trfSMjCOlvAMKDj65Ko",
             authDomain: "prototypeproject-eeb91.firebaseapp.com",

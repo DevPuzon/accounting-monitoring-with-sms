@@ -24,9 +24,13 @@ class MobileController extends Controller
     }
     
     public function home()
-    { 
-        $user = $this->userService->getStudent(\Auth::user()->id); 
-        return view('mobile.home', compact('user'));
+    {  
+        if(is_null(\Auth::user())){
+            return redirect('/mobile/login');
+        }else{ 
+            $user = $this->userService->getStudent(\Auth::user()->id); 
+            return view('mobile.home', compact('user'));
+        }
     }
 
     public function dashboard()
@@ -47,6 +51,16 @@ class MobileController extends Controller
         $user_id = \Auth::user()->id;
         $logs = DB::table('notification_logs')->where('user_id',$user_id)->get();
         return view('mobile.notification', ['logs'=>$logs,'user_id'=>$user_id]); 
+    }
+
+    public function changePasswordGet()
+    {
+        return view('mobile.change_password');
+    } 
+
+    public function saveFcmToken()
+    {
+        return view('mobile.save_fcm_token');
     }
 
 

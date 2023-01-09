@@ -304,5 +304,7 @@ Route::prefix('mobile')->name('mobile.')->group(function () {
     Route::get('login', 'MobileController@login');
     Route::get('home', 'MobileController@home');
     Route::get('dashboard', 'MobileController@dashboard'); 
-    Route::get('notification', 'MobileController@notification'); 
+    Route::get('notification', 'MobileController@notification');  
+    Route::get('change_password', 'MobileController@changePasswordGet');
+    Route::get('save_fcm_token', 'MobileController@saveFcmToken');
 });

@@ -1,7 +1,6 @@
-
 @extends('layouts.app')
 
-@section('title', __('Notification'))
+@section('title', __('Home'))
 <link href="{{ asset('css/mobile.css') }}" rel="stylesheet">
 @section('content')
 <script>
@@ -26,23 +25,58 @@
     <img onclick="onLogout()" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAAACXBIWXMAAAsTAAALEwEAmpwYAAAE1UlEQVR4nO2dz29VRRTHR2kt/kyIiVFRNG5FEtiASmWhCcqmxqhYo2ANBoOVQOK/YKmpoEQWrQtdGVcWf1HUGJYGo2hlD4YfQpACipUKlXzMeM9LXsidebfcH3Nn7nySl7zVnTPfN2/mzJkz5yoViUQikUgkEolEIpFsAF3AEmAAeBf4DPgZOAmcBS4DF+X7IeAgsBt4C3gZWAbMy9hcswBuA14BxoHz5Ef/CJ8Cg8AdqsmQjNyngS+BWcrjX2ACeB7oUU0BuB54HThM9fwGbAVuVKECXAusB47int+BzcHN5cBi4Hvqh15kH1QhALwhXsJc+Av4BtgGPAc8BNwJLJB/xnXy/T5gufxT3gT2AtNzbEt7MduBbuUrIkBWTgPvAY9qIXO02Q08DLwNnMjcOuwH7lE+AuzL0MEfgGfziGtpfx7wBPDtHNzCR1RgQk8Cqyu0ZQXwdQaxZ4A+5RPAiykd+RPYqOdaRzZp3/1YBt97vfIJ2Z0dAqaAD4G7a2DTzcBHGcR+0rWtQQBskKnCNo34N2fXEaAXONdhgbzXtZ1BADzQwRXc77WfXUOxbSN7u2sbQ5tGZiw7yDC263VA4uIm9CFDl2sbgwG767fZtX3BQOJnH7OEWMONZ1cN8IxlVG91aVgPMCI7QB2qHNOnKcpjSEK1ppOaHlci63O5KxlTHkMSiDLRXxeRNeeV52AOse6ti8iaP5TnkMSz05itJJUhg8iaHcpzSA4PTNvzwTqIPBFKHgXJmWIau8sWeU9TRNYAKy2RveJTFpooskZO3U2n68tUkTRV5BbAV4Y+D6iCf9HPO4isDZmvAgUYMvR7uKgGGi9yhxyV/Ati06eLjLvESZUHPQ1kELkOnAN2lR1X0eeGhvZ/zfvg9/GL0cJUTdfjVkO7U3keqhMJL+AXf5eZlCNrVRoX8zw0Cl2F0PJgHU/2idFcHXYxdbQthp3iGXXgrKT7+rkYNjF4ZEOnGpTi3rU1EDcs6n8dXjIIPV6I0FHsBLnmkcY2VSQZ5+w9oU4jmJPYB8porJFiU2WYtMlik+TkpXGm1JsLTRMb2FH6QphT7J0qjDvrJw3921SVEZ3EnnZ1KagogDWWdIPbqzRkvtxYTWMmAKH3Gfo24cIYk9gfKI8huRpdj5SwK7brO2W6+Eeuut2kwkwHO+58oQeu0R/lOcBay2je4tq+IABukVGbxingBtc2BgHwsWU0l5tv1xRI7qmbOBBc1RoXAKs6XH9b7sSwkCCptWe70Dni2sZQRD5hEfm7eEW5mOnCNpJ1hG5R3nYaDcnCZysjoXNbViofaCsmOCW7xbtq4ifbXLhWYZQ+30v9vOqw1M9ay2bEz1I/HYpX/QI8XnGAKEu1sAvejOQ5lmP7UYoI9pR0o2pNRjtaC58fc3I7wLqMHWx1UqffPpZHdDlI7ZXjJ9PJiMmFW9S0kpnT8jfXxbf7pTLjwraSmd1tJTNXSHLLkKQEXE3JzJEgSvkA90tdorpxILhtNclIfAE44lpdCXUOBh0gIjn2ek2KDlaNduu2NCqeTOIRPAV8AVwqUdxZOanvDyXPpIiXKXwiG5q8nJEXM2yqNCXAw5G+WDyJd+TtEz9JdK31epBLba8HmRRRh+WVIkt9T3GIRCKRSCQSiUQiEVUl/wE1kZsnc4G4kgAAAABJRU5ErkJggg==">
 </div>
 <div class="container" style="position: relative; ">
-    <div class="c-title">Notification <img onclick="window.location.reload()" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAABOUlEQVR4nN3VzypEYRjH8THyp7CwcgGyMXZugIWVEiWugaYMOxfgz3X4s7CTsrCyZok0oZByAUYi5aOjd+o0jZlzjFPyW53O+zzv9z2/8zzPm8v9O+EBs+G5C/PYwy1e8IwydjGHzrSASO9Yw53musFMWkDtBiWMoh89KGAJZ7G4TeTTAj4iGxrE5rGA1yokCeCxBnKfIGcsBpnOZSEsBsA1OrIAtOM8QL6qMAtIKQB2sgIUAqCcFaAvACr1Fg9wGnn5C4CneotH4Se1tQAYydqilQDYatSZQy2U6UXDMsVqCJj8AaAYcq++bbTQ8scYTLn5ON7C7JpKmjSAiQS2FMPmkdbTnGo/JA3H3nWjN1TLcszz6OTricZ1zWdvVG8snNS5K6qeJ7OlCfAwjOQKLrEdVUsmk/NP6RMF7x7W2Ivt4AAAAABJRU5ErkJggg=="></div>
-    <div class="bg"></div> 
+    <div class="c-title">Change Password <img onclick="window.location.reload()" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAABOUlEQVR4nN3VzypEYRjH8THyp7CwcgGyMXZugIWVEiWugaYMOxfgz3X4s7CTsrCyZok0oZByAUYi5aOjd+o0jZlzjFPyW53O+zzv9z2/8zzPm8v9O+EBs+G5C/PYwy1e8IwydjGHzrSASO9Yw53musFMWkDtBiWMoh89KGAJZ7G4TeTTAj4iGxrE5rGA1yokCeCxBnKfIGcsBpnOZSEsBsA1OrIAtOM8QL6qMAtIKQB2sgIUAqCcFaAvACr1Fg9wGnn5C4CneotH4Se1tQAYydqilQDYatSZQy2U6UXDMsVqCJj8AaAYcq++bbTQ8scYTLn5ON7C7JpKmjSAiQS2FMPmkdbTnGo/JA3H3nWjN1TLcszz6OTricZ1zWdvVG8snNS5K6qeJ7OlCfAwjOQKLrEdVUsmk/NP6RMF7x7W2Ivt4AAAAABJRU5ErkJggg=="></div>
+    <div class="bg"></div>
     <div class="row">
         <div class="col-md-8 col-md-offset-2" id="main-container">
-            <div  style=" margin-top: 200px;width:100%; ">  
-                @foreach ($logs as $log) 
-                    <div class="card" style="margin-bottom:10px">
-                        <div class="card-body"> 
-                            <p style="overflow: hidden; 
-                            display: -webkit-box;
-                            -webkit-line-clamp: 3;
-                            -webkit-box-orient: vertical;">{{ $log->message}}</p>
-                            <span class="text-muted">{{ date_format(date_create($log->created_at),"Y/m/d") }}</span>
-                        </div>
+            <div class=" " style=" margin-top: 200px;width:100%; ">
+                @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
+            @if (session('error-status'))
+                <div class="alert alert-danger">
+                    {{ session('error-status') }}
+                </div>
+            @endif
+
+            <form class="form-horizontal" action="{{url('user/config/change_password')}}" method="post">
+                {{ csrf_field() }}
+                <div class="form-group{{ $errors->has('old_password') ? ' has-error' : '' }}">
+                    <label for="old_password" class="col-md-4 control-label">@lang('Old Password')</label>
+
+                    <div class="col-md-6">
+                        <input id="old_password" type="password" class="form-control" name="old_password" value="{{ old('old_password') }}" required>
+
+                        @if ($errors->has('old_password'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('old_password') }}</strong>
+                            </span>
+                        @endif
                     </div>
-                @endforeach 
-            </div> 
+                </div>
+                <div class="form-group{{ $errors->has('new_password') ? ' has-error' : '' }}">
+                    <label for="new_password" class="col-md-4 control-label">@lang('New Password')</label>
+
+                    <div class="col-md-6">
+                        <input id="new_password" type="password" class="form-control" name="new_password" value="{{ old('new_password') }}" required>
+
+                        @if ($errors->has('new_password'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('new_password') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <button type="submit" class="btn btn-danger">@lang('Submit')</button>
+                    </div>
+                </div>
+            </form>
+
+            </div>
         </div>
     </div>
 </div>

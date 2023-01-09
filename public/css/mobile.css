@@ -11,6 +11,10 @@
     color: #fff;
     font-size: 25px;
     font-weight: bold; 
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    place-items: center;
 }
 .c-navigation{
     background: #2332C7;
@@ -19,7 +23,7 @@
     padding: 8px 20px;
     display: flex;
     column-gap: 31px; 
-    position: absolute; 
+    position: fixed; 
     top: 93%;
     left: 50%;
     transform: translate(-50%, -50%); 

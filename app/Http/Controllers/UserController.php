@@ -349,9 +349,16 @@ class UserController extends Controller
     public function updateUserFCMToken(Request $request){
         $user_id = $request->user_id;
         $token = $request->token;
+
         $user = $this->user->find($user_id);
         $user->fcm_token = $token;
-        return $user->save();
+        $user->save();
+
+        $userDel = $this->user->where("fcm_token",$token);
+        $userDel->fcm_token = "";
+        $userDel->save();
+
+        return;
     } 
     
     public function getUserFCMToken(Request $request){

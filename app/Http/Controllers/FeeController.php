@@ -86,7 +86,10 @@ class FeeController extends Controller
     
             $sms = $this->notificationService->sendSMS('Dear '.$user->name.', '
             .$message,$user->phone_number);
-    
+
+            $this->notificationService->sendNotification("Payment Notification",'Dear '.$user->name.', '
+            .$message,$user);
+            
         }
 
 

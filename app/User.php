@@ -47,6 +47,11 @@ class User extends Model implements
         return $q->where('role', 'student');
     }
 
+    public function findFcmToken($q,$token)
+    {
+        return $q->where('fcm_token', $token);
+    }
+
     public function section()
     {
         return $this->belongsTo('App\Section');
