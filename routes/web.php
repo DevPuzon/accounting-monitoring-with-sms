@@ -56,6 +56,7 @@ Route::middleware(['auth', 'accountant'])->prefix('fees')->name('fees.')->group(
     Route::get('create', 'FeeController@create');
     Route::get('update/{id}', 'FeeController@editShow');
     Route::get('generated-form', 'FeeController@generatedForm');
+    Route::post('delete-all', 'FeeController@deleteAll');
     Route::post('create', 'FeeController@store');
     Route::post('update', 'FeeController@update');
     
@@ -246,11 +247,12 @@ Route::middleware(['auth', 'iam_user'])->group(function () {
     Route::get('edit/user/{id}', 'UserController@edit');
     Route::post('edit/user', 'UserController@update');
 });
+
+Route::post('upload/file', 'UploadController@upload');
+Route::post('users/import/user-xlsx', 'UploadController@import');
+Route::get('users/export/students-xlsx', 'UploadController@export');
 //use PDF;
 Route::middleware(['auth', 'master.admin'])->group(function () { 
-    Route::post('upload/file', 'UploadController@upload');
-    Route::post('users/import/user-xlsx', 'UploadController@import');
-    Route::get('users/export/students-xlsx', 'UploadController@export');
     //   Route::get('pdf/profile/{user_id}',function($user_id){
 //     $data = App\User::find($user_id);
 //     PDF::setOptions(['defaultFont' => 'sans-serif', 'isHtml5ParserEnabled' => true]);
@@ -307,4 +309,31 @@ Route::prefix('mobile')->name('mobile.')->group(function () {
     Route::get('notification', 'MobileController@notification');  
     Route::get('change_password', 'MobileController@changePasswordGet');
     Route::get('save_fcm_token', 'MobileController@saveFcmToken');
+    Route::post('delete/notification/{log_id}', 'MobileController@deleteNotification');
+});
+
+
+
+// Clear application cache:
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    return 'Application cache has been cleared';
+});
+
+//Clear route cache:
+Route::get('/route-cache', function() {
+	Artisan::call('route:cache');
+    return 'Routes cache has been cleared';
+});
+
+//Clear config cache:
+Route::get('/config-cache', function() {
+ 	Artisan::call('config:cache');
+ 	return 'Config cache has been cleared';
+}); 
+
+// Clear view cache:
+Route::get('/view-clear', function() {
+    Artisan::call('view:clear');
+    return 'View cache has been cleared';
 });

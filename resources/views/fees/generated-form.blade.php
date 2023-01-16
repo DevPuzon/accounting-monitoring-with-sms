@@ -28,7 +28,12 @@
                     @endif 
                     <div class="table-responsive"> 
                         @component('components.excel-fee-generated-upload-form')
-                        @endcomponent
+                        @endcomponent  
+                        <form action="{{url('fees/delete-all')}}" method="post" enctype="multipart/form-data">
+                            {{ csrf_field() }}  
+                            <input type="submit" class="btn btn-danger btn-sm" value="@lang('Delete all')"> 
+                        </form>
+
                         <table class="table table-bordered table-data-div table-hover"
                         id="c_table"> 
                             <thead>
@@ -51,7 +56,7 @@
                                         <td>{{ $fee->fee_name }}</td>  
                                         <td>{{ !empty($fee->user->studentInfo) ? "Individual" : "All" }}</td>   
                                         <td>{{ !empty($fee->user->studentInfo) ? $fee->user->name : "" }}</td>   
-                                        <td>{{ !empty($fee->user->studentInfo) ? $fee->user->studentInfo->student_id : "" }}</td>   
+                                        <td>{{ !empty($fee->user->studentInfo) ? $fee->user->student_code : "" }}</td>   
                                         <td>{{ $fee->balance }}</td>   
                                         <td>{{ date_format($fee->created_at," M d, Y g:i A") }}</td> 
                                         @if(Auth::user()->role == 'admin' || Auth::user()->role == 'accountant'  )

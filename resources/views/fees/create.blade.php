@@ -95,10 +95,9 @@
     selector: 'textarea#message',
         setup: function (editor) {
             editor.on('init', function (e) {
-                editor.setContent(`<br><br>
-                Good day!
-                <br><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;       Please be informed that our PRELIM EXAM will be on _____. To be able to take the exam, kindly settle your due(s) on or before ____.
+                editor.setContent(` 
+                Good day! 
+                <br> Please be informed that our PRELIM EXAM will be on _____. To be able to take the exam, kindly settle your due(s) on or before ____.
                                     <br><br>
                                     Initial balance: <br>
                                     Prelim Due: <br>

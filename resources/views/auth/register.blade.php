@@ -301,10 +301,10 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
-                            <label for="gender" class="col-md-4 control-label">@lang('Gender')</label>
+                            <label for="gender" class="col-md-4 control-label">* @lang('Gender')</label>
 
                             <div class="col-md-6">
-                                <select id="gender" class="form-control" name="gender">
+                                <select id="gender" class="form-control" name="gender" required>
                                     <option selected="selected">@lang('Male')</option>
                                     <option>@lang('Female')</option>
                                 </select>
@@ -321,7 +321,7 @@
                             <label for="version" class="col-md-4 control-label">* @lang('Language')</label>
 
                             <div class="col-md-6">
-                                <select id="version" class="form-control" name="version">
+                                <select id="version" class="form-control" name="version" required>
                                     <option selected="selected">@lang('Tagalog')</option>
                                     <option>@lang('English')</option>
 									<option>@lang('Bicolano Viejo')</option>
@@ -370,10 +370,10 @@
                         </div> --}}
 
                         <div class="form-group{{ $errors->has('religion') ? ' has-error' : '' }}">
-                            <label for="religion" class="col-md-4 control-label">@lang('Religion')</label>
+                            <label for="religion" class="col-md-4 control-label">* @lang('Religion')</label>
 
                             <div class="col-md-6">
-                                <select id="religion" class="form-control" name="religion">
+                                <select id="religion" class="form-control" name="religion" required>
 									<option selected="selected">@lang('Catholic')</option>
                                     <option>@lang('Islam')</option>
                                     <option>@lang('Hinduism')</option>

@@ -5,6 +5,7 @@ use App\Services\User\UserService;
 use App\Imports\FeesImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Services\Notification\NotificationService;
+use Illuminate\Support\Facades\DB;
 use App\Fee;
 use App\Payment;
 
@@ -93,7 +94,7 @@ class FeeController extends Controller
         }
 
 
-        return back()->with('status', __('Saved'));
+        return back()->with('status', __('Saved',));
     }
     
     public function update(Request $request)
@@ -192,6 +193,13 @@ class FeeController extends Controller
                 ->get();  
         return view('fees.generated-form',['fees'=>$fees]); 
     }
+    
+    public function deleteAll(){  
+        DB::table('fees')->delete();
+        return back()->with('status', __('Deleted successfully!'));
+    }
+
+
     /**
      * Display the specified resource.
      *
@@ -238,7 +246,7 @@ class FeeController extends Controller
         $path = $request->file('file')->getRealPath();
 
         try{  
-            Excel::import(new FeesImport, $path); 
+            Excel::import(new FeesImport($this->notificationService), $path); 
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             

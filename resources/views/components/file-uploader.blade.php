@@ -165,7 +165,7 @@ $(function () {
         }
     })
     .on('fileuploadfail', function (e, data) {
-            data.context.text(@json( __('File Upload has been canceled')));
+            data.context.text(@json( __('File Upload has been failed')));
             var error = data['jqXHR']['responseJSON']['error'];
             $('#errorAlert').text(error);
             console.log(data['jqXHR']['responseJSON']);

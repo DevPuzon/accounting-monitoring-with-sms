@@ -63,8 +63,13 @@ class MobileController extends Controller
         return view('mobile.save_fcm_token');
     }
 
-
-    
+    public function deleteNotification($log_id){
+        $logs = DB::table('notification_logs')->where('id',$log_id)->delete();
+       
+        $user_id = \Auth::user()->id;
+        $logs = DB::table('notification_logs')->where('user_id',$user_id)->get();
+        return view('mobile.notification', ['logs'=>$logs,'user_id'=>$user_id]); 
+    } 
 
     public function index($school_id)
     { 

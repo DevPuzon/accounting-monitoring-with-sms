@@ -43,7 +43,7 @@ class CreateUserRequest extends FormRequest
             'version' => 'required',
             'birthday' => 'required', 
             // 'year_and_section' => 'required|string',
-            'student_code' => 'required|string|unique:users',
+            'password' => 'sometimes|string|min:1|unique:users',
             'religion' => 'required|string',
         ];
     }

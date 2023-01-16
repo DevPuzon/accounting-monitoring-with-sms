@@ -17,7 +17,7 @@
             error: function(err) { 
             },
         });
-    }
+    } 
 </script>
 <div class="c-navigation">
     <img onclick="window.location.href = '{{ url('mobile/home') }}'" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAAACXBIWXMAAAsTAAALEwEAmpwYAAACfklEQVR4nO3cMW/TQBiH8dcqonRAghUhJjrAxgJ8AzZYQerCwhY6sjLRVP0EnRhAYoYJPgFlQZlYmBiajki0opVAfZAjDxF2em58Pvt8/99YNU7y5GT37VkxExEREZE5wCVgG5gCB8A4/9n870hDwDVgj7KvwI2mxxebRb4D/GCxfeCeYjVbyRvAMW7572zUPObF4rSTf0DzpsWpaTWZDw1YAXY4v/wxK45jbzmOsW0pAC4D71neR+DKGcfPV+5ZDmzogJvAN5r7Dtxa8BynNR6f2VABD4Cf+PMLeFjxPOmGBp4Bf/DvL/DCUg8NrAKvad87YC3J0CweQtoyG26SCg3crfg7NoS6zxl/aOAx8Jt+y2IfQsbEIUt1CAktS3kICSlLfQgJJZ7QLQ4hIWSx7IS8IW5r1mcdDCFt6e/OTY2dkNjk/069b30CPIlgCFnGCfC0676xDSFN7AIXuhxCPpCOT8DV0JHXIxxC8LRzcztU5FiHEJ87N4/ajrxZ7Fqk7hR46X2wKe6FiH0IacPbvI3P0K9aeZnDsOUzdBe7IbGYKnQY/m64SWQoWdbYZ+hFNwambL9o0v5NkaQnaz2qQs8odCAKHYhCB6LQgSh0IAodiEIHMpzQ5u+11bkP+rwU+n8K7WCeKLSDQlevGu9MK1qh0cWwTOdoB/NEoR0UunrVeGda0QqNLoZlOkc7mCcK7aDQ1avGO9OKVmh0MSzTOdrBPFFoB4WuXjXemVa0QqOLYZnO0Q7miUI7KHT1qjkkHYfWFeAL6djrMvRz0jHq+rtFJwzfpPNvSgeuDzz2JH+P1gfFyh4Bn4Ej4ndUvJdRUt/5LyIiIiIiIiJi9fwD0gnJmHDECOwAAAAASUVORK5CYII=">
@@ -33,7 +33,13 @@
             <div  style=" margin-top: 200px;width:100%; ">  
                 @foreach ($logs as $log) 
                     <div class="card" style="margin-bottom:10px">
-                        <div class="card-body"> 
+                        <div class="card-body">  
+                            <form action="{{url('mobile/delete/notification/'.$log->id.'')}}" method="post" enctype="multipart/form-data" style=" display: flex; justify-content: right; margin-bottom: 5px; ">
+                                {{ csrf_field() }}  
+                                <input id="delete-notif-{{ $log->id }}" style=" display: none; " type="submit" class="btn btn-danger btn-sm">  
+                                <a class="nav-link" style="text-decoration:none" onclick="document.getElementById('delete-notif-{{ $log->id }}').click();">  
+                                <i class="material-icons" style=" color: #7B7B7B; ">delete</i> </a> 
+                            </form>
                             <p style="overflow: hidden; 
                             display: -webkit-box;
                             -webkit-line-clamp: 3;
