@@ -15,11 +15,11 @@ class NotificationService {
 
     
     public function sendSMS($msg,$to){
-        if(!env('IS_SEND_SMS', false)){
-          return response()->json([
-            'IS_SEND_SMS' => env('IS_SEND_SMS', false)
-          ]);
-        }
+        // if(!env('IS_SEND_SMS', false)){
+        //   return response()->json([
+        //     'IS_SEND_SMS' => env('IS_SEND_SMS', false)
+        //   ]);
+        // }
 
         // $curl = curl_init();
   
@@ -65,36 +65,36 @@ class NotificationService {
         // curl_close($curl); 
   
        $curl = curl_init();
-    $data = array(
-      'api_key' => "2KOdI52LgpYuMweMPxhr8yhGl5W",
-      'api_secret' => "znmxMBRk7dRgZZi3Lu1YGL7hwsMHMBZXahL5eDRG",
-      'text' => strip_tags($msg),
-      'to' => "63".$to,
-      'from' => "MOVIDER"
-    );
+        $data = array(
+          'api_key' => "2KOdI52LgpYuMweMPxhr8yhGl5W",
+          'api_secret' => "znmxMBRk7dRgZZi3Lu1YGL7hwsMHMBZXahL5eDRG",
+          'text' => strip_tags($msg),
+          'to' => "63".$to,
+          'from' => "MOVIDER"
+        );
 
-    curl_setopt_array($curl, array(
-      CURLOPT_URL => "https://api.movider.co/v1/sms",
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_TIMEOUT => 30,
-      CURLOPT_CUSTOMREQUEST => "POST",
-      CURLOPT_POSTFIELDS => http_build_query($data),
-      CURLOPT_HTTPHEADER => array(
-        "Content-Type: application/x-www-form-urlencoded",
-        "cache-control: no-cache"
-      ),
-    ));
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => "https://api.movider.co/v1/sms",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => http_build_query($data),
+          CURLOPT_HTTPHEADER => array(
+            "Content-Type: application/x-www-form-urlencoded",
+            "cache-control: no-cache"
+          ),
+        ));
 
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
 
-    curl_close($curl);
+        curl_close($curl);
 
-    if ($err) {
-      echo "cURL Error #:" . $err;
-    } else {
-      echo $response;
-    }
+        if ($err) {
+          echo "cURL Error #:" . $err;
+        } else {
+          echo $response;
+        }
 
 
 
