@@ -324,7 +324,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = $this->user->find($id);
+        // $user = $this->user->find($id);
+        
+        $user = $this->userService->getStudent($id);
         
         $classes = Myclass::query()
             ->bySchool($user->school_id)

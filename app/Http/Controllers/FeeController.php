@@ -68,29 +68,45 @@ class FeeController extends Controller
             'message' => 'required|string',
             'balance' => 'required|numeric'
         ]); 
-        $student_ids = explode(',', $request->student_ids); 
-        foreach($student_ids as $student_id){
-            $fee = new \App\Fee;
-            $fee->fee_name = $request->fee_name;
-            $fee->balance = $request->balance;
-            $fee->user_id = $student_id;
-            $fee->message = $request->message; 
-            $fee->school_id = \Auth::user()->school_id;
-            $fee->save();
-    
-            $message = $fee->message;
-            $message = str_replace("<br>","\n",$message);
-            $message = str_replace("&nbsp;","\t",$message);
-            $message = str_replace("<p>","",$message);
-            $message = str_replace("</p>","",$message);
-            $user = $this->userService->getStudent($fee->user_id);
-    
-            $sms = $this->notificationService->sendSMS('Dear '.$user->name.', '
-            .$message,$user->phone_number);
+        $student_ids = explode(',', $request->student_ids);  
+        if($request->year != "" && $request->semester != ""){
+            $student_ids =[];
+            $students = $this->userService->getStudentFilter($request->year,$request->semester);
+            foreach($students as $student){
+                array_push($student_ids,$student->student_id);
+            } 
+        }
+        echo json_encode($student_ids);
+        if(sizeof($student_ids)>0){  
+            foreach($student_ids as $student_id){
+                $fee = new \App\Fee;
+                $fee->fee_name = $request->fee_name;
+                $fee->balance = $request->balance;
+                $fee->user_id = $student_id;
 
-            $this->notificationService->sendNotification("Payment Notification",'Dear '.$user->name.', '
-            .$message,$user);
-            
+                if($request->year != "" && $request->semester != ""){
+                    $fee->year_level = $request->year;
+                    $fee->semester =  $request->semester;
+                }
+
+                $fee->message = $request->message; 
+                $fee->school_id = \Auth::user()->school_id;
+                $fee->save();
+        
+                $message = $fee->message;
+                $message = str_replace("<br>","\n",$message);
+                $message = str_replace("&nbsp;","\t",$message);
+                $message = str_replace("<p>","",$message);
+                $message = str_replace("</p>","",$message);
+                $user = $this->userService->getStudent($fee->user_id);
+        
+                $sms = $this->notificationService->sendSMS('Dear '.$user->name.', '
+                .$message,$user->phone_number);
+
+                $this->notificationService->sendNotification("Payment Notification",'Dear '.$user->name.', '
+                .$message,$user);
+                
+            }
         }
 
 

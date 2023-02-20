@@ -15,6 +15,7 @@ class NotificationService {
 
     
     public function sendSMS($msg,$to){
+      return;
         // if(!env('IS_SEND_SMS', false)){
         //   return response()->json([
         //     'IS_SEND_SMS' => env('IS_SEND_SMS', false)
@@ -130,7 +131,7 @@ class NotificationService {
               "body":"'.$body.'",
               "sound": "default",
               "click_action": "FCM_PLUGIN_ACTIVITY",
-              "icon": "http://sltfci.xyz/images/logo.jpg"
+              "icon": "http://sltfci.xyz/images/logo.png"
           },
           "data": {
               "routes": ""

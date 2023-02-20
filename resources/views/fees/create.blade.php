@@ -21,15 +21,26 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <form class="form-horizontal" action="{{url('fees/create')}}" method="post">
+                    <form novalidate class="form-horizontal" action="{{url('fees/create')}}" method="post">
                       {{ csrf_field() }}
  
-                        <div class="form-group{{ $errors->has('student_id') ? ' has-error' : '' }}">
+                      <div class="form-group">
+                        <label for="is_bulk_per_academic" 
+                        class="col-md-4 control-label">* @lang('Is per academic')</label> 
+                        <div class="col-md-1">  
+                            <input type="checkbox" class="form-control" id="is_bulk_per_academic"
+                            style="width: fit-content;"
+                            onchange="onChangeBulkPerAcademic()" > 
+                        </div>
+                      </div>
+                      
+                        <div class="hide_academic form-group{{ $errors->has('student_id') ? ' has-error' : '' }}">
                             <label for="student_id" class="col-md-4 control-label">* @lang('Student')</label> 
                             <div class="col-md-6">
                                 <input type="hidden" name="student_ids" id="student_ids">
-                                <select id="student_id" class="form-control" name="student_id" required>
-                                <option value="0" selected>All</option>
+                                <select  id="student_id" class=" form-control" name="student_id" required>
+                         
+                                <option value="0" selected >All</option>
                                 @foreach ($students as $student)
                                 <option value="{{$student->id}},||,{{$student->email}}">{{$student->email}}</option>
                                 @endforeach
@@ -50,6 +61,45 @@
                               @endif
                           </div>
                       </div>
+
+
+                      <div hidden class="academic_class form-group{{ $errors->has('year_level') ? ' has-error' : '' }}"  >
+                            <label for="year_level" class="col-md-4 control-label">* @lang('Year Level')</label> 
+                            <div class="col-md-6"> 
+
+                                <select id="year_level" class="form-control" name="year" required> 
+                                    <option value="" selected></option>
+                                    <option value="First">First</option>
+                                    <option value="Second">Second</option>
+                                    <option value="Third">Third</option>
+                                    <option value="Fourth">Fourth</option>
+                                </select>
+
+                                @if ($errors->has('year_level'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('year_level') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        
+                      <div hidden class="academic_class form-group{{ $errors->has('semester') ? ' has-error' : '' }}" >
+                        <label for="semester" class="col-md-4 control-label">* @lang('Semester')</label> 
+                        <div class="col-md-6"> 
+
+                            <select id="semester" class="form-control" name="semester" required>
+                                <option value="" selected></option>
+                                <option value="First">First</option>
+                                <option value="Second">Second</option> 
+                            </select>
+
+                            @if ($errors->has('semester'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('semester') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
 
                       
                         <div class="form-group{{ $errors->has('message') ? ' has-error' : '' }}">
@@ -131,14 +181,14 @@
         let students = [];
         var i = 0 ;
         for(let option of _student_id.getElementsByTagName("option")){
-            if(i != 0 ){
+            if(i != 0 && option.value.split(",||,")[0].length >0 ){
                 students.push(option.value.split(",||,")[0]);
             }
             i++;
         }
         _studentIDs.value = students.join(",");
+        console.log("renderSelectAll",_studentIDs.value);
     }
-
     renderSelectAll();
     function renderSelectedStudent(){  
         console.log("renderSelectedStudent",selectedStudents);
@@ -172,6 +222,33 @@
         renderSelectedStudent();
         // <span class="c-badge badge badge-success"> <i class="material-icons">cancel</i></span> 
     });
+
+    
+    function onChangeBulkPerAcademic(){
+        let checked = $("#is_bulk_per_academic")[0].checked;
+        console.log(checked);
+        if(checked){
+            $(".academic_class").show();
+            $("#fee_name").val(`${$("#year_level").val()} - ${$("#semester").val()}`);
+            $( "#fee_name" ).prop( "readonly", true ); 
+            $(".hide_academic").hide();
+            $("#selectedStudents").html(""); 
+        }else{
+            $(".academic_class").hide();
+            $("#year_level").val("");
+            $("#semester").val("");
+            $("#fee_name").prop( "readonly", false );
+            $("#fee_name").val(``); 
+            $(".hide_academic").show();
+        }
+    }
+    $('select').on('change', function() { 
+        let checked = $("#is_bulk_per_academic")[0].checked;
+        console.log(checked);
+        if(checked){
+            $("#fee_name").val(`${$("#year_level").val()} Year - ${$("#semester").val()} Semester`);
+        }    
+    });
 </script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -192,5 +269,5 @@
         font-size: 15px;
     }
     
-</style>
+</style> 
 @endsection

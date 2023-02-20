@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2" id="main-container">
             <div class=" ">
-                <img src="{{ asset('images/logo.jpg') }}" alt="" style=" width: 130px; height: 130px; display: grid; margin: 0 auto; margin-top: 80px; margin-bottom: 20px; border-radius: 10px; ">
+                <img src="{{ asset('images/logo.png') }}" alt="" style=" width: 130px; height: 130px; display: grid; margin: 0 auto; margin-top: 80px; margin-bottom: 20px; border-radius: 10px; ">
                 <div class="page-panel-title" style="text-align: center;font-size: 25px;font-weight: bold;color: #fff;">Student Account App.</div>
                 
                 @if ($errors->any())

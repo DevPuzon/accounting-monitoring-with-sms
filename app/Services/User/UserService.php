@@ -48,25 +48,26 @@ class UserService {
         $info->session = (!empty($request->session)) ? $request->session : '';
         $info->version = (!empty($request->version)) ? $request->version : '';
         $info->group = (!empty($request->group)) ? $request->group : '';
-        $info->birthday = (!empty($request->birthday)) ? $request->birthday : ''; 
+        // $info->birthday = (!empty($request->birthday)) ? $request->birthday : ''; 
         // $info->year_and_section = (!empty($request->year_and_section)) ? $request->year_and_section : '';
         
         $info->course =(!empty($request->course)) ? $request->course : '';
         $info->major =(!empty($request->major)) ? $request->major : '';
         $info->year =(!empty($request->year)) ? $request->year : '';
-        $info->religion = (!empty($request->religion)) ? $request->religion : '';
-        $info->father_name = (!empty($request->father_name)) ? $request->father_name : '';
-        $info->father_phone_number = (!empty($request->father_phone_number)) ? $request->father_phone_number : '';
-        $info->father_national_id = (!empty($request->father_national_id)) ? $request->father_national_id : '';
-        $info->father_occupation = (!empty($request->father_occupation)) ? $request->father_occupation : '';
-        $info->father_designation = (!empty($request->father_designation)) ? $request->father_designation : '';
-        $info->father_annual_income = (!empty($request->father_annual_income)) ? $request->father_annual_income : '';
-        $info->mother_name = (!empty($request->mother_name)) ? $request->mother_name : '';
-        $info->mother_phone_number = (!empty($request->mother_phone_number)) ? $request->mother_phone_number : '';
-        $info->mother_national_id = (!empty($request->mother_national_id)) ? $request->mother_national_id : '';
-        $info->mother_occupation = (!empty($request->mother_occupation)) ? $request->mother_occupation : '';
-        $info->mother_designation = (!empty($request->mother_designation)) ? $request->mother_designation : '';
-        $info->mother_annual_income = (!empty($request->mother_annual_income)) ? $request->mother_annual_income : '';
+        $info->semester =(!empty($request->semester)) ? $request->semester : '';
+        // $info->religion = (!empty($request->religion)) ? $request->religion : '';
+        // $info->father_name = (!empty($request->father_name)) ? $request->father_name : '';
+        // $info->father_phone_number = (!empty($request->father_phone_number)) ? $request->father_phone_number : '';
+        // $info->father_national_id = (!empty($request->father_national_id)) ? $request->father_national_id : '';
+        // $info->father_occupation = (!empty($request->father_occupation)) ? $request->father_occupation : '';
+        // $info->father_designation = (!empty($request->father_designation)) ? $request->father_designation : '';
+        // $info->father_annual_income = (!empty($request->father_annual_income)) ? $request->father_annual_income : '';
+        // $info->mother_name = (!empty($request->mother_name)) ? $request->mother_name : '';
+        // $info->mother_phone_number = (!empty($request->mother_phone_number)) ? $request->mother_phone_number : '';
+        // $info->mother_national_id = (!empty($request->mother_national_id)) ? $request->mother_national_id : '';
+        // $info->mother_occupation = (!empty($request->mother_occupation)) ? $request->mother_occupation : '';
+        // $info->mother_designation = (!empty($request->mother_designation)) ? $request->mother_designation : '';
+        // $info->mother_annual_income = (!empty($request->mother_annual_income)) ? $request->mother_annual_income : '';
         $info->user_id = auth()->user()->id;
         $info->save();
     }
@@ -148,6 +149,16 @@ class UserService {
               ->where('id', $id)
               ->where('active', 1)
               ->first();
+    }
+
+    
+    public function getStudentFilter($year_level,$semester){ 
+        return  $this->user->with(['section'])
+              ->join('student_infos', 'users.id', '=', 'student_infos.student_id')
+              ->where('student_infos.year', $year_level)
+              ->where('student_infos.semester', $semester) 
+              ->where('active', 1)
+              ->get();
     }
 
     public function getTeachers(){

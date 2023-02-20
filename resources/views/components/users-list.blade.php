@@ -11,7 +11,7 @@
         <th scope="col">@lang('Action')</th>
         @endif
       @endif --}}
-      <th scope="col">@lang('Code')</th>
+      <th scope="col">@lang('ID no.')</th>
       <th scope="col">@lang('Full Name')</th>
       @foreach ($users as $user)
         @if($user->role == 'student')
@@ -23,11 +23,11 @@
           @endif
             @if (!Session::has('section-attendance'))
             {{-- <th scope="col">@lang('Session')</th> --}}
-            <th scope="col">@lang('Language')</th>
+            {{-- <th scope="col">@lang('Language')</th> --}}
             {{-- <th scope="col">@lang('Class')</th>
             <th scope="col">@lang('Section')</th> --}}
-            <th scope="col">@lang('Father')</th>
-            <th scope="col">@lang('Mother')</th>
+            {{-- <th scope="col">@lang('Father')</th>
+            <th scope="col">@lang('Mother')</th> --}}
             @endif
         @elseif($user->role == 'teacher')
           @if (!Session::has('section-attendance'))
@@ -44,10 +44,10 @@
         @break($loop->first)
       @endforeach
       @if (!Session::has('section-attendance'))
-      <th scope="col">@lang('Gender')</th>
+      <th scope="col">@lang('Course')</th>
       {{-- <th scope="col">@lang('Blood')</th> --}}
-      <th scope="col">@lang('Phone')</th>
-      <th scope="col">@lang('Address')</th>
+      <th scope="col">@lang('Year Level')</th>
+      <th scope="col">@lang('Semester')</th>
       
       @if(Auth::user()->role == 'admin' || Auth::user()->role == 'accountant' )
       <th scope="col">@lang('Actions')</th>
@@ -57,7 +57,7 @@
     </tr>
   </thead>
   <tbody>
-    @foreach ($users as $key=>$user)
+    @foreach ($users as $key=>$user) 
     <tr>
       <th scope="row">{{ ($current_page-1) * $per_page + $key + 1 }}</th>
       @if(Auth::user()->role == 'admin')
@@ -70,7 +70,7 @@
       <td><small>{{$user->student_code}}</small></td>
       <td>
         <small>
-          @if(!empty($user->pic_path))
+          {{-- @if(!empty($user->pic_path))
             <img src="{{asset('01-progress.gif')}}" data-src="{{url($user->pic_path)}}" style="border-radius: 50%;" width="25px" height="25px">
           @else
             @if(strtolower($user->gender) == trans('male'))
@@ -78,8 +78,8 @@
             @else
               <img src="{{asset('01-progress.gif')}}" data-src="https://img.icons8.com/color/48/000000/businesswoman.png" style="border-radius: 50%;" width="25px" height="25px">&nbsp;
             @endif
-          @endif
-          <a href="{{url('user/'.$user->id)}}">
+          @endif --}}
+          <a href="{{url('user/'.$user->id)}}" style="text-decoration: none;">
             {{$user->name}}</a>
           </small></td>
       @if($user->role == 'student')
@@ -102,10 +102,10 @@
           @endisset
           </small>
         </td> --}}
-        <td><small>
+        {{-- <td><small>
         @isset($user->studentInfo['version'])
           {{ucfirst($user->studentInfo['version'])}}
-        @endisset</small></td>
+        @endisset</small></td> --}}
         {{-- <td><small>{{$user->section->class->class_number}} {{!empty($user->group)? '- '.$user->group:''}}</small></td>
         <td style="white-space: nowrap;"><small>{{$user->section->section_number}}
             @if(Auth::user()->role == 'student' || Auth::user()->role == 'teacher' || Auth::user()->role == 'admin')
@@ -113,14 +113,14 @@
           @endif  
           </small>
         </td> --}}
-        <td><small>
+        {{-- <td><small>
         @isset($user->studentInfo['father_name'])
           {{$user->studentInfo['father_name']}}
         @endisset</small></td>
         <td><small>
         @isset($user->studentInfo['mother_name'])
           {{$user->studentInfo['mother_name']}}
-        @endisset</small></td>
+        @endisset</small></td> --}}
         @endif
       @elseif($user->role == 'teacher')
         @if (!Session::has('section-attendance'))
@@ -143,10 +143,10 @@
         @endif
       @endif
       @if (!Session::has('section-attendance'))
-      <td><small>{{ucfirst($user->gender)}}</small></td>
+      <td><small>{{ucfirst($user->studentInfo['course'])}}</small></td>
       {{-- <td><small>{{$user->blood_group}}</small></td> --}}
-      <td><small>{{$user->phone_number}}</small></td>
-      <td><small>{{$user->address}}</small></td>
+      <td><small>{{$user->studentInfo['year']}}</small></td>
+      <td><small>{{$user->studentInfo['semester']}}</small></td>
           
       @if(Auth::user()->role == 'admin' || Auth::user()->role == 'accountant'  )
       <td style="display:flex; column-gap:7px;"> 

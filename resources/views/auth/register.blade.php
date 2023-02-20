@@ -127,7 +127,7 @@
 
                         
                         <div class="form-group{{ $errors->has('student_code') ? ' has-error' : '' }}">
-                            <label for="student_code" class="col-md-4 control-label">* @lang('Student Code')</label>
+                            <label for="student_code" class="col-md-4 control-label">* @lang('Student ID')</label>
 
                             <div class="col-md-6">
                                 <input id="student_code" value="{{ old('student_code') }}" type="text" class="form-control" name="student_code" required>
@@ -141,11 +141,15 @@
                         </div>
                         
                         <div class="form-group{{ $errors->has('course') ? ' has-error' : '' }}">
-                            <label for="course" class="col-md-4 control-label">@lang('Course')</label>
+                            <label for="course" class="col-md-4 control-label">* @lang('Course')</label>
 
-                            <div class="col-md-6">
-                                <input id="course" value="{{ old('course') }}" type="text" class="form-control" name="course" >
-
+                            <div class="col-md-6"> 
+                                <select id="course" class="form-control" name="course" required> 
+                                    <option value="" selected></option>
+                                    <option value="BSCS">BSCS</option>
+                                    <option value="BSIS">BSIS</option>
+                                    <option value="ACT">ACT</option> 
+                                </select> 
                                 @if ($errors->has('course'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('course') }}</strong>
@@ -171,10 +175,17 @@
 
                         
                         <div class="form-group{{ $errors->has('year') ? ' has-error' : '' }}">
-                            <label for="year" class="col-md-4 control-label">@lang('Year')</label>
+                            <label for="year" class="col-md-4 control-label">* @lang('Year Level')</label>
 
                             <div class="col-md-6">
-                                <input id="year" value="{{ old('year') }}" type="text" class="form-control" name="year" >
+
+                                <select id="year_level" class="form-control" name="year" required> 
+                                    <option value="" selected></option>
+                                    <option value="First">First</option>
+                                    <option value="Second">Second</option>
+                                    <option value="Third">Third</option>
+                                    <option value="Fourth">Fourth</option>
+                                </select>
 
                                 @if ($errors->has('year'))
                                 <span class="help-block">
@@ -183,6 +194,26 @@
                                 @endif
                             </div>
                         </div>
+                        
+                          <div class="form-group{{ $errors->has('semester') ? ' has-error' : '' }}">
+                            <label for="semester" class="col-md-4 control-label">* @lang('Semester')</label>
+
+                            <div class="col-md-6">
+                                
+                                <select id="semester" class="form-control" name="semester" required> 
+                                    <option value="" selected></option>
+                                    <option value="First">First</option>
+                                    <option value="Second">Second</option> 
+                                </select>
+
+                                @if ($errors->has('semester'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('semester') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        
 
 
 
@@ -206,7 +237,7 @@
                                 @endif
                             </div>
                         </div>  --}}
-                        <div class="form-group{{ $errors->has('birthday') ? ' has-error' : '' }}">
+                        {{-- <div class="form-group{{ $errors->has('birthday') ? ' has-error' : '' }}">
                             <label for="birthday" class="col-md-4 control-label">* @lang('Birthday')</label>
 
                             <div class="col-md-6">
@@ -219,7 +250,7 @@
                                 </span>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
                         @endif
                         @if(session('register_role', 'teacher') == 'teacher')
                         <div class="form-group{{ $errors->has('department') ? ' has-error' : '' }}">
@@ -285,7 +316,7 @@
                             </div>
                         </div> --}}
 
-                        <div class="form-group{{ $errors->has('nationality') ? ' has-error' : '' }}">
+                        {{-- <div class="form-group{{ $errors->has('nationality') ? ' has-error' : '' }}">
                             <label for="nationality" class="col-md-4 control-label">* @lang('Nationality')</label>
 
                             <div class="col-md-6">
@@ -298,7 +329,7 @@
                                 </span>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
                             <label for="gender" class="col-md-4 control-label">* @lang('Gender')</label>
@@ -317,7 +348,7 @@
                             </div>
                         </div>
                         @if(session('register_role', 'student') == 'student')
-                        <div class="form-group{{ $errors->has('version') ? ' has-error' : '' }}">
+                        {{-- <div class="form-group{{ $errors->has('version') ? ' has-error' : '' }}">
                             <label for="version" class="col-md-4 control-label">* @lang('Language')</label>
 
                             <div class="col-md-6">
@@ -336,7 +367,7 @@
                                 </span>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
                         
                         <input type="hidden" value="3020" name="session" id="session">
                         {{-- <div class="form-group{{ $errors->has('session') ? ' has-error' : '' }}">
@@ -369,7 +400,7 @@
                             </div>
                         </div> --}}
 
-                        <div class="form-group{{ $errors->has('religion') ? ' has-error' : '' }}">
+                        {{-- <div class="form-group{{ $errors->has('religion') ? ' has-error' : '' }}">
                             <label for="religion" class="col-md-4 control-label">* @lang('Religion')</label>
 
                             <div class="col-md-6">
@@ -388,7 +419,7 @@
                                 </span>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                             <label for="address" class="col-md-4 control-label">* @lang('Address')</label>
@@ -419,7 +450,7 @@
                             </div>
                         </div> --}}
 
-                        <div class="form-group{{ $errors->has('father_name') ? ' has-error' : '' }}">
+                        {{-- <div class="form-group{{ $errors->has('father_name') ? ' has-error' : '' }}">
                             <label for="father_name" class="col-md-4 control-label">* @lang('Father\'s Name')</label>
 
                             <div class="col-md-6">
@@ -447,7 +478,7 @@
                                 </span>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
 
                         {{-- <div class="form-group{{ $errors->has('father_national_id') ? ' has-error' : '' }}">
                             <label for="father_national_id" class="col-md-4 control-label">@lang('Father\'s National ID')</label>
@@ -464,7 +495,7 @@
                             </div>
                         </div> --}}
 
-                        <div class="form-group{{ $errors->has('father_occupation') ? ' has-error' : '' }}">
+                        {{-- <div class="form-group{{ $errors->has('father_occupation') ? ' has-error' : '' }}">
                             <label for="father_occupation" class="col-md-4 control-label">@lang('Father\'s Occupation')</label>
 
                             <div class="col-md-6">
@@ -477,7 +508,7 @@
                                 </span>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
 
                         {{-- <div class="form-group{{ $errors->has('father_designation') ? ' has-error' : '' }}">
                             <label for="father_designation" class="col-md-4 control-label">@lang('Father\'s Designation')</label>
@@ -508,7 +539,7 @@
                                 @endif
                             </div>
                         </div> --}}
-
+{{-- 
                         <div class="form-group{{ $errors->has('mother_name') ? ' has-error' : '' }}">
                             <label for="mother_name" class="col-md-4 control-label">* @lang('Mother\'s Name')</label>
 
@@ -522,9 +553,9 @@
                                 </span>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <div class="form-group{{ $errors->has('mother_phone_number') ? ' has-error' : '' }}">
+                        {{-- <div class="form-group{{ $errors->has('mother_phone_number') ? ' has-error' : '' }}">
                             <label for="mother_phone_number" class="col-md-4 control-label">@lang('Mother\'s Phone Number')</label>
 
                             <div class="col-md-6">
@@ -537,7 +568,7 @@
                                 </span>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
 
                         {{-- <div class="form-group{{ $errors->has('mother_national_id') ? ' has-error' : '' }}">
                             <label for="mother_national_id" class="col-md-4 control-label">@lang('Mother\'s National ID')</label>
@@ -554,7 +585,7 @@
                             </div>
                         </div> --}}
 
-                        <div class="form-group{{ $errors->has('mother_occupation') ? ' has-error' : '' }}">
+                        {{-- <div class="form-group{{ $errors->has('mother_occupation') ? ' has-error' : '' }}">
                             <label for="mother_occupation" class="col-md-4 control-label">@lang('Mother\'s Occupation')</label>
 
                             <div class="col-md-6">
@@ -567,7 +598,7 @@
                                 </span>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
 
                         {{-- <div class="form-group{{ $errors->has('mother_designation') ? ' has-error' : '' }}">
                             <label for="mother_designation" class="col-md-4 control-label">@lang('Mother\'s Designation')</label>
