@@ -59,12 +59,12 @@
                   <td>@lang('Section'):</td>
                   <td>{{$user->section->section_number}}</td>
                 </tr> --}}
-                <tr>
-                  {{-- <td>@lang('Session'):</td>
-                  <td>@isset($user->studentInfo['session']){{$user->studentInfo['session']}}@endisset</td> --}}
+                {{-- <tr>
+                  <td>@lang('Session'):</td>
+                  <td>@isset($user->studentInfo['session']){{$user->studentInfo['session']}}@endisset</td>
                   <td>@lang('Language'):</td>
                   <td>@isset($user->studentInfo['version']){{$user->studentInfo['version']}}@endisset</td>
-                </tr>
+                </tr> --}}
                 {{-- <tr>
                   <td>@lang('Group'):</td>
                   <td>@isset($user->studentInfo['group']){{$user->studentInfo['group']}}@endisset</td>
@@ -101,8 +101,10 @@
                 <tr>
                   <td>@lang('Gender'):</td>
                   <td>{{$user->gender}}</td> 
-                  <td>@lang('Nationality'):</td>
-                  <td>{{$user->nationality}}</td>
+                  <td>@lang('Address'):</td>
+                  <td>{{$user->address}}</td>
+                  {{-- <td>@lang('Nationality'):</td>
+                  <td>{{$user->nationality}}</td> --}}
                 </tr>
                 <tr>
                   <td>@lang('Course'):</td>
@@ -112,21 +114,23 @@
                 </tr>
                 <tr>
                   <td>@lang('Year'):</td>
-                  <td>{{$user->studentInfo['year']}}</td>
-                </tr> 
-                <tr>
+                  <td>{{$user->studentInfo['year']}} year</td>
+                  <td>@lang('Semester'):</td>
+                  <td>{{$user->studentInfo['semester']}} semester</td>
+                </tr>  
+                {{-- <tr>
                   <td>@lang('Birthday'):</td>
                   <td>{{Carbon\Carbon::parse($user->birthday)->format('d/m/Y')}}</td>
                   <td>@lang('Religion'):</td>
                   <td>@isset($user->studentInfo['religion']){{$user->studentInfo['religion']}}@endisset</td>
-                </tr> 
+                </tr>  --}}
                 <tr>
+                  <td>@lang('School Year'):</td>
+                  <td>{{$user->studentInfo['school_year']}}</td>
                   <td>@lang('Phone Number'):</td>
                   <td>{{$user->phone_number}}</td>
-                  <td>@lang('Address'):</td>
-                  <td>{{$user->address}}</td>
                 </tr>
-                <tr> 
+                {{-- <tr> 
                   <td>@lang('Father Name'):</td>
                   <td>@isset($user->studentInfo['father_name']){{$user->studentInfo['father_name']}}@endisset</td>
                   <td>@lang('Mother Name'):</td>
@@ -143,7 +147,7 @@
                   <td>@isset($user->studentInfo['father_occupation']){{$user->studentInfo['father_occupation']}}@endisset</td> 
                   <td>@lang('Mother\'s Occupation'):</td>
                   <td>@isset($user->studentInfo['mother_occupation']){{$user->studentInfo['mother_occupation']}}@endisset</td> 
-                </tr> 
+                </tr>  --}}
               </table>
             </div>
           </div>
@@ -174,12 +178,12 @@
       <tbody>
         @if($user->role == "student")
         <tr>
-          <td><b>@lang('Code'):</b></td>
+          <td><b>@lang('Student ID'):</b></td>
           <td>{{$user->student_code}}</td>
           <td><b>@lang('Email'):<b></td>
           <td>{{$user->email}}</td>   
         </tr> 
-        <tr>
+        {{-- <tr>
           <td><b>@lang('Language'):</b></td>
           <td>@isset($user->studentInfo['version']){{$user->studentInfo['version']}}@endisset</td>
           <td><b>@lang('Birthday'):</b></td>
@@ -190,7 +194,7 @@
           <td>{{$user->nationality}}</td>
           <td><b>@lang('Religion'):</b></td>
           <td>@isset($user->studentInfo['religion']){{$user->studentInfo['religion']}}@endisset</td>
-        </tr> 
+        </tr>  --}}
         <tr>
           <td><b>@lang('Address'):</b></td>
           <td>{{$user->address}}</td>
@@ -207,9 +211,16 @@
           <td><b>@lang('Major'):</b></td>
           <td>{{$user->studentInfo['major']}}</td>
           <td><b>@lang('Year'):</b></td>
-          <td>{{$user->studentInfo['year']}}</td>
+          <td>{{$user->studentInfo['year']}} year</td>
         </tr> 
+        
         <tr>
+          <td><b>@lang('Semester'):</b></td> 
+          <td>{{$user->studentInfo['semester']}} semester</td>
+          <td><b>@lang('School Year'):</b></td> 
+          <td>{{$user->studentInfo['school_year']}}</td>
+        </tr> 
+        {{-- <tr>
           <td><b>@lang('Father\'s Name'):</b></td>
           <td>@isset($user->studentInfo['father_name']){{$user->studentInfo['father_name']}}@endisset</td>
           <td><b>@lang('Mother\'s Name'):</b></td>
@@ -226,11 +237,11 @@
           <td>@isset($user->studentInfo['father_occupation']){{$user->studentInfo['father_occupation']}}@endisset</td>
           <td><b>@lang('Mother\'s Occupation'):</b></td>
           <td>@isset($user->studentInfo['mother_occupation']){{$user->studentInfo['mother_occupation']}}@endisset</td>
-        </tr> 
+        </tr>  --}}
         @else
         
         <tr>
-          <td><b>@lang('Code'):</b></td>
+          <td><b>@lang('Student ID'):</b></td>
           <td>{{$user->student_code}}</td>
           <td><b>@lang('Email'):<b></td>
           <td>{{$user->email}}</td>   
@@ -241,10 +252,10 @@
           <td><b>@lang('Gender'):<b></td>
           <td>{{$user->gender}}</td>    
         </tr> 
-        <tr>
+        {{-- <tr>
           <td><b>@lang('Nationality'):</b></td>
           <td>{{$user->nationality}}</td>
-        </tr> 
+        </tr>  --}}
 
         @endif
       </tbody>

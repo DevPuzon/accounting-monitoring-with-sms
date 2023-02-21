@@ -68,10 +68,19 @@ class FeeController extends Controller
             'message' => 'required|string',
             'balance' => 'required|numeric'
         ]); 
+        
+        if( $request->is_bulk_per_academic){
+            $request->validate([ 
+                'year' => 'required|string',
+                'semester' => 'required|string',
+                'school_year' => 'required|string'
+            ]); 
+        }
+
         $student_ids = explode(',', $request->student_ids);  
-        if($request->year != "" && $request->semester != ""){
+        if($request->year != "" && $request->semester != "" && $request->school_year != ""){
             $student_ids =[];
-            $students = $this->userService->getStudentFilter($request->year,$request->semester);
+            $students = $this->userService->getStudentFilter($request->year,$request->semester,$request->school_year);
             foreach($students as $student){
                 array_push($student_ids,$student->student_id);
             } 
@@ -84,9 +93,10 @@ class FeeController extends Controller
                 $fee->balance = $request->balance;
                 $fee->user_id = $student_id;
 
-                if($request->year != "" && $request->semester != ""){
+                if($request->year != "" && $request->semester != "" && $request->school_year != ""){
                     $fee->year_level = $request->year;
                     $fee->semester =  $request->semester;
+                    $fee->school_year =  $request->school_year;
                 }
 
                 $fee->message = $request->message; 
@@ -100,8 +110,10 @@ class FeeController extends Controller
                 $message = str_replace("</p>","",$message);
                 $user = $this->userService->getStudent($fee->user_id);
         
-                $sms = $this->notificationService->sendSMS('Dear '.$user->name.', '
-                .$message,$user->phone_number);
+                if(false){ 
+                    $sms = $this->notificationService->sendSMS('Dear '.$user->name.', '
+                    .$message,$user->phone_number);
+                }
 
                 $this->notificationService->sendNotification("Payment Notification",'Dear '.$user->name.', '
                 .$message,$user);

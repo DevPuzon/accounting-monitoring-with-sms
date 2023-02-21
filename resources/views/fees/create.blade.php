@@ -29,7 +29,7 @@
                         class="col-md-4 control-label">* @lang('Is per academic')</label> 
                         <div class="col-md-1">  
                             <input type="checkbox" class="form-control" id="is_bulk_per_academic"
-                            style="width: fit-content;"
+                            style="width: fit-content;" name="is_bulk_per_academic"
                             onchange="onChangeBulkPerAcademic()" > 
                         </div>
                       </div>
@@ -62,8 +62,28 @@
                           </div>
                       </div>
 
+                      <div class="academic_class form-group{{ $errors->has('school_year') ? ' has-error' : '' }}" >
+                        <label for="school_year" class="col-md-4 control-label">* @lang('School Year')</label> 
+                        <div class="col-md-6"> 
 
-                      <div hidden class="academic_class form-group{{ $errors->has('year_level') ? ' has-error' : '' }}"  >
+                            <select id="school_year" class="form-control" name="school_year" required>
+                                <option value="" selected></option>
+                                <option value="2020-2021">2020-2021</option> 
+                                <option value="2021-2022">2021-2022</option> 
+                                <option value="2022-2023">2022-2023</option> 
+                                <option value="2023-2024">2023-2024</option> 
+                                <option value="2024-2025">2024-2025</option> 
+                            </select>
+
+                            @if ($errors->has('school_year'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('school_year') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                      <div class="academic_class form-group{{ $errors->has('year_level') ? ' has-error' : '' }}"  >
                             <label for="year_level" class="col-md-4 control-label">* @lang('Year Level')</label> 
                             <div class="col-md-6"> 
 
@@ -83,23 +103,24 @@
                             </div>
                         </div>
                         
-                      <div hidden class="academic_class form-group{{ $errors->has('semester') ? ' has-error' : '' }}" >
-                        <label for="semester" class="col-md-4 control-label">* @lang('Semester')</label> 
-                        <div class="col-md-6"> 
+                    
+                      <div class="academic_class form-group{{ $errors->has('semester') ? ' has-error' : '' }}" >
+                            <label for="semester" class="col-md-4 control-label">* @lang('Semester')</label> 
+                            <div class="col-md-6"> 
 
-                            <select id="semester" class="form-control" name="semester" required>
-                                <option value="" selected></option>
-                                <option value="First">First</option>
-                                <option value="Second">Second</option> 
-                            </select>
+                                <select id="semester" class="form-control" name="semester" required>
+                                    <option value="" selected></option>
+                                    <option value="First">First</option>
+                                    <option value="Second">Second</option> 
+                                </select>
 
-                            @if ($errors->has('semester'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('semester') }}</strong>
-                                </span>
-                            @endif
+                                @if ($errors->has('semester'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('semester') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                         </div>
-                    </div>
 
                       
                         <div class="form-group{{ $errors->has('message') ? ' has-error' : '' }}">
@@ -223,18 +244,32 @@
         // <span class="c-badge badge badge-success"> <i class="material-icons">cancel</i></span> 
     });
 
-    
+    addEventListener('submit', (event) => { 
+        let checked = $("#is_bulk_per_academic")[0].checked;
+        var url = new URL(window.location);
+        url.searchParams.set('is_bulk_per_academic', checked?1:0);
+        window.history.pushState(null, '', url.toString());
+    });
+
+    if(getParameterByName("is_bulk_per_academic")==1){
+        $("#is_bulk_per_academic").prop( "checked", true );
+        onChangeBulkPerAcademic();
+    }else{
+        onChangeBulkPerAcademic();
+    }
+
     function onChangeBulkPerAcademic(){
         let checked = $("#is_bulk_per_academic")[0].checked;
-        console.log(checked);
+        console.log(checked);  
         if(checked){
             $(".academic_class").show();
-            $("#fee_name").val(`${$("#year_level").val()} - ${$("#semester").val()}`);
+            $("#fee_name").val(`${$("#school_year").val()} - ${$("#year_level").val()} Year - ${$("#semester").val()} Semester`);
             $( "#fee_name" ).prop( "readonly", true ); 
             $(".hide_academic").hide();
             $("#selectedStudents").html(""); 
         }else{
             $(".academic_class").hide();
+            $("#school_year").val("");
             $("#year_level").val("");
             $("#semester").val("");
             $("#fee_name").prop( "readonly", false );
@@ -246,9 +281,18 @@
         let checked = $("#is_bulk_per_academic")[0].checked;
         console.log(checked);
         if(checked){
-            $("#fee_name").val(`${$("#year_level").val()} Year - ${$("#semester").val()} Semester`);
+            $("#fee_name").val(`${$("#school_year").val()} - ${$("#year_level").val()} Year - ${$("#semester").val()} Semester`);
         }    
     });
+    
+    function getParameterByName(name, url = window.location.href) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
 </script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

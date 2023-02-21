@@ -44,10 +44,14 @@
         @break($loop->first)
       @endforeach
       @if (!Session::has('section-attendance'))
+      
+      @if($user->studentInfo)
+      <th scope="col">@lang('School Year')</th>
       <th scope="col">@lang('Course')</th>
       {{-- <th scope="col">@lang('Blood')</th> --}}
       <th scope="col">@lang('Year Level')</th>
       <th scope="col">@lang('Semester')</th>
+      @endif
       
       @if(Auth::user()->role == 'admin' || Auth::user()->role == 'accountant' )
       <th scope="col">@lang('Actions')</th>
@@ -143,13 +147,18 @@
         @endif
       @endif
       @if (!Session::has('section-attendance'))
-      <td><small>{{ucfirst($user->studentInfo['course'])}}</small></td>
-      {{-- <td><small>{{$user->blood_group}}</small></td> --}}
-      <td><small>{{$user->studentInfo['year']}}</small></td>
-      <td><small>{{$user->studentInfo['semester']}}</small></td>
+        @if($user->studentInfo)
+          <td><small>{{$user->studentInfo['school_year']}}</small></td>
+          <td><small>{{ucfirst($user->studentInfo['course'])}}</small></td>
+          {{-- <td><small>{{$user->blood_group}}</small></td> --}}
+          <td><small>{{$user->studentInfo['year']}}</small></td>
+          <td><small>{{$user->studentInfo['semester']}}</small></td>
+        @endif
           
       @if(Auth::user()->role == 'admin' || Auth::user()->role == 'accountant'  )
       <td style="display:flex; column-gap:7px;"> 
+        <a class="btn btn-xs btn-sm btn-success"
+        href="{{url('user/'.$user->id)}}" ><i class="material-icons">person</i> </a>   
         @if($user->role == 'student')
           <a class="btn btn-xs btn-sm btn-success" href="{{url('stripe/balance-list/'.$user->id)}}" ><i class="material-icons">payment</i> </a>   
         @endif

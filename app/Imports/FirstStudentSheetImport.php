@@ -68,7 +68,7 @@ class FirstStudentSheetImport implements ToCollection,OnEachRow, WithHeadingRow
             'verified'       => 1,
             // 'section_id'     => $this->getSectionId(),
             // 'blood_group'    => $row['blood_group'],
-            'nationality'    => $row['nationality'],
+            // 'nationality'    => $row['nationality'],
             'gender'         => $row['gender'],
         ]; 
 
@@ -81,6 +81,8 @@ class FirstStudentSheetImport implements ToCollection,OnEachRow, WithHeadingRow
             'course'              => $row['course'] ?? '',
             'major'              => $row['major'] ?? '',
             'year'              => $row['year'] ?? '',
+            'semester'              => $row['semester'] ?? '',
+            'school_year'              => $row['school_year'] ?? '',
             'group'                => $row['group'] ?? '',
             // 'birthday'             => $row['birthday']?? date('Y-m-d'),
             // 'religion'             => $row['religion'] ?? '',
@@ -128,9 +130,14 @@ class FirstStudentSheetImport implements ToCollection,OnEachRow, WithHeadingRow
         }
         // call_user_func($this->message,$rowIndex,"sds");
         // $this->message($rowIndex,"sds");
+        // echo var_dump($row);
+        // return;
+        
         $user = User::where('email',$row['email'])->orWhere('student_code',$row['student_code'])->first(); 
         $arrayNames[$rowIndex] = $row['name'];
-        call_user_func($this->message,$arrayNames );
+        // call_user_func(json_encode($user));
+        // call_user_func(var_dump($row));
+        // return;
         if(!is_null($user)){ 
             $error = ["Detected not unique data (".$row['email']."),please check email and student code fields."];
             $failures[] = array($error); 
@@ -168,7 +175,7 @@ class FirstStudentSheetImport implements ToCollection,OnEachRow, WithHeadingRow
             'verified'       => 1,
             // 'section_id'     => $this->getSectionId(),
             // 'blood_group'    => $row['blood_group'],
-            'nationality'    => $row['nationality'],
+            // 'nationality'    => $row['nationality'],
             'gender'         => $row['gender'],
         ]; 
 
@@ -181,6 +188,8 @@ class FirstStudentSheetImport implements ToCollection,OnEachRow, WithHeadingRow
             'course'              => $row['course'] ?? '',
             'major'              => $row['major'] ?? '',
             'year'              => $row['year'] ?? '',
+            'semester'              => $row['semester'] ?? '',
+            'school_year'              => $row['school_year'] ?? '',
             'group'                => $row['group'] ?? '',
             // 'birthday'             => $row['birthday']?? date('Y-m-d'),
             // 'religion'             => $row['religion'] ?? '',

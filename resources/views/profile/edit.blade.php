@@ -154,6 +154,29 @@
                         </div> --}}
                         
                         @if($user->role == 'student')  
+                        
+                        <div class="form-group{{ $errors->has('school_year') ? ' has-error' : '' }}">
+                            <label for="school_year" class="col-md-4 control-label">* @lang('School Year')</label>
+
+                            <div class="col-md-6">
+                                
+                                <select id="school_year" class="form-control" name="school_year" required> 
+                                    <option value="" {{ ($user->studentInfo["school_year"]  == "" ? "selected" : "" ) }}></option>
+                    
+                                    <option value="2020-2021" {{ ($user->studentInfo["school_year"]  == "2020-2021" ? "selected" : "" ) }}>2020-2021</option> 
+                                    <option value="2021-2022" {{ ($user->studentInfo["school_year"]  == "2021-2022" ? "selected" : "" ) }}>2021-2022</option> 
+                                    <option value="2022-2023" {{ ($user->studentInfo["school_year"]  == "2022-2023" ? "selected" : "" ) }}>2022-2023</option> 
+                                    <option value="2023-2024" {{ ($user->studentInfo["school_year"]  == "2023-2024" ? "selected" : "" ) }}>2023-2024</option> 
+                                    <option value="2024-2025" {{ ($user->studentInfo["school_year"]  == "2024-2025" ? "selected" : "" ) }}>2024-2025</option>
+                                </select>
+
+                                @if ($errors->has('school_year'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('school_year') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
                             <div class="form-group{{ $errors->has('course') ? ' has-error' : '' }}">
                                 <label for="course" class="col-md-4 control-label">* @lang('Course')</label>
 
@@ -210,6 +233,7 @@
                                 </div>
                             </div>
                             
+
                             <div class="form-group{{ $errors->has('semester') ? ' has-error' : '' }}">
                                 <label for="semester" class="col-md-4 control-label">* @lang('Semester')</label>
 

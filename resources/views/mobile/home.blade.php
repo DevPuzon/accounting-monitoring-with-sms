@@ -44,7 +44,9 @@
                     <p><b>Student code : </b>{{ $user->student_code }}</p>
                     <p><b>Course : </b>{{ $user->studentInfo['course'] }}</p>
                     <p><b>Major : </b>{{ $user->studentInfo['major'] }}</p>
-                    <p><b>Year : </b>{{ $user->studentInfo['year'] }}</p>
+                    <p><b>Year Level: </b>{{ $user->studentInfo['year'] }} year</p>
+                    <p><b>Semester : </b>{{ $user->studentInfo['semester'] }} semester</p>
+                    <p><b>School Year : </b>{{ $user->studentInfo['school_year'] }}</p>
                     <p><b>Email : </b>{{ $user->email }}</p>
                     <p><b>Phone number : </b>{{ $user->phone_number }}</p> 
                 </div>

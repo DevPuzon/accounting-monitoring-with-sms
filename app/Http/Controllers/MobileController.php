@@ -33,21 +33,38 @@ class MobileController extends Controller
         }
     }
 
-    public function dashboard()
+    function filter_fee($el){
+        return $el->year_level;
+    }
+    public function dashboard(Request $request)
     { 
+        if(is_null(\Auth::user())){
+            return redirect('/mobile/login');
+        }
+        $filter = $request->query("filter");
         $user_id = \Auth::user()->id;
-        $fees = $this->fee
+        // $fees = array();
+        $fee_q = $this->fee
                 ->with(['payment'=>function($q) use ($user_id){
                     $q->where('user_id',$user_id);
                 }])   
-                ->where('user_id',$user_id)
-                ->orWhere('user_id',0)
-                ->get();
+                ->where('user_id',$user_id);
+        if($filter == "other"){   
+            $fee_q = $fee_q->whereNull('year_level');  
+        }
+        else{
+            $fee_q = $fee_q->where('year_level',"!=","");
+        }
+        $fee_q = $fee_q->orWhere('user_id',0); 
+        $fees = $fee_q->get(); 
         return view('mobile.dashboard', ['fees'=>$fees,'user_id'=>$user_id]); 
     }
 
     public function notification()
     { 
+        if(is_null(\Auth::user())){
+            return redirect('/mobile/login');
+        }
         $user_id = \Auth::user()->id;
         $logs = DB::table('notification_logs')->where('user_id',$user_id)->get();
         return view('mobile.notification', ['logs'=>$logs,'user_id'=>$user_id]); 
@@ -64,6 +81,9 @@ class MobileController extends Controller
     }
 
     public function deleteNotification($log_id){
+        if(is_null(\Auth::user())){
+            return redirect('/mobile/login');
+        }
         $logs = DB::table('notification_logs')->where('id',$log_id)->delete();
        
         $user_id = \Auth::user()->id;

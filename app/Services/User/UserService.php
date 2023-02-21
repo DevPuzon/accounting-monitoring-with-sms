@@ -55,6 +55,7 @@ class UserService {
         $info->major =(!empty($request->major)) ? $request->major : '';
         $info->year =(!empty($request->year)) ? $request->year : '';
         $info->semester =(!empty($request->semester)) ? $request->semester : '';
+        $info->school_year =(!empty($request->school_year)) ? $request->school_year : '';
         // $info->religion = (!empty($request->religion)) ? $request->religion : '';
         // $info->father_name = (!empty($request->father_name)) ? $request->father_name : '';
         // $info->father_phone_number = (!empty($request->father_phone_number)) ? $request->father_phone_number : '';
@@ -152,11 +153,12 @@ class UserService {
     }
 
     
-    public function getStudentFilter($year_level,$semester){ 
+    public function getStudentFilter($year_level,$semester,$school_year){ 
         return  $this->user->with(['section'])
               ->join('student_infos', 'users.id', '=', 'student_infos.student_id')
               ->where('student_infos.year', $year_level)
               ->where('student_infos.semester', $semester) 
+              ->where('student_infos.school_year', $school_year) 
               ->where('active', 1)
               ->get();
     }

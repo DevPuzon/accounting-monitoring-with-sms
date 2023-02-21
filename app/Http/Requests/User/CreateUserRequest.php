@@ -35,6 +35,7 @@ class CreateUserRequest extends FormRequest
             'gender' => 'required|string',
             'year' => 'required|string',
             'semester' => 'required|string',
+            'school_year' => 'required|string',
             'course' => 'required|string', 
             // 'blood_group' => 'required|string',
             // 'nationality' => 'required|string',

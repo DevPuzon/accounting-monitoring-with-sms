@@ -29,8 +29,19 @@
     <div class="c-title">Dashboard <img onclick="window.location.reload()" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAABOUlEQVR4nN3VzypEYRjH8THyp7CwcgGyMXZugIWVEiWugaYMOxfgz3X4s7CTsrCyZok0oZByAUYi5aOjd+o0jZlzjFPyW53O+zzv9z2/8zzPm8v9O+EBs+G5C/PYwy1e8IwydjGHzrSASO9Yw53musFMWkDtBiWMoh89KGAJZ7G4TeTTAj4iGxrE5rGA1yokCeCxBnKfIGcsBpnOZSEsBsA1OrIAtOM8QL6qMAtIKQB2sgIUAqCcFaAvACr1Fg9wGnn5C4CneotH4Se1tQAYydqilQDYatSZQy2U6UXDMsVqCJj8AaAYcq++bbTQ8scYTLn5ON7C7JpKmjSAiQS2FMPmkdbTnGo/JA3H3nWjN1TLcszz6OTricZ1zWdvVG8snNS5K6qeJ7OlCfAwjOQKLrEdVUsmk/NP6RMF7x7W2Ivt4AAAAABJRU5ErkJggg=="></div>
     <div class="bg"></div> 
     <div class="row">
-        <div class="col-md-8 col-md-offset-2" id="main-container">
-            <table  style=" margin-top: 200px;width:100%; ">  
+        <div class="col-md-8 col-md-offset-2" id="main-container"
+        style=" margin-top: 200px;width:100%;margin-bottom: 120px; ">
+            <h4><b>Filter</b></h4>
+            <div class="c-btn-groups" role="group" >
+                <div class="c-button-g c-button-g-active" onclick="onChangeFilter(0,'acad')">
+                    Per Academic Fee
+                </div>
+                <div class="c-button-g" onclick="onChangeFilter(1,'other')">
+                    Other Fee
+                </div>
+            </div>
+
+            {{-- <table  style=" margin-top: 200px;width:100%; ">  
                 <tr>
                     <td style=" font-size: 20px; font-weight: bold; padding-bottom:10px">Fee</td>
                     <td style=" font-size: 20px; font-weight: bold; padding-bottom:10px">Amount</td>
@@ -49,12 +60,107 @@
                     </td>
                 </tr>
                 @endforeach 
-            </table> 
+            </table>  --}}
+ 
+            @foreach ($fees as $fee)   
+            <div class="card" style="margin-bottom:10px">
+                <div class="card-header">
+                    <h5 style="text-transform:capitalize;">{{ $fee->fee_name }}</h5>
+                </div>
+                <div class="card-body"> 
+                    <div class="c-label">
+                        <h5><b>Mark As: </b></h5> 
+                        {{-- <span>{{ ( $fee->payment != null ? "Unpaid" : "Paid" ) }}</span>  --}} 
+                        @if($fee->payment)
+                        <span class="label label-success"> Paid </span>
+                        @else
+                        <span class="label label-warning"> Not paid </span>
+                        @endif
+                    </div>
+
+                    <div class="c-label">
+                        <h5><b>Amount: </b></h5>
+                        <span>₱ {{ number_format($fee->balance) }}</span>
+                    </div>
+
+                    @if($fee->payment) 
+
+                    <div class="c-label">
+                        <h5><b>Reference ID: </b></h5>
+                        <span>{{ $fee->payment['reference_id'] }}</span>
+                    </div>
+                    <div class="c-label">
+                        <h5><b>Payment Method: </b></h5>
+                        <span>{{ $fee->payment['payment_method'] }}</span>
+                    </div>
+                    <div class="c-label">
+                        <h5><b>Paid At: </b></h5>
+                        <span>{{ 
+                         date( 'm/d/Y h:i A',  strtotime($fee->payment['updated_at'])) 
+                          }}</span>
+                    </div>
+
+                    @endif
+                </div>
+            </div>
+            @endforeach 
         </div>
     </div>
 </div>
+
+<script>
+    function onChangeFilter(index,filter){
+        window.location.href = "{{ url('mobile/dashboard?filter=') }}"+filter;
+        onUpdateBtns(index);
+    }
+    if(getParameterByName("filter") =="other"){
+        onUpdateBtns(1);
+    }else{
+        onUpdateBtns(0);
+    }
+    function onUpdateBtns(index){
+        const btns = document.getElementsByClassName("c-button-g");
+        for(let i = 0; i < btns.length ; i++){
+            if(index == i){
+                btns[i].classList.add("c-button-g-active");
+            }else{
+                btns[i].classList.remove("c-button-g-active");
+            }
+        }
+    }
+
+    function getParameterByName(name, url = window.location.href) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+</script>
 <style>
-    
+    .c-label{
+        display: flex;
+        place-items: center;
+        column-gap: 8px;
+    }
+    .c-label h5{
+        margin: 4px 0px; 
+    }
+
+    .c-btn-groups{ 
+        display: flex;
+        margin-bottom: 10px;
+        column-gap: 8px; 
+    }
+    .c-btn-groups .c-button-g{ 
+        padding: 4px;
+        border-radius: 4px;
+        color: #000; 
+    }
+    .c-btn-groups .c-button-g-active{ 
+        background: #E2E2E2;
+    }
 </style>
 @endsection
 
