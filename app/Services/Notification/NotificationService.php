@@ -14,7 +14,7 @@ class NotificationService {
     } 
 
     
-    public function sendSMS($msg,$to){
+    public function sendSMS($msg,$to){ 
       return;
         // if(!env('IS_SEND_SMS', false)){
         //   return response()->json([

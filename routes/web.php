@@ -271,6 +271,23 @@ Route::middleware(['auth', 'teacher'])->group(function () {
     Route::post('calculate-marks', 'GradeController@calculateMarks');
     Route::post('message/students', 'NotificationController@store');
 });
+
+ 
+
+Route::get('messages/{school_id}', 'MessageController@index');
+Route::post('message', 'MessageController@store');
+Route::get('message/{id}', 'MessageController@show');
+Route::put('message/{id}', 'MessageController@update');
+
+
+Route::get('message/get-user', 'MessageController@getUser');
+Route::get('message/send-chat', 'MessageController@sendChat');
+Route::get('message/get-room-id', 'MessageController@getChatRoomID');
+Route::get('message/get-convo', 'MessageController@getConversation');
+Route::get('message/chat-main', 'MessageController@chatMain');
+Route::get('message/get-list-convo', 'MessageController@getListConvo'); 
+
+//Route::delete('notification/{id}', 'NotificationController@destroy')
 // Route::middleware(['auth'])->group(function (){
 //   Route::get('download/pdf', function(){
 //     $pathToFile = public_path('storage/Bano-EducationandAspiration.pdf');
@@ -307,6 +324,7 @@ Route::prefix('mobile')->name('mobile.')->group(function () {
     Route::get('home', 'MobileController@home');
     Route::get('dashboard', 'MobileController@dashboard'); 
     Route::get('notification', 'MobileController@notification');  
+    Route::get('chat', 'MobileController@chat'); 
     Route::get('change_password', 'MobileController@changePasswordGet');
     Route::get('save_fcm_token', 'MobileController@saveFcmToken');
     Route::post('delete/notification/{log_id}', 'MobileController@deleteNotification');

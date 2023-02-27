@@ -109,6 +109,9 @@
   </li> --}}
   <li class="nav-item" style="border-bottom: 1px solid #dbd8d8;"></li>
   <li class="nav-item">
+    <a class="nav-link" href="{{url('message/chat-main')}}"><i class="material-icons">message</i> <span class="nav-link-text">@lang('Chat')</span></a>
+  </li>
+  <li class="nav-item">
     <a class="nav-link" href="{{ route('settings.index') }}"><i class="material-icons">settings</i> <span class="nav-link-text">@lang('Academic Settings')</span></a>
   </li>
   {{-- <li class="nav-item dropdown">

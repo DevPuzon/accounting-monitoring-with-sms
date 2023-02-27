@@ -85,7 +85,7 @@ class FeeController extends Controller
                 array_push($student_ids,$student->student_id);
             } 
         }
-        echo json_encode($student_ids);
+        
         if(sizeof($student_ids)>0){  
             foreach($student_ids as $student_id){
                 $fee = new \App\Fee;
@@ -110,10 +110,9 @@ class FeeController extends Controller
                 $message = str_replace("</p>","",$message);
                 $user = $this->userService->getStudent($fee->user_id);
         
-                if(false){ 
-                    $sms = $this->notificationService->sendSMS('Dear '.$user->name.', '
-                    .$message,$user->phone_number);
-                }
+                
+                $sms = $this->notificationService->sendSMS('Dear '.$user->name.', '
+                .$message,$user->phone_number);
 
                 $this->notificationService->sendNotification("Payment Notification",'Dear '.$user->name.', '
                 .$message,$user);
@@ -274,7 +273,7 @@ class FeeController extends Controller
         $path = $request->file('file')->getRealPath();
 
         try{  
-            Excel::import(new FeesImport($this->notificationService), $path); 
+            Excel::import(new FeesImport($this->notificationService,$this->userService), $path); 
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             

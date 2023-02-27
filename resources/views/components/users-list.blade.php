@@ -1,8 +1,31 @@
 {{$users->links()}}
- 
+<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+
+{{-- <tr id="userstable_filter'">
+  <th>#</th>
+  <th>ID no.</th>
+  <th>Full Name</th>
+  <th>School Year</th>
+  <th>Course</th>
+  <th>Year Level</th>
+  <th>Semester</th>  
+  <th> </th>  
+</tr> --}}
+
+<div id="userstable_filter" style=" display: flex; margin-bottom: 20px; column-gap:6px;">
+  {{-- <div>#</div>
+  <div>ID no.</div>
+  <div>Full Name</div>
+  <div>School Year</div>
+  <div>Course</div>
+  <div>Year Level</div>
+  <div>Semester</div>  
+  <div> </div>   --}}
+</div>
 
 <div class="table-responsive">
-<table class="table table-bordered table-data-div table-condensed table-striped table-hover">
+<table id="table-1" class="table table-bordered table-condensed table-striped table-hover">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -59,7 +82,10 @@
 
       @endif
     </tr>
+    
+
   </thead>
+   
   <tbody>
     @foreach ($users as $key=>$user) 
     <tr>
@@ -71,9 +97,9 @@
         </td>
         @endif --}}
       @endif
-      <td><small>{{$user->student_code}}</small></td>
+      <td>{{$user->student_code}}</td>
       <td>
-        <small>
+        
           {{-- @if(!empty($user->pic_path))
             <img src="{{asset('01-progress.gif')}}" data-src="{{url($user->pic_path)}}" style="border-radius: 50%;" width="25px" height="25px">
           @else
@@ -85,17 +111,17 @@
           @endif --}}
           <a href="{{url('user/'.$user->id)}}" style="text-decoration: none;">
             {{$user->name}}</a>
-          </small></td>
+          </td>
       @if($user->role == 'student')
         @if(Auth::user()->role == 'student' || Auth::user()->role == 'teacher' || Auth::user()->role == 'admin')
-          {{-- <td><small><a class="btn btn-xs btn-info" role="button" href="{{url('attendances/0/'.$user->id.'/0')}}">@lang('View Attendance')</a></small></td> --}}
+          {{-- <td><a class="btn btn-xs btn-info" role="button" href="{{url('attendances/0/'.$user->id.'/0')}}">@lang('View Attendance')</a></td> --}}
           {{--@if (!Session::has('section-attendance'))
-          <td><small><a class="btn btn-xs btn-success" role="button" href="{{url('grades/'.$user->id)}}">@lang('View Marks')</a></small></td>
+          <td><a class="btn btn-xs btn-success" role="button" href="{{url('grades/'.$user->id)}}">@lang('View Marks')</a></td>
           @endif --}}
         @endif
         @if (!Session::has('section-attendance'))
         {{-- <td>
-          <small>
+          
           @isset($user->studentInfo['session'])
             {{$user->studentInfo['session']}}
             @if($user->studentInfo['session'] == now()->year || $user->studentInfo['session'] > now()->year)
@@ -104,55 +130,55 @@
               <span class="label label-danger">@lang('Not Promoted')</span>
             @endif
           @endisset
-          </small>
+          
         </td> --}}
-        {{-- <td><small>
+        {{-- <td>
         @isset($user->studentInfo['version'])
           {{ucfirst($user->studentInfo['version'])}}
-        @endisset</small></td> --}}
-        {{-- <td><small>{{$user->section->class->class_number}} {{!empty($user->group)? '- '.$user->group:''}}</small></td>
-        <td style="white-space: nowrap;"><small>{{$user->section->section_number}}
+        @endisset</td> --}}
+        {{-- <td>{{$user->section->class->class_number}} {{!empty($user->group)? '- '.$user->group:''}}</td>
+        <td style="white-space: nowrap;">{{$user->section->section_number}}
             @if(Auth::user()->role == 'student' || Auth::user()->role == 'teacher' || Auth::user()->role == 'admin')
             - <a class="btn btn-xs btn-primary" role="button" href="{{url('courses/0/'.$user->section->id)}}">@lang('All Courses')</a>
           @endif  
-          </small>
+          
         </td> --}}
-        {{-- <td><small>
+        {{-- <td>
         @isset($user->studentInfo['father_name'])
           {{$user->studentInfo['father_name']}}
-        @endisset</small></td>
-        <td><small>
+        @endisset</td>
+        <td>
         @isset($user->studentInfo['mother_name'])
           {{$user->studentInfo['mother_name']}}
-        @endisset</small></td> --}}
+        @endisset</td> --}}
         @endif
       @elseif($user->role == 'teacher')
         @if (!Session::has('section-attendance'))
         <td>
-          <small>{{$user->email}}</small>
+          {{$user->email}}
         </td>
         @if(Auth::user()->role == 'student' || Auth::user()->role == 'teacher' || Auth::user()->role == 'admin')
         <td style="white-space: nowrap;">
-          <small>
+          
             <a href="{{url('courses/'.$user->id.'/0')}}">@lang('All Courses')</a>
-          </small>
+          
         </td>
         @endif
         @endif
       @elseif($user->role == 'accountant' || $user->role == 'librarian')
         @if (!Session::has('section-attendance'))
         <td>
-          <small>{{$user->email}}</small>
+          {{$user->email}}
         </td>
         @endif
       @endif
       @if (!Session::has('section-attendance'))
         @if($user->studentInfo)
-          <td><small>{{$user->studentInfo['school_year']}}</small></td>
-          <td><small>{{ucfirst($user->studentInfo['course'])}}</small></td>
-          {{-- <td><small>{{$user->blood_group}}</small></td> --}}
-          <td><small>{{$user->studentInfo['year']}}</small></td>
-          <td><small>{{$user->studentInfo['semester']}}</small></td>
+          <td>{{$user->studentInfo['school_year']}}</td>
+          <td>{{ucfirst($user->studentInfo['course'])}}</td>
+          {{-- <td>{{$user->blood_group}}</td> --}}
+          <td>{{$user->studentInfo['year']}}</td>
+          <td>{{$user->studentInfo['semester']}}</td>
         @endif
           
       @if(Auth::user()->role == 'admin' || Auth::user()->role == 'accountant'  )
@@ -180,6 +206,76 @@
     </tr>
     @endforeach
   </tbody>
+  
 </table>
 </div>
 {{$users->links()}}
+
+
+<script>
+  $(document).ready(function () {
+      $('#table-1').DataTable({
+          initComplete: function (el) {
+              console.log("initComplete",el)
+              console.log("initComplete 2",this.api())
+              this.api()
+                  .columns([4,5,6])
+                  .every(function (el) {
+                      var column = this;
+                      console.log("initComplete 3",column.cell(),el)
+
+                      // var select = $('<select><option value=""></option></select>')
+                      //     .appendTo( '#userstable_filter')
+                      //     .on('change', function () {
+                      //         var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                      //         console.log(val);
+                      //         column.search(val ? '^' + val + '$' : '', true, false).draw();
+                      //   });
+                      
+                      let  theads = [];
+                      for(let a of $("thead:first tr th")){
+                          theads.push($(a).text());
+                      }
+                      var divSelect = `
+                      <div class="c-select-label">
+                        <span>${theads[el]}</span>
+                        <select id="select-${el}"><option value=""></option></select>
+                      </div>
+                      `;
+                      $("#userstable_filter").append(divSelect);
+
+                      let select = $(`#select-${el}`);
+                      select.on('change', function () {
+                          console.log(val);
+                          var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                          column.search(val ? '^' + val + '$' : '', true, false).draw();
+                      });
+
+                      setTimeout(() => { 
+                          column
+                          .data()
+                          .unique()
+                          .sort()
+                          .each(function (d, j) { 
+                              if(d){    
+                                  select.append('<option value="' + d + '">' + d + '</option>');
+                              }
+                          });
+                      }, 1000);
+                  });
+          },
+      });
+  });
+</script>
+
+<style>
+  .c-select-label{
+    display: grid;
+    width: fit-content;
+    min-width: 110px;
+    row-gap: 5px;
+  }
+  .c-select-label span{ 
+    font-weight: bold;
+  }
+</style>

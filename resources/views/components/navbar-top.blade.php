@@ -2,7 +2,7 @@
 <input id="user_id" type="hidden" value="{{ \Auth::user()->id }}">
 @endif
 <nav class="navbar navbar-default navbar-static-top">
-    <div class="container">
+    <div class="container" style="display: block;">
         <div class="navbar-header">
 
             <!-- Collapsed Hamburger -->

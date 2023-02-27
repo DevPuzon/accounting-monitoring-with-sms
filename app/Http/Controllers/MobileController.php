@@ -68,7 +68,12 @@ class MobileController extends Controller
         $user_id = \Auth::user()->id;
         $logs = DB::table('notification_logs')->where('user_id',$user_id)->get();
         return view('mobile.notification', ['logs'=>$logs,'user_id'=>$user_id]); 
-    }
+    } 
+    
+    public function chat()
+    {  
+        return view('mobile.chat' ); 
+    } 
 
     public function changePasswordGet()
     {

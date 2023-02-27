@@ -152,6 +152,12 @@ class UserService {
               ->first();
     }
 
+    public function getStudentsWithInfo(){ 
+        return  $this->user->with(['section'])
+              ->join('student_infos', 'users.id', '=', 'student_infos.student_id') 
+              ->where('active', 1)
+              ->get();
+    }
     
     public function getStudentFilter($year_level,$semester,$school_year){ 
         return  $this->user->with(['section'])
