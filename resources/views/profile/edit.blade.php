@@ -185,7 +185,10 @@
                                         <option value="" {{ ($user->studentInfo["course"] == "" ? "selected" : "" ) }}></option>
                                         <option value="BSCS"  {{ ($user->studentInfo["course"] == "BSCS" ? "selected" : "" ) }}>BSCS</option>
                                         <option value="BSIS"  {{ ($user->studentInfo["course"] == "BSIS" ? "selected" : "" ) }}>BSIS</option>
-                                        <option value="ACT"  {{ ($user->studentInfo["course"] == "ACT" ? "selected" : "" ) }}>ACT</option> 
+                                        <option value="ACT"  {{ ($user->studentInfo["course"] == "ACT" ? "selected" : "" ) }}>ACT</option>  
+                                        <option value="BSBA"  {{ ($user->studentInfo["course"] == "BSBA" ? "selected" : "" ) }}>BSBA</option>
+                                        <option value="BSED"  {{ ($user->studentInfo["course"] == "BSED" ? "selected" : "" ) }}>BSED</option> 
+                                        <option value="BSTM"  {{ ($user->studentInfo["course"] == "BSTM" ? "selected" : "" ) }}>BSTM</option> 
                                     </select> 
                                     @if ($errors->has('course'))
                                     <span class="help-block">

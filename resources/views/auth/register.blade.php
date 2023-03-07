@@ -149,6 +149,10 @@
                                     <option value="BSCS">BSCS</option>
                                     <option value="BSIS">BSIS</option>
                                     <option value="ACT">ACT</option> 
+                                    <option value="BSBA">BSBA</option>
+                                    <option value="BSED">BSED</option> 
+                                    <option value="BSTM">BSTM</option> 
+                                    
                                 </select> 
                                 @if ($errors->has('course'))
                                 <span class="help-block">
